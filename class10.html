@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 10 | Social Science</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar with Menu Button -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-logo">
+      <span>Social Science</span><span class="brand-accent">.</span>
+    </a>
+    <button class="menu-trigger" aria-label="Open Navigation Menu" onclick="toggleMenu(true)">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+  </nav>
+
+  <!-- iOS Liquid Glass Menu Modal -->
+  <div class="glass-overlay" id="glassMenu" onclick="closeOnBackdrop(event)">
+    <div class="glass-menu-window">
+      <div class="glass-header">
+        <span class="glass-title">Navigation</span>
+        <button class="glass-close-btn" onclick="toggleMenu(false)">✕</button>
+      </div>
+      <ul class="glass-nav-list">
+        <li>
+          <a href="index.html" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">🏛️</span>
+              <span>Home</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#classes" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">📚</span>
+              <span>Classes</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="quiz.html" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">⚡</span>
+              <span>Quiz</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#help-desk" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">💬</span>
+              <span>Ask Doubts</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Grade Header -->
+  <header class="hero" style="margin-bottom: 2rem;">
+    <div class="pill-badge">GRADE 10 BOARD</div>
+    <h1 class="hero-title">Class 10</h1>
+    <p class="hero-subtitle">CBSE Board Exam blueprints, chapter summaries, and revision notes.</p>
+  </header>
+
+  <!-- Chapter Groups -->
+  <div class="section-wrapper">
+    
+    <!-- 01 History -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>📖 History</h2>
+        <span class="chapter-count">05 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">The Rise of Nationalism in Europe</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1AO8Ha4YneqwcDNAkb8hTqpDl-pzUadz_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">Nationalism in India</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1b_LeSChZt7IzwxTMiRmoyt7uQGLhrs6e/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">03</div>
+          <span class="chapter-tag">Chapter 03</span>
+          <h3 class="chapter-title">The Making of a Global World</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+
+        <!-- History Chapter 4: Excluded from Board Exam -->
+        <div class="chapter-card">
+          <div class="chapter-number-bg">04</div>
+          <span class="chapter-tag">Chapter 04</span>
+          <h3 class="chapter-title">The Age of Industrialisation</h3>
+          <p class="chapter-desc">Internal assessment and school evaluation only.</p>
+          <span class="badge-btn badge-excluded">🚫 Not included in Board Exam</span>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">05</div>
+          <span class="chapter-tag">Chapter 05</span>
+          <h3 class="chapter-title">Print Culture and the Modern World</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Geography -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>🌍 Geography</h2>
+        <span class="chapter-count">07 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">Resources and Development</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">Forest and Wildlife Resources</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">03</div>
+          <span class="chapter-tag">Chapter 03</span>
+          <h3 class="chapter-title">Water Resources</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1kbiei7JEPBtQ3sdEiF2cXf0m1zVGGsg4/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">04</div>
+          <span class="chapter-tag">Chapter 04</span>
+          <h3 class="chapter-title">Agriculture</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1L_UJIqukDsxS-92bgzZ4HsVzbX2TZyUu/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">05</div>
+          <span class="chapter-tag">Chapter 05</span>
+          <h3 class="chapter-title">Minerals and Energy Resources</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">06</div>
+          <span class="chapter-tag">Chapter 06</span>
+          <h3 class="chapter-title">Manufacturing Industries</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">07</div>
+          <span class="chapter-tag">Chapter 07</span>
+          <h3 class="chapter-title">Lifelines of National Economy</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 Political Science -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>🏛️ Political Science</h2>
+        <span class="chapter-count">05 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">Power-sharing</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1O5JCDVBoiQNJKQcm-aKuoPDKMb0pBgmi/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">Federalism</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/19aqJCABr5dh7K93Yh64nFmWu9sczqi9R/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">03</div>
+          <span class="chapter-tag">Chapter 03</span>
+          <h3 class="chapter-title">Gender, Religion and Caste</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/125UM70CT3pA5JT37B2ZhN-jKyihByz_b/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">04</div>
+          <span class="chapter-tag">Chapter 04</span>
+          <h3 class="chapter-title">Political Parties</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1jVPiNrs5RmAw86OYNsW_R4Og94wY8kNw/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">05</div>
+          <span class="chapter-tag">Chapter 05</span>
+          <h3 class="chapter-title">Outcomes of Democracy</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1eyH1-GoeZuoKsRPYKLK_b8DwR8W6JzKZ/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 Economics -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>📈 Economics</h2>
+        <span class="chapter-count">05 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">Development</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/12YXkDPJREVkf36d7RcFwuC-iN67ploPW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">Sectors of the Indian Economy</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1vLJT1Uh2lHuYSfYQHeiJUcv7g56NkgYi/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">03</div>
+          <span class="chapter-tag">Chapter 03</span>
+          <h3 class="chapter-title">Money and Credit</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1NJ_d1dtG5cVH3TEIHqtWHB5VCvvDR3iW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chapter-number-bg">04</div>
+          <span class="chapter-tag">Chapter 04</span>
+          <h3 class="chapter-title">Globalisation and the Indian Economy</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/10J7EIdUOQA6qaF-N5SfyFCwD_OHgQGJA/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+
+        <!-- Economics Chapter 5: Excluded from Board Exam -->
+        <div class="chapter-card">
+          <div class="chapter-number-bg">05</div>
+          <span class="chapter-tag">Chapter 05</span>
+          <h3 class="chapter-title">Consumer Rights</h3>
+          <p class="chapter-desc">Project work and internal evaluation syllabus.</p>
+          <span class="badge-btn badge-excluded">🚫 Not included in Board Exam</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Social Science • Dedicated Learning Space</p>
+  </footer>
+
+  <script>
+    function toggleMenu(isOpen) {
+      const menu = document.getElementById('glassMenu');
+      if (isOpen) {
+        menu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        menu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeOnBackdrop(e) {
+      if (e.target.id === 'glassMenu') {
+        toggleMenu(false);
+      }
+    }
+  </script>
+
+</body>
+</html>

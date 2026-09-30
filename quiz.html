@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Arena | Social Science</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .quiz-wrap { max-width: 720px; margin: 0 auto; padding: 0 1.25rem 3rem; }
+    .quiz-card { background: rgba(24, 24, 27, 0.9); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 2rem; backdrop-filter: blur(14px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .step-tag { font-size: 0.78rem; font-weight: 700; color: #71717a; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.65rem; }
+    
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.6rem; margin-bottom: 1.5rem; }
+    
+    .sel-btn { padding: 0.95rem 1rem; border-radius: 14px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); color: #a1a1aa; font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer; text-align: center; }
+    .sel-btn.active { background: rgba(245, 158, 11, 0.12); border-color: #f59e0b; color: #f59e0b; box-shadow: 0 0 14px rgba(245,158,11,0.18); }
+    
+    .start-btn { width: 100%; padding: 1rem; border-radius: 14px; background: #f59e0b; color: #0e0e11; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; margin-top: 0.5rem; font-family: inherit; }
+    .start-btn:active { transform: scale(0.98); }
+
+    /* Progress & Questions */
+    .prog-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 999px; margin-bottom: 1.25rem; overflow: hidden; }
+    .prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #f59e0b, #fbbf24); transition: width 0.25s ease; }
+    .q-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: #71717a; margin-bottom: 1rem; }
+    .q-tag { color: #f59e0b; background: rgba(245,158,11,0.12); padding: 0.25rem 0.65rem; border-radius: 6px; }
+    .q-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 1.5rem; }
+    
+    .opt-btn { width: 100%; text-align: left; padding: 1rem 1.2rem; border-radius: 14px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); color: #f4f4f5; font-family: inherit; font-size: 0.92rem; cursor: pointer; margin-bottom: 0.75rem; display: flex; justify-content: space-between; }
+    .opt-btn.correct { background: rgba(45, 212, 191, 0.15) !important; border-color: #2dd4bf !important; color: #2dd4bf !important; font-weight: 700; }
+    .opt-btn.wrong { background: rgba(239, 68, 68, 0.15) !important; border-color: #ef4444 !important; color: #f87171 !important; font-weight: 700; }
+    
+    .exp-box { display: none; background: rgba(14,14,17,0.95); border-left: 4px solid #f59e0b; border-radius: 10px; padding: 1rem; font-size: 0.86rem; color: #a1a1aa; line-height: 1.5; margin-bottom: 1.25rem; }
+    .score-box { text-align: center; padding: 1rem 0; }
+    .score-num { width: 90px; height: 90px; border-radius: 50%; background: rgba(245,158,11,0.12); border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; color: #f59e0b; }
+
+    /* iOS Glass Menu Modal */
+    .glass-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1.5rem; }
+    .glass-modal.open { display: flex !important; }
+    .glass-box { width: 100%; max-width: 360px; background: rgba(24, 24, 28, 0.85); border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 1.5rem; backdrop-filter: blur(25px); }
+    .glass-nav-a { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 1.1rem; border-radius: 12px; background: rgba(255,255,255,0.04); color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-logo">
+      <span>Social Science</span><span class="brand-accent">.</span>
+    </a>
+    <button type="button" class="menu-trigger" onclick="toggleNav(true)">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+  </nav>
+
+  <!-- iOS Glass Navigation Menu -->
+  <div class="glass-modal" id="glassModal" onclick="bgClose(event)">
+    <div class="glass-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+        <span style="font-weight:700; color:#fff; font-size:1.1rem;">Navigation</span>
+        <button type="button" onclick="toggleNav(false)" style="background:none; border:none; color:#71717a; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <a href="index.html" class="glass-nav-a"><span>🏛️ Home</span><span style="color:#f59e0b;">→</span></a>
+      <a href="index.html#classes" class="glass-nav-a"><span>📚 Classes</span><span style="color:#f59e0b;">→</span></a>
+      <a href="quiz.html" class="glass-nav-a"><span>⚡ Quiz</span><span style="color:#f59e0b;">→</span></a>
+      <a href="index.html#help-desk" class="glass-nav-a"><span>💬 Ask Doubts</span><span style="color:#f59e0b;">→</span></a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="hero" style="margin-bottom: 2rem;">
+    <div class="pill-badge">PRACTICE ARENA</div>
+    <h1 class="hero-title">Practice Arena</h1>
+    <p class="hero-subtitle">Select your class and choose between a complete mock paper or a targeted subject test.</p>
+  </header>
+
+  <!-- Quiz Interface -->
+  <main class="quiz-wrap">
+    
+    <!-- Setup Card -->
+    <div class="quiz-card" id="setupCard">
+      <div class="step-tag">1. Select Your Class</div>
+      <div class="grid-2">
+        <button type="button" class="sel-btn active" id="c9Btn" onclick="pickClass(9)">Class 9</button>
+        <button type="button" class="sel-btn" id="c10Btn" onclick="pickClass(10)">Class 10</button>
+      </div>
+
+      <div class="step-tag">2. Choose Test Format</div>
+      <div class="grid-2">
+        <button type="button" class="sel-btn active" id="mCompBtn" onclick="pickMode('complete')">📑 Complete Quiz</button>
+        <button type="button" class="sel-btn" id="mSubBtn" onclick="pickMode('subject')">🎯 Subject-Wise</button>
+      </div>
+
+      <div id="subSection" style="display: none;">
+        <div class="step-tag">3. Choose Subject</div>
+        <div class="grid-4">
+          <button type="button" class="sel-btn active" id="sHistory" onclick="pickSub('History')">History</button>
+          <button type="button" class="sel-btn" id="sGeography" onclick="pickSub('Geography')">Geography</button>
+          <button type="button" class="sel-btn" id="sCivics" onclick="pickSub('Civics')">Civics</button>
+          <button type="button" class="sel-btn" id="sEconomics" onclick="pickSub('Economics')">Economics</button>
+        </div>
+      </div>
+
+      <button type="button" class="start-btn" onclick="startTest()">Start →</button>
+    </div>
+
+    <!-- Active Question Card -->
+    <div class="quiz-card" id="qCard" style="display: none;">
+      <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+      <div class="q-meta">
+        <span class="q-tag" id="qTag">Subject</span>
+        <span id="qCount">Question 1 of 5</span>
+      </div>
+      <div class="q-text" id="qTitle">Question text</div>
+      <div id="optsBox"></div>
+      <div class="exp-box" id="expBox"></div>
+      <button type="button" class="start-btn" id="nextBtn" onclick="goNext()" style="display:none;">Next Question →</button>
+    </div>
+
+    <!-- Scorecard -->
+    <div class="quiz-card score-box" id="scoreCard" style="display: none;">
+      <div class="score-num" id="scoreNum">0/5</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:1.6rem; margin-bottom:0.4rem;" id="scoreHead">Completed!</h2>
+      <p style="color:#a1a1aa; font-size:0.92rem; margin-bottom:1.5rem;" id="scoreDesc">Review your key points or restart a new test run.</p>
+      <button type="button" class="start-btn" onclick="resetTest()" style="max-width:260px; margin:0 auto;">Take Another Test ↺</button>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Social Science • Dedicated Learning Space</p>
+  </footer>
+
+  <!-- Compact NCERT Logic Engine -->
+  <script>
+    var curClass = 9, curMode = 'complete', curSub = 'History';
+
+    function toggleNav(on) {
+      document.getElementById('glassModal').className = on ? 'glass-modal open' : 'glass-modal';
+    }
+    function bgClose(e) {
+      if (e.target.id === 'glassModal') toggleNav(false);
+    }
+
+    function pickClass(c) {
+      curClass = c;
+      document.getElementById('c9Btn').className = (c === 9) ? 'sel-btn active' : 'sel-btn';
+      document.getElementById('c10Btn').className = (c === 10) ? 'sel-btn active' : 'sel-btn';
+    }
+    function pickMode(m) {
+      curMode = m;
+      document.getElementById('mCompBtn').className = (m === 'complete') ? 'sel-btn active' : 'sel-btn';
+      document.getElementById('mSubBtn').className = (m === 'subject') ? 'sel-btn active' : 'sel-btn';
+      document.getElementById('subSection').style.display = (m === 'subject') ? 'block' : 'none';
+    }
+    function pickSub(s) {
+      curSub = s;
+      ['History', 'Geography', 'Civics', 'Economics'].forEach(function(item) {
+        document.getElementById('s' + item).className = (item === s) ? 'sel-btn active' : 'sel-btn';
+      });
+    }
+
+    var qBank = [
+      // Class 9 NCERT
+      { c:9, s:"History", t:"Early Humans", q:"The shift from nomadic hunting to agriculture and domestication is the:", o:["Neolithic Revolution","Paleolithic Era","Industrial Age","Mesolithic Shift"], a:"Neolithic Revolution", e:"The Neolithic Revolution founded permanent farming villages along river basins." },
+      { c:9, s:"History", t:"State & Society", q:"In early India, autonomous craft and merchant guilds were known as:", o:["Shrenis","Samitis","Sabhas","Janapadas"], a:"Shrenis", e:"Shrenis regulated craft training, pricing, and merchant banking standards." },
+      { c:9, s:"Geography", t:"Earth's Surface", q:"Internal forces driving crustal uplift, mountain folding, and earthquakes are:", o:["Endogenic Forces","Exogenic Forces","Weathering","Fluvial Forces"], a:"Endogenic Forces", e:"Endogenic forces originate deep within the Earth, creating major landmasses." },
+      { c:9, s:"Geography", t:"Atmosphere", q:"In which atmospheric layer do almost all cloud and rain phenomena occur?", o:["Troposphere","Stratosphere","Mesosphere","Thermosphere"], a:"Troposphere", e:"The Troposphere contains 75% of atmospheric air mass and all weather water vapor." },
+      { c:9, s:"Civics", t:"Democracy", q:"Which principle guarantees that every adult citizen holds one vote of equal value?", o:["Universal Adult Franchise","Judicial Review","Rule of Law","Separation of Powers"], a:"Universal Adult Franchise", e:"Universal Adult Franchise guarantees equal political voting rights to all adults." },
+      { c:9, s:"Civics", t:"Election", q:"Which independent constitutional body conducts free and fair elections in India?", o:["Election Commission of India","Supreme Court","Parliament","Law Commission"], a:"Election Commission of India", e:"The Election Commission of India functions autonomously under Article 324." },
+      { c:9, s:"Economics", t:"Problem of Choice", q:"The economic problem of choice arises primarily because resources are:", o:["Scarce with alternative uses","Unlimited","Free and abundant","Stationary"], a:"Scarce with alternative uses", e:"Scarcity combined with competing uses forces rational allocation decisions." },
+      { c:9, s:"Economics", t:"What Drives Market", q:"When the quantity demanded equals the quantity supplied, the market reaches:", o:["Equilibrium Price","Price Monopoly","Trade Deficit","Price Ceiling"], a:"Equilibrium Price", e:"Equilibrium price balances market supply and consumer demand." },
+
+      // Class 10 NCERT
+      { c:10, s:"History", t:"Nationalism in Europe", q:"The customs union formed in 1834 at the initiative of Prussia to abolish tariffs was:", o:["Zollverein","Vienna Congress","Frankfurt Diet","Carbonari"], a:"Zollverein", e:"Zollverein unified economic trade across German states by abolishing internal tariffs." },
+      { c:10, s:"History", t:"Nationalism in India", q:"Mahatma Gandhi launched the historic Salt March from Sabarmati to Dandi in:", o:["1930","1920","1942","1919"], a:"1930", e:"The Salt March of March-April 1930 inaugurated the Civil Disobedience Movement." },
+      { c:10, s:"Geography", t:"Resources", q:"Black soil (Regur soil), celebrated for moisture retention, is ideal for:", o:["Cotton","Tea","Jute","Rubber"], a:"Cotton", e:"Deccan volcanic black soils are clayey and optimal for cotton cultivation." },
+      { c:10, s:"Geography", t:"Water Resources", q:"Underground tanks for rooftop rainwater harvesting in arid Rajasthan are called:", o:["Tankas","Kuls","Johads","Guls"], a:"Tankas", e:"Tankas were deep cisterns built inside household courtyards to store drinking water." },
+      { c:10, s:"Civics", t:"Power-sharing", q:"Sharing power among the Legislature, Executive, and Judiciary is called:", o:["Horizontal Power Sharing","Vertical Division","Federal System","Unitary Rule"], a:"Horizontal Power Sharing", e:"Horizontal power sharing creates checks and balances among equal branches of government." },
+      { c:10, s:"Civics", t:"Federalism", q:"Which Seventh Schedule list includes joint subjects like Education and Forests?", o:["Concurrent List","Union List","State List","Residuary List"], a:"Concurrent List", e:"Both central and state legislatures can make laws on Concurrent subjects." },
+      { c:10, s:"Economics", t:"Sectors of Economy", q:"When more people work on a farm than required, it is known as:", o:["Disguised Unemployment","Seasonal Unemployment","Open Unemployment","Frictional"], a:"Disguised Unemployment", e:"Disguised unemployment occurs when marginal productivity of surplus labor is zero." },
+      { c:10, s:"Economics", t:"Money & Credit", q:"Which institution supervises the functioning of formal bank loans in India?", o:["Reserve Bank of India (RBI)","State Bank of India","Finance Ministry","SEBI"], a:"Reserve Bank of India (RBI)", e:"The RBI monitors commercial bank reserves and ensures credit reaches small borrowers." }
+    ];
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+      }
+      return a;
+    }
+
+    var activeQuestions = [], qIndex = 0, userScore = 0;
+
+    function startTest() {
+      var pool = qBank.filter(function(item) { return item.c === curClass; });
+      if (curMode === 'subject') {
+        pool = pool.filter(function(item) { return item.s === curSub; });
+      }
+
+      var shuffled = shuffle(pool);
+      activeQuestions = shuffled.slice(0, 5).map(function(item) {
+        var scrambledOpts = shuffle(item.o);
+        return {
+          tag: item.s + " • " + item.t,
+          q: item.q,
+          opts: scrambledOpts,
+          ansIdx: scrambledOpts.indexOf(item.a),
+          exp: item.e
+        };
+      });
+
+      qIndex = 0;
+      userScore = 0;
+
+      document.getElementById('setupCard').style.display = 'none';
+      document.getElementById('qCard').style.display = 'block';
+      showQ();
+    }
+
+    function showQ() {
+      var cur = activeQuestions[qIndex];
+      document.getElementById('progFill').style.width = ((qIndex / activeQuestions.length) * 100) + '%';
+      document.getElementById('qTag').textContent = cur.tag;
+      document.getElementById('qCount').textContent = "Question " + (qIndex + 1) + " of " + activeQuestions.length;
+      document.getElementById('qTitle').textContent = cur.q;
+
+      var box = document.getElementById('optsBox');
+      box.innerHTML = '';
+
+      cur.opts.forEach(function(opt, idx) {
+        var btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerHTML = '<span>' + opt + '</span><span>○</span>';
+        btn.onclick = function() { checkAns(btn, idx, cur.ansIdx, cur.exp); };
+        box.appendChild(btn);
+      });
+
+      document.getElementById('expBox').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'none';
+    }
+
+    function checkAns(btn, chosen, correct, exp) {
+      var btns = document.querySelectorAll('.opt-btn');
+      btns.forEach(function(b) { b.disabled = true; });
+
+      var expBox = document.getElementById('expBox');
+      if (chosen === correct) {
+        userScore++;
+        btn.className = 'opt-btn correct';
+        btn.innerHTML = '<span>' + btn.textContent.slice(0, -1) + '</span><span>✓</span>';
+        expBox.innerHTML = '<strong style="color:#2dd4bf;">Correct!</strong> ' + exp;
+      } else {
+        btn.className = 'opt-btn wrong';
+        btn.innerHTML = '<span>' + btn.textContent.slice(0, -1) + '</span><span>✕</span>';
+        btns[correct].className = 'opt-btn correct';
+        btns[correct].innerHTML = '<span>' + btns[correct].textContent.slice(0, -1) + '</span><span>✓ Correct</span>';
+        expBox.innerHTML = '<strong style="color:#f87171;">Incorrect.</strong> ' + exp;
+      }
+
+      expBox.style.display = 'block';
+      document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function goNext() {
+      qIndex++;
+      if (qIndex < activeQuestions.length) {
+        showQ();
+      } else {
+        document.getElementById('qCard').style.display = 'none';
+        document.getElementById('scoreCard').style.display = 'block';
+        document.getElementById('scoreNum').textContent = userScore + '/' + activeQuestions.length;
+
+        var h = document.getElementById('scoreHead'), d = document.getElementById('scoreDesc');
+        if (userScore === activeQuestions.length) {
+          h.textContent = "Perfect Score! 🌟";
+          d.textContent = "Outstanding mastery of NCERT core concepts and chapter definitions.";
+        } else if (userScore >= 3) {
+          h.textContent = "Well Done! 👍";
+          d.textContent = "Strong conceptual foundation. Review notes to convert these into 100% board accuracy.";
+        } else {
+          h.textContent = "Keep Practicing! 📖";
+          d.textContent = "Re-read the chapter summaries and timelines, then generate another run!";
+        }
+      }
+    }
+
+    function resetTest() {
+      document.getElementById('scoreCard').style.display = 'none';
+      document.getElementById('setupCard').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

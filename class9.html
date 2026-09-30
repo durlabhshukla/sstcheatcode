@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 9 | Social Science</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar with Menu Button -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-logo">
+      <span>Social Science</span><span class="brand-accent">.</span>
+    </a>
+    <button class="menu-trigger" aria-label="Open Navigation Menu" onclick="toggleMenu(true)">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+  </nav>
+
+  <!-- iOS Liquid Glass Menu Modal -->
+  <div class="glass-overlay" id="glassMenu" onclick="closeOnBackdrop(event)">
+    <div class="glass-menu-window">
+      <div class="glass-header">
+        <span class="glass-title">Navigation</span>
+        <button class="glass-close-btn" onclick="toggleMenu(false)">✕</button>
+      </div>
+      <ul class="glass-nav-list">
+        <li>
+          <a href="index.html" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">🏛️</span>
+              <span>Home</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#classes" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">📚</span>
+              <span>Classes</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="quiz.html" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">⚡</span>
+              <span>Quiz</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#help-desk" class="glass-nav-item">
+            <div class="nav-item-left">
+              <span class="nav-item-icon">💬</span>
+              <span>Ask Doubts</span>
+            </div>
+            <span style="color: var(--accent-primary);">→</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Grade Header -->
+  <header class="hero" style="margin-bottom: 2rem;">
+    <div class="pill-badge">GRADE 09</div>
+    <h1 class="hero-title">Class 9</h1>
+    <p class="hero-subtitle">Select any subject below to read chapter notes and revision guides.</p>
+  </header>
+
+  <!-- Chapter Groups -->
+  <div class="section-wrapper">
+    
+    <!-- 01 History -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>📖 History</h2>
+        <span class="chapter-count">02 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">Early Humans and Beginning of Civilization</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/19TOkznyKnhws-Pl_WxyK78Xgs1-tqyrF/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">State and Society up to 1000 CE</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Geography -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>🌍 Geography</h2>
+        <span class="chapter-count">02 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">Shaping of the Earth's Surface</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">Atmosphere and Climate</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1wujQbBiTwHBO26vdzJpZHFw_4b10T8EN/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 Civics -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>🏛️ Civics</h2>
+        <span class="chapter-count">02 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">Democracy</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">Election</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/1-fiOjlmo4L62dEl-nJlSoqIX9j8LKS6f/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 Economics -->
+    <div class="subject-group">
+      <div class="subject-header-banner">
+        <h2>📈 Economics</h2>
+        <span class="chapter-count">02 Chapters</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card">
+          <div class="chapter-number-bg">01</div>
+          <span class="chapter-tag">Chapter 01</span>
+          <h3 class="chapter-title">Building Blocks in Economics: The Problem of Choice</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <span class="badge-btn badge-soon">⏳ Notes Coming Soon</span>
+        </div>
+        <div class="chapter-card">
+          <div class="chapter-number-bg">02</div>
+          <span class="chapter-tag">Chapter 02</span>
+          <h3 class="chapter-title">The Price Puzzle: What Drives the Market</h3>
+          <p class="chapter-desc">Teacher's notes for this chapter.</p>
+          <a href="https://drive.google.com/file/d/19od_O5OOAIy2U7xnLG1K1e_ULtvyDY88/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="badge-btn badge-active">📄 View Notes ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Social Science • Dedicated Learning Space</p>
+  </footer>
+
+  <script>
+    function toggleMenu(isOpen) {
+      const menu = document.getElementById('glassMenu');
+      if (isOpen) {
+        menu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        menu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeOnBackdrop(e) {
+      if (e.target.id === 'glassMenu') {
+        toggleMenu(false);
+      }
+    }
+  </script>
+
+</body>
+</html>
