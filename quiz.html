@@ -3,317 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Practice Arena | Social Science Classes 9 & 10</title>
+  <title>Social Science Practice Arena</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .arena-container {
-      max-width: 780px;
-      margin: 1.5rem auto 4rem auto;
-      padding: 0 1.2rem;
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(16, 24, 40, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
     }
-    .arena-header {
-      margin-bottom: 2rem;
-      text-align: center;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      padding: 1.2rem;
     }
-    .arena-title {
-      font-size: 2.3rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.8px;
-      margin-bottom: 0.5rem;
-    }
-    .arena-subtitle {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
+    .arena-container { max-width: 740px; margin: 0 auto 4rem auto; }
+    .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.5rem; }
+    .brand { font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .brand span { color: var(--amber); }
+    .back-link { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+    .back-link:hover { color: #fff; }
+
+    .arena-header { text-align: center; margin-bottom: 1.8rem; }
+    .tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--amber); text-transform: uppercase; margin-bottom: 0.4rem; }
+    .title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.4rem; color: #fff; }
+    .subtitle { color: var(--muted); font-size: 0.92rem; }
+
     .class-toggle-bar {
-      display: inline-flex;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-      padding: 0.35rem;
-      margin: 1.5rem auto 2rem auto;
-      gap: 0.35rem;
+      display: inline-flex; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 999px; padding: 0.3rem; margin: 1.3rem auto 0 auto; gap: 0.3rem;
     }
     .toggle-pill {
-      border: none;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.6);
-      font-weight: 700;
-      font-size: 0.92rem;
-      padding: 0.6rem 1.6rem;
-      border-radius: 999px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.25s ease;
+      border: none; background: transparent; color: var(--muted); font-weight: 700;
+      font-size: 0.95rem; padding: 0.6rem 2rem; border-radius: 999px; cursor: pointer;
+      font-family: inherit; transition: all 0.2s ease;
     }
-    .toggle-pill.active {
-      background: var(--accent-primary, #f59e0b);
-      color: #0e0e11;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-    }
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
+    .toggle-pill.active { background: var(--amber); color: #0b0f19; box-shadow: 0 4px 15px rgba(245,158,11,0.25); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
     .mode-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 1.5rem;
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s, background 0.2s;
-      text-align: left;
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+      padding: 1.4rem; cursor: pointer; text-align: left; transition: transform 0.2s, border-color 0.2s;
     }
-    .mode-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(245, 158, 11, 0.5);
-      background: rgba(255, 255, 255, 0.07);
+    .mode-card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.4); }
+    .mega-card {
+      grid-column: 1 / -1; background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(16,24,40,0.8));
+      border: 1px solid rgba(245,158,11,0.3);
     }
-    .mode-card.mega-card {
-      grid-column: 1 / -1;
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(255, 255, 255, 0.04));
-      border: 1px solid rgba(245, 158, 11, 0.35);
-    }
-    .mode-tag {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      color: var(--accent-primary, #f59e0b);
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-    .mode-name {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.3rem;
-    }
-    .mode-desc {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.55);
-      line-height: 1.4;
-    }
+    .mode-tag { font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; color: var(--blue); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .mode-name { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .mode-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.4; }
+
     #quizCard {
-      display: none;
-      background: rgba(24, 24, 28, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 2rem;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      display: none; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 24px; padding: 2rem; margin-top: 1rem;
     }
-    @media (max-width: 600px) {
-      #quizCard { padding: 1.4rem 1.1rem; }
+    @media(max-width: 600px) { #quizCard { padding: 1.3rem 1.1rem; } }
+    .meta-row { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 0.8rem; }
+    .prog-wrap { width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; margin-bottom: 1.5rem; }
+    .prog-fill { height: 100%; width: 0%; background: var(--amber); transition: width 0.3s; }
+    .q-text { font-size: 1.15rem; font-weight: 600; color: #fff; line-height: 1.6; margin-bottom: 1.5rem; }
+    .opts { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .opt-btn {
+      display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.95rem 1.1rem;
+      border-radius: 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: #fff; font-family: inherit; font-size: 0.93rem; cursor: pointer; text-align: left;
     }
-    .progress-bar-wrap {
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 1.2rem 0 1.8rem 0;
+    .opt-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.07); }
+    .opt-btn.correct { background: rgba(45,212,191,0.15) !important; border-color: #2dd4bf !important; color: #2dd4bf !important; font-weight: 700; }
+    .opt-btn.wrong { background: rgba(239,68,68,0.15) !important; border-color: #ef4444 !important; color: #f87171 !important; }
+    .next-btn {
+      width: 100%; padding: 0.95rem; background: var(--amber); color: #0b0f19; font-weight: 800;
+      border-radius: 12px; border: none; cursor: pointer; font-size: 1rem; display: none;
     }
-    .progress-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--accent-primary, #f59e0b);
-      transition: width 0.3s ease;
-    }
-    .quiz-meta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.5);
-    }
-    .question-box {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #ffffff;
-      line-height: 1.6;
-      margin-bottom: 1.8rem;
-    }
-    .options-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      margin-bottom: 1.8rem;
-    }
-    .option-btn {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      text-align: left;
-      padding: 1rem 1.2rem;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.95rem;
-      cursor: pointer;
-      line-height: 1.4;
-      transition: all 0.2s ease;
-    }
-    .option-btn:hover:not(:disabled) {
-      border-color: rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .option-btn.correct {
-      background: rgba(45, 212, 191, 0.15) !important;
-      border-color: #2dd4bf !important;
-      color: #2dd4bf !important;
-      font-weight: 700;
-    }
-    .option-btn.wrong {
-      background: rgba(239, 68, 68, 0.15) !important;
-      border-color: #ef4444 !important;
-      color: #f87171 !important;
-    }
-    .action-btn {
-      width: 100%;
-      padding: 0.95rem 1.4rem;
-      background: var(--accent-primary, #f59e0b);
-      color: #0e0e11;
-      font-weight: 800;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 1rem;
-      display: none;
-    }
+
     #resultCard {
-      display: none;
-      background: rgba(24, 24, 28, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 2.5rem 1.8rem;
-      text-align: center;
-      backdrop-filter: blur(20px);
+      display: none; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 24px; padding: 2.5rem 1.5rem; text-align: center; margin-top: 1rem;
     }
     .score-circle {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: rgba(245, 158, 11, 0.15);
-      border: 2px solid var(--accent-primary, #f59e0b);
-      margin: 0 auto 1.5rem auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 100px; height: 100px; border-radius: 50%; background: rgba(245,158,11,0.15);
+      border: 2px solid var(--amber); margin: 0 auto 1.2rem auto; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
     }
-    .score-num {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1;
-    }
-    .score-total {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
-    }
+    .score-num { font-size: 2.2rem; font-weight: 900; color: #fff; line-height: 1; }
+    .score-denom { font-size: 0.8rem; color: var(--muted); }
   </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <a href="index.html" class="brand-logo">
-      <span>Social Science</span><span class="brand-accent">.</span>
-    </a>
-    <div style="display: flex; gap: 0.8rem; align-items: center;">
-      <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 600;">← Back to Home</a>
-    </div>
-  </nav>
+  <div class="arena-container">
+    <nav class="top-nav">
+      <a href="index.html" class="brand">Social Science<span>.</span></a>
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </nav>
 
-  <main class="arena-container">
-    
     <div id="selectionView">
       <div class="arena-header">
-        <div class="step-tag" style="color: var(--accent-primary, #f59e0b); margin-bottom: 0.5rem;">COMPETENCY TESTING</div>
-        <h1 class="arena-title">Social Science Practice Arena</h1>
-        <p class="arena-subtitle">Official NCERT curriculum test engine with randomized questions & instant analysis.</p>
+        <div class="tag">COMPETENCY TESTING</div>
+        <h1 class="title">Social Science Practice Arena</h1>
+        <p class="subtitle">Curated multiple-choice assessments with randomized questions & answers.</p>
 
         <div class="class-toggle-bar">
-          <button type="button" class="toggle-pill active" id="btnGrade9" onclick="switchGrade(9)">Class 9 (New NCERT)</button>
-          <button type="button" class="toggle-pill" id="btnGrade10" onclick="switchGrade(10)">Class 10 (CBSE Board)</button>
+          <button type="button" class="toggle-pill active" id="btn9" onclick="switchGrade(9)">Class 9</button>
+          <button type="button" class="toggle-pill" id="btn10" onclick="switchGrade(10)">Class 10</button>
         </div>
       </div>
 
-      <div class="category-grid">
+      <div class="grid">
         <div class="mode-card" onclick="startQuiz('eco')">
           <div class="mode-tag">Subject Specific</div>
           <div class="mode-name">📊 Economics</div>
-          <div class="mode-desc" id="descEco">Scarcity, Opportunity Cost, Law of Demand & Personal Finance.</div>
-          <div style="margin-top: 0.8rem; font-size: 0.8rem; font-weight: 700; color: var(--accent-primary, #f59e0b);">10 Questions →</div>
+          <div class="mode-desc">10 randomized competency questions.</div>
+          <div style="margin-top:0.7rem; font-size:0.8rem; font-weight:700; color:var(--amber);">Start Test →</div>
         </div>
 
         <div class="mode-card" onclick="startQuiz('hist')">
           <div class="mode-tag">Subject Specific</div>
           <div class="mode-name">📜 History</div>
-          <div class="mode-desc" id="descHist">Harappan Civilization, Vedic Assemblies, Resisting Queens & Regional Heroes.</div>
-          <div style="margin-top: 0.8rem; font-size: 0.8rem; font-weight: 700; color: var(--accent-primary, #f59e0b);">10 Questions →</div>
+          <div class="mode-desc">10 randomized competency questions.</div>
+          <div style="margin-top:0.7rem; font-size:0.8rem; font-weight:700; color:var(--amber);">Start Test →</div>
         </div>
 
         <div class="mode-card" onclick="startQuiz('pol')">
           <div class="mode-tag">Subject Specific</div>
           <div class="mode-name">🏛️ Political Science</div>
-          <div class="mode-desc" id="descPol">Democratic Foundations, Constitution, Rule of Law & Accountability.</div>
-          <div style="margin-top: 0.8rem; font-size: 0.8rem; font-weight: 700; color: var(--accent-primary, #f59e0b);">10 Questions →</div>
+          <div class="mode-desc">10 randomized competency questions.</div>
+          <div style="margin-top:0.7rem; font-size:0.8rem; font-weight:700; color:var(--amber);">Start Test →</div>
         </div>
 
         <div class="mode-card" onclick="startQuiz('geo')">
           <div class="mode-tag">Subject Specific</div>
           <div class="mode-name">🌍 Geography</div>
-          <div class="mode-desc" id="descGeo">Plate Tectonics, Atmosphere Layers, Coastal Landforms & Monsoons.</div>
-          <div style="margin-top: 0.8rem; font-size: 0.8rem; font-weight: 700; color: var(--accent-primary, #f59e0b);">10 Questions →</div>
+          <div class="mode-desc">10 randomized competency questions.</div>
+          <div style="margin-top:0.7rem; font-size:0.8rem; font-weight:700; color:var(--amber);">Start Test →</div>
         </div>
 
         <div class="mode-card mega-card" onclick="startQuiz('all')">
-          <div class="mode-tag">Comprehensive Examination</div>
+          <div class="mode-tag" style="color:var(--amber);">Comprehensive Test</div>
           <div class="mode-name" id="megaTitle">⚡ Class 9 Mega Arena</div>
-          <div class="mode-desc">A full simulated test combining 5 balanced questions from Economics, History, Civics, and Geography.</div>
-          <div style="margin-top: 0.8rem; font-size: 0.85rem; font-weight: 700; color: var(--accent-primary, #f59e0b);">20 Questions (Balanced Mix) →</div>
+          <div class="mode-desc">20 balanced questions (5 from Economics, 5 History, 5 Civics, 5 Geography).</div>
+          <div style="margin-top:0.7rem; font-size:0.85rem; font-weight:700; color:var(--amber);">Launch Mega Test →</div>
         </div>
       </div>
     </div>
 
     <div id="quizCard">
-      <div class="quiz-meta-row">
-        <span id="quizSubjectTag" style="text-transform: uppercase; color: var(--accent-primary, #f59e0b);">ECONOMICS</span>
+      <div class="meta-row">
+        <span id="quizSubjectTag" style="text-transform:uppercase; color:var(--amber);">ECONOMICS</span>
         <span id="questionCounter">Question 1 of 10</span>
       </div>
-
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="progressFill"></div>
-      </div>
-
-      <div class="question-box" id="questionText">Loading question text...</div>
-      <div class="options-grid" id="optionsContainer"></div>
-      <button type="button" class="action-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+      <div class="prog-wrap"><div class="prog-fill" id="progressFill"></div></div>
+      <div class="q-text" id="questionText">Loading question...</div>
+      <div class="opts" id="optionsContainer"></div>
+      <button type="button" class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
     </div>
 
     <div id="resultCard">
       <div class="score-circle">
         <span class="score-num" id="finalScore">0</span>
-        <span class="score-total" id="finalOutOf">/ 10</span>
+        <span class="score-denom" id="finalOutOf">/ 10</span>
       </div>
-      <h2 style="color: #fff; font-size: 1.6rem; margin-bottom: 0.5rem;" id="verdictTitle">Assessment Complete</h2>
-      <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-bottom: 2rem;" id="verdictSubtitle">Great effort! Review the chapter notes to solidify concepts.</p>
-      
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <button type="button" class="action-btn" style="display: inline-block; width: auto;" onclick="restartArena()">Choose Another Subject</button>
-        <a href="index.html" class="option-btn" style="text-decoration: none; padding: 0.95rem 1.4rem;">Return to Homepage</a>
+      <h2 style="color:#fff; font-size:1.5rem; margin-bottom:0.4rem;" id="verdictTitle">Assessment Complete</h2>
+      <p style="color:var(--muted); font-size:0.9rem; margin-bottom:1.8rem;" id="verdictSubtitle">Great effort!</p>
+      <div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;">
+        <button type="button" class="next-btn" style="display:inline-block; width:auto;" onclick="restartArena()">Choose Another Test</button>
+        <a href="index.html" class="opt-btn" style="text-decoration:none;">Return to Homepage</a>
       </div>
     </div>
-
-  </main>
+  </div>
 
   <script>
     const questionBank = {
@@ -340,7 +204,7 @@
           { q: "Why do sellers frequently offer discounts and lower prices during seasonal festival sales?", opts: ["To deliberately reduce their overall revenue", "To stimulate buyer demand, clear inventory, and boost total revenue through higher sales volume", "Because the government forces them to sell at zero profit", "To discourage shoppers from visiting the market"], ans: 1 },
           { q: "A household that spends less than its monthly income and invests the surplus into regulated savings channels is practicing:", opts: ["Deficit financing", "Prudent financial management", "Conspicuous consumption", "Forced barter"], ans: 1 }
         ],
-                hist: [
+        hist: [
           { q: "What major transformation defines the 'Neolithic Revolution' in human history?", opts: ["The discovery of iron smelting", "The shift from hunting-gathering to agriculture, domestication of animals, and settled village life", "The development of steam-powered machinery", "The emergence of transoceanic empires"], ans: 1 },
           { q: "What archaeological artifact used across the Harappan civilization demonstrated trust and precision in long-distance trade?", opts: ["Iron coinage", "Standardised cubical chert weights", "Paper contracts", "Glass beads as legal currency"], ans: 1 },
           { q: "The ancient civilizations of Mesopotamia, Egypt, and the Indus Valley all developed in river valleys primarily because:", opts: ["Rivers protected them from wild animals", "Rivers provided reliable fresh water, fertile alluvial soil, and trade/transport routes", "Riverbeds were made of precious metals", "Rulers were forbidden from living on mountains"], ans: 1 },
@@ -362,7 +226,7 @@
           { q: "The earliest stone tools made by early humans during the Palaeolithic age were predominantly used for:", opts: ["Building multistorey stone towns", "Hunting, butchering meat, scraping skins, and digging roots", "Minting official coins", "Carving large sailing ships"], ans: 1 },
           { q: "Historical sources such as rock paintings at Bhimbetka demonstrate that early human communities:", opts: ["Depended exclusively on imported industrial goods", "Engaged in group hunting, ritual dances, and deep observation of animal behavior", "Used modern written scripts", "Practiced large-scale canal irrigation"], ans: 1 }
         ],
-        pol: [
+                pol: [
           { q: "What evidence illustrates that early democratic traditions existed in ancient India long before modern constitutionalism?", opts: ["Feudal military fiefdoms", "Elected councils and democratic assemblies in Mahajanapada Ganas and Sanghas (like the Vajji confederacy)", "Hereditary divine-right monarchies in every territory", "Colonially appointed governors"], ans: 1 },
           { q: "The historical Uttaramerur stone inscriptions in Tamil Nadu provide explicit details regarding:", opts: ["Maritime trade tariffs", "Rules, qualifications, and lottery-based ballot procedures for electing village assembly councils", "The construction of naval ships", "Religious taxes imposed on farmers"], ans: 1 },
           { q: "In a representative democracy, who holds the ultimate sovereign political authority?", opts: ["Hereditary nobility", "The military generals", "The citizens, exercised through free and regular voting", "International financial corporations"], ans: 2 },
@@ -384,7 +248,7 @@
           { q: "In the context of public policy, what does 'responsiveness' signify?", opts: ["Answering international court queries only", "Institutions serving all stakeholders within a reasonable timeframe and addressing citizen grievances promptly", "Automatic police detention of dissenters", "Rapid changes to tax rates every single day"], ans: 1 },
           { q: "Which principle requires public institutions and leaders to take moral and legal responsibility for their decisions and conduct?", opts: ["Immunity", "Accountability", "Centralization", "Feudal privilege"], ans: 1 }
         ],
-                geo: [
+        geo: [
           { q: "The scientific model explaining that the Earth's lithosphere is broken into moving tectonic slabs floating atop the asthenosphere is:", opts: ["Continental Glaciation Theory", "Plate Tectonics Theory", "Geosynclinal Theory", "Steady State Hypothesis"], ans: 1 },
           { q: "What type of tectonic plate boundary occurs where two lithospheric plates collide, causing subduction or mountain folding?", opts: ["Divergent boundary", "Transform fault boundary", "Convergent boundary", "Conservative boundary"], ans: 2 },
           { q: "The innermost core of the Earth is composed primarily of which two heavy metallic elements?", opts: ["Silica and magnesium (Sima)", "Silica and aluminium (Sial)", "Nickel and iron (Nife)", "Calcium and potassium"], ans: 2 },
@@ -498,122 +362,93 @@
         ]
       }
     };
-        function shuffle(arr) {
-      const array = [...arr];
-      for (let i = array.length - 1; i > 0; i--) {
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [a[i], a[j]] = [a[j], a[i]];
       }
-      return array;
+      return a;
     }
 
     let selectedGrade = 9;
     let currentQuestions = [];
     let currentIndex = 0;
     let score = 0;
-    let activeSubjectName = "";
 
     function switchGrade(grade) {
       selectedGrade = grade;
-      document.getElementById('btnGrade9').className = grade === 9 ? 'toggle-pill active' : 'toggle-pill';
-      document.getElementById('btnGrade10').className = grade === 10 ? 'toggle-pill active' : 'toggle-pill';
-
-      const dEco = document.getElementById('descEco');
-      const dHist = document.getElementById('descHist');
-      const dPol = document.getElementById('descPol');
-      const dGeo = document.getElementById('descGeo');
-      const mega = document.getElementById('megaTitle');
-
-      if (grade === 9) {
-        dEco.innerText = "Scarcity, Opportunity Cost, Law of Demand & Personal Finance.";
-        dHist.innerText = "Harappan Civilization, Vedic Assemblies, Resisting Queens & Regional Heroes.";
-        dPol.innerText = "Democratic Foundations, Constitution, Rule of Law & Accountability.";
-        dGeo.innerText = "Plate Tectonics, Atmosphere Layers, Coastal Landforms & Monsoons.";
-        mega.innerText = "⚡ Class 9 Mega Arena";
-      } else {
-        dEco.innerText = "Development Indicators, Sectors of Economy, Money, Credit & Globalisation.";
-        dHist.innerText = "Nationalism in Europe & India, Global World & Print Culture.";
-        dPol.innerText = "Power-sharing, Federalism, Gender, Religion & Political Parties.";
-        dGeo.innerText = "Resources, Agriculture, Minerals, Energy & Manufacturing Industries.";
-        mega.innerText = "⚡ Class 10 Board Mega Arena";
-      }
+      document.getElementById('btn9').className = grade === 9 ? 'toggle-pill active' : 'toggle-pill';
+      document.getElementById('btn10').className = grade === 10 ? 'toggle-pill active' : 'toggle-pill';
+      document.getElementById('megaTitle').innerText = `⚡ Class ${grade} Mega Arena`;
     }
 
     function startQuiz(mode) {
       score = 0;
       currentIndex = 0;
-
       const bank = questionBank[selectedGrade];
 
       if (mode === 'all') {
-        activeSubjectName = `Class ${selectedGrade} Social Science • Mega Arena`;
+        document.getElementById('quizSubjectTag').innerText = `Class ${selectedGrade} • Mega Arena`;
         const e = shuffle(bank.eco).slice(0, 5);
         const h = shuffle(bank.hist).slice(0, 5);
         const p = shuffle(bank.pol).slice(0, 5);
         const g = shuffle(bank.geo).slice(0, 5);
         currentQuestions = shuffle([...e, ...h, ...p, ...g]);
       } else {
-        const titles = {
-          eco: `Class ${selectedGrade} Economics`,
-          hist: `Class ${selectedGrade} History`,
-          pol: `Class ${selectedGrade} Political Science`,
-          geo: `Class ${selectedGrade} Geography`
-        };
-        activeSubjectName = titles[mode];
+        const titles = { eco: "Economics", hist: "History", pol: "Political Science", geo: "Geography" };
+        document.getElementById('quizSubjectTag').innerText = `Class ${selectedGrade} • ${titles[mode]}`;
         currentQuestions = shuffle(bank[mode]).slice(0, 10);
       }
 
       document.getElementById('selectionView').style.display = 'none';
       document.getElementById('resultCard').style.display = 'none';
       document.getElementById('quizCard').style.display = 'block';
-      document.getElementById('quizSubjectTag').innerText = activeSubjectName;
-
       renderQuestion();
     }
 
     function renderQuestion() {
-      const qData = currentQuestions[currentIndex];
+      const q = currentQuestions[currentIndex];
       const total = currentQuestions.length;
-
       document.getElementById('questionCounter').innerText = `Question ${currentIndex + 1} of ${total}`;
-      document.getElementById('progressFill').style.width = `${((currentIndex) / total) * 100}%`;
-      document.getElementById('questionText').innerText = qData.q;
+      document.getElementById('progressFill').style.width = `${(currentIndex / total) * 100}%`;
+      document.getElementById('questionText').innerText = q.q;
 
-      const optsBox = document.getElementById('optionsContainer');
-      optsBox.innerHTML = '';
+      // Randomizes options so the answer isn't predictably option (b)
+      const shuffledIndices = shuffle([0, 1, 2, 3]);
+      const newCorrectIndex = shuffledIndices.indexOf(q.ans);
 
+      const box = document.getElementById('optionsContainer');
+      box.innerHTML = '';
       const letters = ['A', 'B', 'C', 'D'];
-      qData.opts.forEach((optText, idx) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'option-btn';
-        btn.innerHTML = `<strong style="color:var(--accent-primary, #f59e0b); min-width: 22px;">(${letters[idx]})</strong> <span>${optText}</span>`;
-        btn.onclick = () => selectAnswer(idx, qData.ans);
-        optsBox.appendChild(btn);
-      });
 
+      shuffledIndices.forEach((origIdx, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'opt-btn';
+        b.innerHTML = `<strong style="color:var(--amber); min-width:20px;">(${letters[i]})</strong> <span>${q.opts[origIdx]}</span>`;
+        b.onclick = () => selectAnswer(i, newCorrectIndex);
+        box.appendChild(b);
+      });
       document.getElementById('nextBtn').style.display = 'none';
     }
 
-    function selectAnswer(selectedIdx, correctIdx) {
-      const buttons = document.querySelectorAll('.option-btn');
-      buttons.forEach(b => b.disabled = true);
+    function selectAnswer(userPick, correctPick) {
+      const btns = document.querySelectorAll('.opt-btn');
+      btns.forEach(b => b.disabled = true);
 
-      if (selectedIdx === correctIdx) {
-        buttons[selectedIdx].classList.add('correct');
+      if (userPick === correctPick) {
+        btns[userPick].classList.add('correct');
         score++;
       } else {
-        buttons[selectedIdx].classList.add('wrong');
-        buttons[correctIdx].classList.add('correct');
+        btns[userPick].classList.add('wrong');
+        btns[correctPick].classList.add('correct');
       }
 
-      const nextBtn = document.getElementById('nextBtn');
-      if (currentIndex < currentQuestions.length - 1) {
-        nextBtn.innerText = "Next Question →";
-      } else {
-        nextBtn.innerText = "Complete Quiz & View Score →";
-      }
-      nextBtn.style.display = 'block';
+      const next = document.getElementById('nextBtn');
+      next.innerText = currentIndex < currentQuestions.length - 1 ? "Next Question →" : "View Score →";
+      next.style.display = 'block';
     }
 
     function nextQuestion() {
@@ -621,32 +456,14 @@
       if (currentIndex < currentQuestions.length) {
         renderQuestion();
       } else {
-        showResults();
-      }
-    }
-
-    function showResults() {
-      document.getElementById('quizCard').style.display = 'none';
-      const resultCard = document.getElementById('resultCard');
-      resultCard.style.display = 'block';
-
-      const total = currentQuestions.length;
-      document.getElementById('finalScore').innerText = score;
-      document.getElementById('finalOutOf').innerText = `/ ${total}`;
-
-      const pct = Math.round((score / total) * 100);
-      const title = document.getElementById('verdictTitle');
-      const subtitle = document.getElementById('verdictSubtitle');
-
-      if (pct >= 85) {
-        title.innerText = "Exceptional Mastery! 🌟";
-        subtitle.innerText = `You scored ${pct}%. Your conceptual grasp over NCERT Social Science is outstanding!`;
-      } else if (pct >= 60) {
-        title.innerText = "Solid Effort! 📚";
-        subtitle.innerText = `You scored ${pct}%. You have good foundational clarity—review missed questions to push for 90%+!`;
-      } else {
-        title.innerText = "Keep Practicing! 💪";
-        subtitle.innerText = `You scored ${pct}%. Revisit the chapter revision notes on the home portal and retake the test!`;
+        document.getElementById('quizCard').style.display = 'none';
+        document.getElementById('resultCard').style.display = 'block';
+        const total = currentQuestions.length;
+        document.getElementById('finalScore').innerText = score;
+        document.getElementById('finalOutOf').innerText = `/ ${total}`;
+        const pct = Math.round((score / total) * 100);
+        document.getElementById('verdictTitle').innerText = pct >= 80 ? "Excellent Work! 🌟" : pct >= 60 ? "Good Job! 📚" : "Keep Practicing! 💪";
+        document.getElementById('verdictSubtitle').innerText = `You scored ${pct}%. Review your notes and try again to improve.`;
       }
     }
 
@@ -656,6 +473,5 @@
       document.getElementById('selectionView').style.display = 'block';
     }
   </script>
-
 </body>
 </html>
