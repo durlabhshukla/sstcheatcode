@@ -127,47 +127,6 @@
       </button>
     </header>
 
-    <!-- Main Navigation Modal -->
-    <div class="modal" id="menuModal" onclick="closeIfBackdrop(event, 'menuModal')">
-      <div class="modal-box">
-        <div class="modal-head">
-          <strong style="color: #fff; font-size: 1.1rem;">Navigation</strong>
-          <button type="button" class="modal-close" onclick="closeMenu()">✕</button>
-        </div>
-        <a href="index.html" class="menu-link"><span>🏛️ Home</span><span style="color:var(--amber);">→</span></a>
-        <a href="#classes" class="menu-link" onclick="closeMenu()"><span>📚 Classes</span><span style="color:var(--amber);">→</span></a>
-        <a href="quiz.html" class="menu-link"><span>⚡ Quiz Arena</span><span style="color:var(--amber);">→</span></a>
-        <div class="menu-link" onclick="openPapers()"><span>📄 Sample Question Papers</span><span style="color:var(--amber);">→</span></div>
-        <a href="#doubt-desk" class="menu-link" onclick="closeMenu()"><span>💬 Ask Doubts</span><span style="color:var(--amber);">→</span></a>
-      </div>
-    </div>
-
-    <!-- Sample Papers Modal (Opened from Menu) -->
-    <div class="modal" id="papersModal" onclick="closeIfBackdrop(event, 'papersModal')">
-      <div class="modal-box">
-        <div class="modal-head">
-          <strong style="color: #fff; font-size: 1.1rem;">Sample Papers (SQP)</strong>
-          <button type="button" class="modal-close" onclick="closePapers()">✕</button>
-        </div>
-        <div style="display:flex; flex-direction:column; gap:0.8rem;">
-          <a href="class10.html" class="menu-link" style="margin:0;">
-            <div>
-              <div style="font-weight:700;">Class 10 Model Paper</div>
-              <div style="font-size:0.75rem; color:var(--muted);">CBSE 80-Mark Blueprint</div>
-            </div>
-            <span style="color:var(--blue);">Open ↗</span>
-          </a>
-          <a href="class9.html" class="menu-link" style="margin:0;">
-            <div>
-              <div style="font-weight:700;">Class 9 Model Paper</div>
-              <div style="font-size:0.75rem; color:var(--muted);">New NCERT Annual Exam</div>
-            </div>
-            <span style="color:var(--blue);">Open ↗</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
     <!-- Hero -->
     <main>
       <div class="hero-tag">ACADEMIC HUB</div>
@@ -214,8 +173,7 @@
           </div>
         </div>
       </section>
-
-      <!-- Doubt / Query Help Desk -->
+            <!-- Doubt / Query Help Desk -->
       <section class="doubt-box" id="doubt-desk">
         <div class="hero-tag" style="color:var(--amber);">FACULTY HELP DESK</div>
         <h3 style="font-size:1.4rem; color:#fff; margin-bottom:0.4rem;">Ask a Doubt or Query</h3>
@@ -278,12 +236,43 @@
       </section>
     </main>
 
+    <!-- Main Navigation Modal -->
+    <div class="modal" id="menuModal" onclick="closeIfBackdrop(event, 'menuModal')">
+      <div class="modal-box">
+        <div class="modal-head">
+          <strong style="color: #fff; font-size: 1.1rem;">Navigation</strong>
+          <button type="button" class="modal-close" onclick="closeMenu()">✕</button>
+        </div>
+        <a href="index.html" class="menu-link"><span>🏛️️ Home</span><span style="color:var(--amber);">→</span></a>
+        <a href="#classes" class="menu-link" onclick="closeMenu()"><span>📚 Classes</span><span style="color:var(--amber);">→</span></a>
+        <a href="quiz.html" class="menu-link"><span>⚡ Quiz Arena</span><span style="color:var(--amber);">→</span></a>
+        <div class="menu-link" onclick="openPapers()"><span>📄 Sample Question Papers</span><span style="color:var(--amber);">→</span></div>
+        <a href="#doubt-desk" class="menu-link" onclick="closeMenu()"><span>💬 Ask Doubts</span><span style="color:var(--amber);">→</span></a>
+      </div>
+    </div>
+
+    <!-- Sample Papers Modal (Popup window on tap) -->
+    <div class="modal" id="papersModal" onclick="closeIfBackdrop(event, 'papersModal')">
+      <div class="modal-box">
+        <div class="modal-head">
+          <strong style="color: #fff; font-size: 1.1rem;">Sample Question Papers</strong>
+          <button type="button" class="modal-close" onclick="closePapers()">✕</button>
+        </div>
+        <div style="text-align: center; padding: 1.8rem 1rem;">
+          <div style="font-size: 2.2rem; margin-bottom: 0.8rem;">📄</div>
+          <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">Sample Papers</h3>
+          <p style="color: var(--muted); font-size: 0.92rem; line-height: 1.5;">
+            The sample paper will be uploaded soon.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <footer>
       <p>© 2026 Social Science Academic Hub • NCERT Aligned Learning</p>
     </footer>
   </div>
 
-  <!-- Direct JavaScript -->
   <script>
     function openMenu() { document.getElementById('menuModal').style.display = 'flex'; }
     function closeMenu() { document.getElementById('menuModal').style.display = 'none'; }
@@ -298,7 +287,6 @@
       if (e.target.id === id) document.getElementById(id).style.display = 'none';
     }
 
-    // Direct Form Submission
     const form = document.getElementById('doubtForm');
     const okMsg = document.getElementById('okMsg');
     if (form) {
