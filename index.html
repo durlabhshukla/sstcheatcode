@@ -3,637 +3,323 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Science • Class 9 & 10 Academic Resource Portal</title>
+  <title>Social Science Portal | Classes 9 & 10</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* =========================================================
-       1. COLOR SYSTEM & AMBIENT GLOW
-       ========================================================= */
     :root {
-      --bg-base: #080b12;
-      --card-bg: rgba(16, 22, 36, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --card-hover: rgba(26, 36, 58, 0.85);
-      --accent-blue: #3b82f6;
-      --accent-amber: #f59e0b;
-      --accent-cyan: #06b6d4;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
+      --bg: #090d16;
+      --card-bg: rgba(16, 24, 40, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      background-color: var(--bg-base);
-      background-image: 
-        radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
-        radial-gradient(at 90% 40%, rgba(245, 158, 11, 0.09) 0px, transparent 50%),
-        radial-gradient(at 30% 90%, rgba(6, 182, 212, 0.08) 0px, transparent 60%);
-      background-attachment: fixed;
-      color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.5;
+      background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 1.2rem;
       min-height: 100vh;
-      opacity: 0;
-      animation: pageEntrance 0.5s ease-out forwards;
     }
+    .wrapper { max-width: 680px; margin: 0 auto; }
+    
+    /* Top Bar */
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.8rem; }
+    .brand { font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .brand span { color: var(--amber); }
+    .nav-toggle {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.6rem 0.8rem; cursor: pointer;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .nav-toggle div { width: 18px; height: 2px; background: #fff; border-radius: 2px; }
 
-    @keyframes pageEntrance {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Modals (Menu & Sample Papers) */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(16px); z-index: 9999;
+      display: none; align-items: center; justify-content: center; padding: 1.5rem;
     }
-
-    /* Container */
-    .portal-container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 1.2rem 1.2rem 4rem 1.2rem;
+    .modal-box {
+      width: 100%; max-width: 380px; background: #0f172a;
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 24px;
+      padding: 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     }
-
-    /* =========================================================
-       2. TOP NAVIGATION BAR & GLASS MODAL
-       ========================================================= */
-    .nav-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      margin-bottom: 2rem;
-    }
-
-    .brand-mark {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
-    }
-    .brand-dot {
-      color: var(--accent-amber);
-    }
-
-    .menu-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 0.6rem 0.9rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .menu-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: scale(1.03);
-    }
-    .menu-bar {
-      width: 18px;
-      height: 2px;
-      background: #fff;
-      border-radius: 2px;
-    }
-
-    /* Glass Menu Modal */
-    .glass-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(5, 8, 15, 0.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-    }
-    .glass-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .glass-sheet {
-      width: 100%;
-      max-width: 380px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 26px;
-      padding: 1.6rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-      transform: scale(0.94);
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .glass-overlay.active .glass-sheet {
-      transform: scale(1);
-    }
-
-    .sheet-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.4rem;
-    }
-    .sheet-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #fff;
-    }
-    .sheet-close {
-      background: none;
-      border: none;
-      color: var(--text-dim);
-      font-size: 1.3rem;
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+    .modal-close { background: none; border: none; color: var(--muted); font-size: 1.4rem; cursor: pointer; }
+    .menu-link {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.95rem 1.1rem; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 14px;
+      color: #fff; text-decoration: none; font-weight: 600; margin-bottom: 0.6rem;
       cursor: pointer;
     }
+    .menu-link:hover { background: rgba(59,130,246,0.15); border-color: var(--blue); }
 
-    .menu-link-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.95rem 1.15rem;
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.96rem;
-      margin-bottom: 0.6rem;
-      transition: background 0.2s, border-color 0.2s, transform 0.15s;
-    }
-    .menu-link-card:hover {
-      background: rgba(59, 130, 246, 0.12);
-      border-color: rgba(59, 130, 246, 0.3);
-      transform: translateX(3px);
-    }
-    .menu-link-card .arrow {
-      color: var(--accent-amber);
-    }
-
-    /* =========================================================
-       3. HERO HEADER
-       ========================================================= */
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      background: rgba(59, 130, 246, 0.12);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      color: #60a5fa;
-      margin-bottom: 1rem;
-    }
-    .main-title {
-      font-size: 2.7rem;
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -1.2px;
-      color: #fff;
-      margin-bottom: 0.8rem;
-    }
-    .main-desc {
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 2.4rem;
-      max-width: 90%;
-    }
-
-    /* =========================================================
-       4. CLASS CARDS (REFERENCE STYLE)
-       ========================================================= */
+    /* Hero & Reference Class Cards */
+    .hero-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--blue); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .hero-h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.6rem; letter-spacing: -1px; }
+    .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 2rem; }
     .class-card {
-      position: relative;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 2.3rem 2rem;
-      text-decoration: none;
-      display: block;
-      overflow: hidden;
-      margin-bottom: 1.4rem;
-      backdrop-filter: blur(14px);
-      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+      position: relative; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 28px; padding: 2.2rem 1.8rem; text-decoration: none;
+      display: block; overflow: hidden; margin-bottom: 1.2rem;
+      transition: transform 0.2s, border-color 0.2s;
     }
-    .class-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(96, 165, 250, 0.35);
-      background: var(--card-hover);
-    }
-    .card-watermark {
-      position: absolute;
-      top: 1rem;
-      right: 1.8rem;
-      font-size: 5.6rem;
-      font-weight: 900;
-      color: rgba(255, 255, 255, 0.05);
-      line-height: 1;
-      pointer-events: none;
-      font-family: inherit;
-    }
-    .card-tag {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      color: var(--accent-blue);
-      margin-bottom: 0.5rem;
-    }
-    .card-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.5px;
-    }
-    .card-desc {
-      font-size: 0.94rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      max-width: 82%;
-    }
-    .card-arrow {
-      position: absolute;
-      bottom: 2rem;
-      right: 1.8rem;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.25rem;
-      transition: background 0.2s, transform 0.2s, border-color 0.2s;
-    }
-    .class-card:hover .card-arrow {
-      background: var(--accent-blue);
-      border-color: var(--accent-blue);
-      transform: translate(2px, -2px);
-      color: #0b0f19;
+    .class-card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.4); }
+    .watermark { position: absolute; top: 1rem; right: 1.5rem; font-size: 5.5rem; font-weight: 900; color: rgba(255,255,255,0.04); pointer-events: none; }
+    .card-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--blue); text-transform: uppercase; margin-bottom: 0.4rem; }
+    .card-h2 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .card-p { font-size: 0.92rem; color: var(--muted); max-width: 80%; line-height: 1.5; }
+    .arrow-btn {
+      position: absolute; bottom: 2rem; right: 1.8rem; width: 44px; height: 44px;
+      border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem;
     }
 
-    /* =========================================================
-       5. WHAT LIES IN-BETWEEN: PEDAGOGICAL AIM SECTION
-       ========================================================= */
-    .section-box {
-      margin-top: 3.5rem;
-      margin-bottom: 3.5rem;
+    /* Purpose / Aim Section */
+    .aim-card {
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      border-radius: 24px; padding: 1.8rem; margin: 3rem 0;
     }
-    .section-kicker {
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      color: var(--accent-amber);
-      margin-bottom: 0.4rem;
-    }
-    .section-headline {
-      font-size: 1.65rem;
-      font-weight: 750;
-      color: #fff;
-      letter-spacing: -0.5px;
-      margin-bottom: 0.6rem;
-    }
-    .section-subtext {
-      color: var(--text-muted);
-      font-size: 0.94rem;
-      line-height: 1.55;
-      margin-bottom: 1.8rem;
-    }
+    .aim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .aim-item { background: rgba(255,255,255,0.03); border-radius: 16px; padding: 1.1rem; }
+    .aim-item h4 { color: #fff; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .aim-item p { color: var(--muted); font-size: 0.82rem; line-height: 1.4; }
 
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
+    /* Doubt Box */
+    .doubt-box {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 28px; padding: 2rem; margin-bottom: 3rem;
     }
-    .pillar-card {
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 1.5rem 1.2rem;
-      transition: border-color 0.2s;
+    .form-group { margin-bottom: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+    .form-control {
+      width: 100%; padding: 0.85rem 1rem; border-radius: 12px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: #fff; font-family: inherit; font-size: 0.92rem; outline: none;
     }
-    .pillar-card:hover {
-      border-color: rgba(255, 255, 255, 0.15);
+    .form-control:focus { border-color: var(--amber); }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 0.8rem; }
+    @media(max-width: 600px) { .row-3 { grid-template-columns: 1fr; } }
+    .sub-btn {
+      padding: 0.9rem 1.4rem; background: var(--amber); color: #0b0f19;
+      font-weight: 800; border-radius: 12px; border: none; cursor: pointer; font-size: 0.95rem;
     }
-    .pillar-icon {
-      font-size: 1.6rem;
-      margin-bottom: 0.8rem;
+    .alert-ok {
+      display: none; background: rgba(45,212,191,0.15); border: 1px solid #2dd4bf;
+      color: #2dd4bf; padding: 0.9rem; border-radius: 12px; font-weight: 600; text-align: center; margin-top: 1rem;
     }
-    .pillar-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.4rem;
-    }
-    .pillar-p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-
-    /* =========================================================
-       6. SAMPLE PAPERS SECTION (NEW)
-       ========================================================= */
-    .sqp-card {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 22, 36, 0.8));
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      border-radius: 24px;
-      padding: 1.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .sqp-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.9rem 1rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-    }
-    .sqp-label {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    .sqp-btn {
-      display: inline-block;
-      padding: 0.45rem 0.95rem;
-      border-radius: 10px;
-      background: rgba(59, 130, 246, 0.18);
-      border: 1px solid rgba(59, 130, 246, 0.4);
-      color: #93c5fd;
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 700;
-      transition: background 0.2s;
-    }
-    .sqp-btn:hover {
-      background: var(--accent-blue);
-      color: #0b0f19;
-    }
-
-    /* =========================================================
-       7. FACULTY DESK / DOUBT BOX FORM
-       ========================================================= */
-    .doubt-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 2.2rem;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-      margin-top: 3.5rem;
-    }
-    @media (max-width: 600px) {
-      .doubt-card { padding: 1.6rem 1.2rem; }
-      .main-title { font-size: 2.2rem; }
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-    }
-    .form-group label {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-    }
-    .form-row-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1.3fr;
-      gap: 0.9rem;
-      margin-bottom: 1.2rem;
-    }
-    @media (max-width: 640px) {
-      .form-row-3 { grid-template-columns: 1fr; }
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.9rem 1.1rem;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .form-input:focus {
-      border-color: var(--accent-amber);
-      background: rgba(255, 255, 255, 0.06);
-    }
-    textarea.form-input {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .submit-button {
-      padding: 0.95rem 1.6rem;
-      background: var(--accent-amber);
-      color: #0b0f19;
-      font-weight: 800;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.95rem;
-      transition: transform 0.15s, opacity 0.15s;
-    }
-    .submit-button:active {
-      transform: scale(0.98);
-    }
-    .success-alert {
-      display: none;
-      background: rgba(45, 212, 191, 0.12);
-      border: 1px solid #2dd4bf;
-      color: #2dd4bf;
-      padding: 1rem 1.2rem;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-top: 1rem;
-      text-align: center;
-    }
-
-    /* =========================================================
-       8. ACADEMIC FOOTER
-       ========================================================= */
-    .portal-footer {
-      margin-top: 5rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--text-dim);
-      font-size: 0.86rem;
-      line-height: 1.6;
-    }
-    .footer-quote {
-      font-style: italic;
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-    }
+    footer { text-align: center; color: var(--muted); font-size: 0.82rem; padding: 2rem 0; border-top: 1px solid var(--border); }
   </style>
 </head>
 <body>
 
-  <!-- Modal Navigation Menu -->
-  <div class="glass-overlay" id="navModal" onclick="closeOnOverlay(event)">
-    <div class="glass-sheet">
-      <div class="sheet-head">
-        <span class="sheet-title">Navigation</span>
-        <button type="button" class="sheet-close" onclick="toggleMenu(false)">✕</button>
-      </div>
-      <a href="index.html" class="menu-link-card"><span>🏛️ Home</span><span class="arrow">→</span></a>
-      <a href="#classes" class="menu-link-card" onclick="toggleMenu(false)"><span>📚 Classes (9 & 10)</span><span class="arrow">→</span></a>
-      <a href="quiz.html" class="menu-link-card"><span>⚡ Quiz Arena</span><span class="arrow">→</span></a>
-      <a href="#sample-papers" class="menu-link-card" onclick="toggleMenu(false)"><span>📄 Sample Papers (SQP)</span><span class="arrow">→</span></a>
-      <a href="#faculty-desk" class="menu-link-card" onclick="toggleMenu(false)"><span>💬 Ask Doubts</span><span class="arrow">→</span></a>
-    </div>
-  </div>
-
-  <div class="portal-container">
-    
-    <!-- Top Bar -->
-    <header class="nav-header">
-      <a href="index.html" class="brand-mark">
-        <span>Social Science</span><span class="brand-dot">.</span>
-      </a>
-      <button type="button" class="menu-btn" aria-label="Open Menu" onclick="toggleMenu(true)">
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
+  <div class="wrapper">
+    <!-- Navbar -->
+    <header class="top-bar">
+      <a href="index.html" class="brand">Social Science<span>.</span></a>
+      <button type="button" class="nav-toggle" aria-label="Menu" onclick="openMenu()">
+        <div></div><div></div>
       </button>
     </header>
 
-    <!-- Hero Title -->
+    <!-- Main Navigation Modal -->
+    <div class="modal" id="menuModal" onclick="closeIfBackdrop(event, 'menuModal')">
+      <div class="modal-box">
+        <div class="modal-head">
+          <strong style="color: #fff; font-size: 1.1rem;">Navigation</strong>
+          <button type="button" class="modal-close" onclick="closeMenu()">✕</button>
+        </div>
+        <a href="index.html" class="menu-link"><span>🏛️ Home</span><span style="color:var(--amber);">→</span></a>
+        <a href="#classes" class="menu-link" onclick="closeMenu()"><span>📚 Classes</span><span style="color:var(--amber);">→</span></a>
+        <a href="quiz.html" class="menu-link"><span>⚡ Quiz Arena</span><span style="color:var(--amber);">→</span></a>
+        <div class="menu-link" onclick="openPapers()"><span>📄 Sample Question Papers</span><span style="color:var(--amber);">→</span></div>
+        <a href="#doubt-desk" class="menu-link" onclick="closeMenu()"><span>💬 Ask Doubts</span><span style="color:var(--amber);">→</span></a>
+      </div>
+    </div>
+
+    <!-- Sample Papers Modal (Opened from Menu) -->
+    <div class="modal" id="papersModal" onclick="closeIfBackdrop(event, 'papersModal')">
+      <div class="modal-box">
+        <div class="modal-head">
+          <strong style="color: #fff; font-size: 1.1rem;">Sample Papers (SQP)</strong>
+          <button type="button" class="modal-close" onclick="closePapers()">✕</button>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.8rem;">
+          <a href="class10.html" class="menu-link" style="margin:0;">
+            <div>
+              <div style="font-weight:700;">Class 10 Model Paper</div>
+              <div style="font-size:0.75rem; color:var(--muted);">CBSE 80-Mark Blueprint</div>
+            </div>
+            <span style="color:var(--blue);">Open ↗</span>
+          </a>
+          <a href="class9.html" class="menu-link" style="margin:0;">
+            <div>
+              <div style="font-weight:700;">Class 9 Model Paper</div>
+              <div style="font-size:0.75rem; color:var(--muted);">New NCERT Annual Exam</div>
+            </div>
+            <span style="color:var(--blue);">Open ↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
     <main>
-      <div class="hero-badge">ACADEMIC RESOURCE ARCHIVE</div>
-      <h1 class="main-title">Choose<br>your class.</h1>
-      <p class="main-desc">Structured chapter frameworks, primary sources, downloadable revision guides, and practice tests for NCERT curriculum.</p>
+      <div class="hero-tag">ACADEMIC HUB</div>
+      <h1 class="hero-h1">Choose<br>your class.</h1>
+      <p class="hero-p">Select your class to access chapter frameworks, primary sources, downloadable PDFs, and practice tests.</p>
 
-      <!-- Grade 9 & 10 Selection Cards -->
+      <!-- Reference Style Class Cards -->
       <section id="classes">
-        <!-- Class 9 -->
         <a href="class9.html" class="class-card">
-          <div class="card-watermark">09</div>
+          <div class="watermark">09</div>
           <div class="card-tag">NEW NCERT</div>
-          <h2 class="card-title">Class 9</h2>
-          <p class="card-desc">Understanding Society: India & Beyond. Early civilizations, Vedic assemblies, and geomorphic systems.</p>
-          <div class="card-arrow">↗</div>
+          <h2 class="card-h2">Class 9</h2>
+          <p class="card-p">Understanding Society: India & Beyond. Early Civilizations, Democratic Foundations, and Landforms.</p>
+          <div class="arrow-btn">↗</div>
         </a>
 
-        <!-- Class 10 -->
         <a href="class10.html" class="class-card">
-          <div class="card-watermark">10</div>
+          <div class="watermark">10</div>
           <div class="card-tag">CBSE BOARD PREP</div>
-          <h2 class="card-title">Class 10</h2>
-          <p class="card-desc">India & the Contemporary World. Board syllabus frameworks, federalism, economic development, and maps.</p>
-          <div class="card-arrow">↗</div>
+          <h2 class="card-h2">Class 10</h2>
+          <p class="card-p">India & the Contemporary World. Comprehensive notes, Federalism, Economic Development, and Maps.</p>
+          <div class="arrow-btn">↗</div>
         </a>
       </section>
 
-      <!-- WHAT LIES IN-BETWEEN: Pedagogical Mission & Method -->
-      <section class="section-box">
-        <div class="section-kicker">OUR PEDAGOGICAL AIM</div>
-        <h2 class="section-headline">Why This Portal Exists</h2>
-        <p class="section-subtext">Social Science should build analytical thinkers, not rote memorizers. We bridge the gap between classroom teaching and deep board exam readiness.</p>
+      <!-- Aim of the Platform -->
+      <section class="aim-card">
+        <div class="hero-tag" style="color:var(--amber);">OUR PURPOSE</div>
+        <h3 style="font-size:1.3rem; color:#fff; margin-bottom:0.4rem;">Why This Portal Exists</h3>
+        <p style="color:var(--muted); font-size:0.88rem;">To replace passive rote memorization with analytical, concept-driven understanding.</p>
         
-        <div class="pillars-grid">
-          <div class="pillar-card">
-            <div class="pillar-icon">💡</div>
-            <h3 class="pillar-title">Concept Over Ratta</h3>
-            <p class="pillar-p">Breakdown of complex history dates and economic terms into cause-and-effect flowcharts.</p>
+        <div class="aim-grid">
+          <div class="aim-item">
+            <h4>💡 Logic Over Ratta</h4>
+            <p>Clear timelines and cause-and-effect flowcharts for every historical event.</p>
           </div>
-          <div class="pillar-card">
-            <div class="pillar-icon">🎯</div>
-            <h3 class="pillar-title">Board Competency</h3>
-            <p class="pillar-p">Questions aligned strictly to assertion-reasoning, source analysis, and blueprint weightage.</p>
+          <div class="aim-item">
+            <h4>🎯 Board Aligned</h4>
+            <p>Strict adherence to NCERT competencies and CBSE marking schemes.</p>
           </div>
-          <div class="pillar-card">
-            <div class="pillar-icon">🛡️</div>
-            <h3 class="pillar-title">Zero Hesitation</h3>
-            <p class="pillar-p">Direct faculty query desk where no question is too basic to ask.</p>
+          <div class="aim-item">
+            <h4>🤝 Direct Guidance</h4>
+            <p>An open help desk where students can ask questions without hesitation.</p>
           </div>
         </div>
       </section>
 
-      <!-- NEW SECTION: Sample Papers & Blueprints -->
-      <section class="section-box" id="sample-papers">
-        <div class="section-kicker">EXAMINATION PREPARATION</div>
-        <h2 class="section-headline">Sample Question Papers</h2>
-        <p class="section-subtext">Official model papers, marking scheme distribution, and chapter weightage sheets.</p>
-
-        <div class="sqp-card">
-          <div class="sqp-row">
-            <div>
-              <div class="sqp-label">Class 10 Board Model Paper (80 Marks)</div>
-              <div style="font-size: 0.78rem; color: var(--text-dim);">CBSE Pattern • History, Geo, Civics, Eco</div>
-            </div>
-            <a href="class10.html#papers" class="sqp-btn">View Paper →</a>
-          </div>
-
-          <div class="sqp-row">
-            <div>
-              <div class="sqp-label">Class 9 Annual Model Paper (80 Marks)</div>
-              <div style="font-size: 0.78rem; color: var(--text-dim);">New NCERT Pattern • Full Syllabus</div>
-            </div>
-            <a href="class9.html#papers" class="sqp-btn">View Paper →</a>
-          </div>
-
-          <div class="sqp-row">
-            <div>
-              <div class="sqp-label">Competency MCQ Practice Engine</div>
-              <div style="font-size: 0.78rem; color: var(--text-dim);">160+ Curated Chapter MCQs with Explanations</div>
-            </div>
-            <a href="quiz.html" class="sqp-btn" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;">Launch Arena ⚡</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Faculty Doubt Desk -->
-      <section class="doubt-card" id="faculty-desk">
-        <div class="section-kicker">DIRECT COMMUNICATION</div>
-        <h2 style="font-size: 1.65rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem;">Ask a Doubt or Query</h2>
-        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.6rem; line-height: 1.5;">
-          Have a doubt in a history timeline, map work, or economic model? Send your question directly to your teacher.
-        </p>
+      <!-- Doubt / Query Help Desk -->
+      <section class="doubt-box" id="doubt-desk">
+        <div class="hero-tag" style="color:var(--amber);">FACULTY HELP DESK</div>
+        <h3 style="font-size:1.4rem; color:#fff; margin-bottom:0.4rem;">Ask a Doubt or Query</h3>
+        <p style="color:var(--muted); font-size:0.9rem; margin-bottom:1.4rem;">Stuck on a concept, timeline, or map question? Send it directly to your teacher.</p>
 
         <form name="sst-doubts" method="POST" data-netlify="true" netlify id="doubtForm">
           <input type="hidden" name="form-name" value="sst-doubts">
 
           <div class="form-group">
-            <label for="studentName">Student Name</label>
-            <input type="text" id="studentName" name="name" class="form-input" placeholder="Enter your full name" required>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
           </div>
 
-          <div class="form-row-3">
-         
+          <div class="row-3">
+            <div class="form-group">
+              <label for="class">Class</label>
+              <select id="class" name="class" class="form-control" required>
+                <option value="Class 9">Class 9</option>
+                <option value="Class 10">Class 10</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="section">Section</label>
+              <select id="section" name="section" class="form-control" required>
+                <option value="A">Section A</option>
+                <option value="B">Section B</option>
+                <option value="C">Section C</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject" class="form-control" required>
+                <option value="History">History</option>
+                <option value="Geography">Geography</option>
+                <option value="Civics">Civics</option>
+                <option value="Economics">Economics</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="topic">Topic / Chapter</label>
+            <input type="text" id="topic" name="topic" class="form-control" placeholder="e.g. Sectors of Economy or French Revolution" required>
+          </div>
+
+          <div class="form-group">
+            <label for="question">Your Question</label>
+            <textarea id="question" name="question" rows="3" class="form-control" placeholder="Type your doubt clearly here..." required></textarea>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <button type="submit" class="sub-btn">Submit Question →</button>
+            <span style="font-size:0.8rem; color:var(--muted);">🔒 Reviewed directly by teacher</span>
+          </div>
+
+          <div class="alert-ok" id="okMsg">
+            ✓ Your question has been submitted successfully! It will be reviewed by your teacher.
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Social Science Academic Hub • NCERT Aligned Learning</p>
+    </footer>
+  </div>
+
+  <!-- Direct JavaScript -->
+  <script>
+    function openMenu() { document.getElementById('menuModal').style.display = 'flex'; }
+    function closeMenu() { document.getElementById('menuModal').style.display = 'none'; }
+    
+    function openPapers() {
+      closeMenu();
+      document.getElementById('papersModal').style.display = 'flex';
+    }
+    function closePapers() { document.getElementById('papersModal').style.display = 'none'; }
+
+    function closeIfBackdrop(e, id) {
+      if (e.target.id === id) document.getElementById(id).style.display = 'none';
+    }
+
+    // Direct Form Submission
+    const form = document.getElementById('doubtForm');
+    const okMsg = document.getElementById('okMsg');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = new FormData(form);
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(data).toString()
+        })
+        .then(() => {
+          okMsg.style.display = 'block';
+          form.reset();
+        })
+        .catch(() => {
+          okMsg.style.display = 'block';
+          form.reset();
+        });
+      });
+    }
+  </script>
+</body>
+</html>
