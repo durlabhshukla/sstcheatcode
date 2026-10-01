@@ -13,6 +13,7 @@
       --amber: #f59e0b;
       --blue: #3b82f6;
       --teal: #14b8a6;
+      --emerald: #10b981;
       --text: #f8fafc;
       --muted: #94a3b8;
     }
@@ -74,32 +75,49 @@
     .hero-p { color: var(--muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 2rem; }
 
     /* Subject Section */
-    .subject-section { margin-bottom: 2.2rem; }
+    .subject-section { margin-bottom: 2.4rem; }
     .subject-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
     
+    /* Chapter Card with Minimal Vector Watermark */
     .chapter-card {
+      position: relative; overflow: hidden;
       background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 18px; padding: 1.2rem; margin-bottom: 0.8rem;
+      border-radius: 20px; padding: 1.3rem 1.4rem; margin-bottom: 0.9rem;
       display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
     }
-    .chapter-info h4 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
-    .chapter-info p { font-size: 0.82rem; color: var(--muted); }
+    .chapter-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); }
     
-    .view-btn {
-      padding: 0.6rem 1rem; border-radius: 10px; background: rgba(59,130,246,0.15);
-      border: 1px solid var(--blue); color: #93c5fd; text-decoration: none;
-      font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+    .card-watermark {
+      position: absolute; right: -10px; bottom: -12px;
+      width: 110px; height: 110px; pointer-events: none;
+      opacity: 0.08; transition: opacity 0.3s, transform 0.3s;
+      fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
     }
-    .view-btn:hover { background: var(--blue); color: #fff; }
+    .chapter-card:hover .card-watermark { opacity: 0.14; transform: scale(1.05); }
+
+    .chapter-info { position: relative; z-index: 1; max-width: 70%; }
+    .chapter-info h4 { font-size: 1.02rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+    .chapter-info p { font-size: 0.83rem; color: var(--muted); line-height: 1.4; }
+    
+    .card-action { position: relative; z-index: 1; }
+    .view-btn {
+      padding: 0.65rem 1.05rem; border-radius: 12px; background: rgba(59,130,246,0.15);
+      border: 1px solid var(--blue); color: #93c5fd; text-decoration: none;
+      font-size: 0.84rem; font-weight: 700; white-space: nowrap; display: inline-block;
+      transition: all 0.2s;
+    }
+    .view-btn:hover { background: var(--blue); color: #fff; box-shadow: 0 4px 15px rgba(59,130,246,0.3); }
+    
     .excluded-badge {
-      font-size: 0.7rem; font-weight: 800; padding: 0.35rem 0.65rem; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 800; padding: 0.4rem 0.7rem; border-radius: 999px;
       background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.3);
-      white-space: nowrap;
+      white-space: nowrap; display: inline-block;
     }
     .soon-badge {
-      font-size: 0.72rem; font-weight: 800; padding: 0.4rem 0.7rem; border-radius: 999px;
+      font-size: 0.72rem; font-weight: 800; padding: 0.4rem 0.75rem; border-radius: 999px;
       background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border);
-      white-space: nowrap;
+      white-space: nowrap; display: inline-block;
     }
 
     footer { text-align: center; color: var(--muted); font-size: 0.82rem; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
@@ -130,159 +148,315 @@
       <!-- History -->
       <section class="subject-section">
         <div class="subject-title">📜 History</div>
-        <div class="chapter-card">
+
+        <!-- 1. Rise of Nationalism in Europe -->
+        <div class="chapter-card" style="color:var(--amber);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16l-3-2-3 2-3-2-3 2-3-2-3 2Z"/>
+            <path d="M9 8h6M9 12h6M9 16h4"/>
+          </svg>
           <div class="chapter-info">
             <h4>The Rise of Nationalism in Europe</h4>
             <p>French Revolution, unification of Italy & Germany, and visual allegories.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1AO8Ha4YneqwcDNAkb8hTqpDl-pzUadz_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1AO8Ha4YneqwcDNAkb8hTqpDl-pzUadz_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 2. Nationalism in India -->
+        <div class="chapter-card" style="color:var(--amber);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/>
+          </svg>
           <div class="chapter-info">
             <h4>Nationalism in India</h4>
             <p>Non-Cooperation, Civil Disobedience, and collective belonging.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1b_LeSChZt7IzwxTMiRmoyt7uQGLhrs6e/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1b_LeSChZt7IzwxTMiRmoyt7uQGLhrs6e/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 3. The Making of a Global World -->
+        <div class="chapter-card" style="color:var(--amber);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/>
+          </svg>
           <div class="chapter-info">
             <h4>The Making of a Global World</h4>
             <p>Pre-modern trade, silk routes, and the 19th-century economy.</p>
           </div>
-          <span class="soon-badge">Notes Coming Soon</span>
+          <div class="card-action">
+            <span class="soon-badge">Notes Coming Soon</span>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 4. The Age of Industrialisation -->
+        <div class="chapter-card" style="color:var(--amber);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M2 20h20M6 20V10l6 4V8l6 4V4l4 4v12"/>
+          </svg>
           <div class="chapter-info">
             <h4>The Age of Industrialisation</h4>
             <p>Proto-industrialisation, factories, and colonial labor.</p>
           </div>
-          <span class="excluded-badge">🚫 Excluded from Board</span>
+          <div class="card-action">
+            <span class="excluded-badge">🚫 Excluded from Board</span>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 5. Print Culture and the Modern World -->
+        <div class="chapter-card" style="color:var(--amber);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10M6 10h10M6 14h6"/>
+          </svg>
           <div class="chapter-info">
             <h4>Print Culture and the Modern World</h4>
             <p>Gutenberg press, the reading public, and print in India.</p>
           </div>
-          <span class="soon-badge">Notes Coming Soon</span>
+          <div class="card-action">
+            <span class="soon-badge">Notes Coming Soon</span>
+          </div>
         </div>
       </section>
 
       <!-- Geography -->
       <section class="subject-section">
         <div class="subject-title">🌍 Geography</div>
-        <div class="chapter-card">
+
+        <!-- 1. Resources and Development -->
+        <div class="chapter-card" style="color:var(--emerald);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M8 3v3a6 6 0 0 1-6 6v0a12 12 0 0 0 12 12h0a6 6 0 0 0 6-6V3"/>
+            <path d="M2 12h10"/>
+          </svg>
           <div class="chapter-info">
             <h4>Resources and Development</h4>
             <p>Resource classification, conservation, and soil types of India.</p>
           </div>
-          <span class="soon-badge">Notes Coming Soon</span>
+          <div class="card-action">
+            <span class="soon-badge">Notes Coming Soon</span>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 2. Water Resources -->
+        <div class="chapter-card" style="color:var(--emerald);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M12 2.7A12 12 0 0 0 4 14a8 8 0 0 0 16 0 12 12 0 0 0-8-11.3Z"/>
+            <path d="M8 15a4 4 0 0 0 4 4"/>
+          </svg>
           <div class="chapter-info">
             <h4>Water Resources</h4>
             <p>Multi-purpose dam projects and traditional rainwater harvesting.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1kbiei7JEPBtQ3sdEiF2cXf0m1zVGGsg4/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1kbiei7JEPBtQ3sdEiF2cXf0m1zVGGsg4/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 3. Agriculture -->
+        <div class="chapter-card" style="color:var(--emerald);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M2 22 12 2l10 20M5 16h14M7 11h10"/>
+          </svg>
           <div class="chapter-info">
             <h4>Agriculture</h4>
             <p>Kharif, Rabi, Zaid cropping patterns and major crops.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1L_UJIqukDsxS-92bgzZ4HsVzbX2TZyUu/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1L_UJIqukDsxS-92bgzZ4HsVzbX2TZyUu/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 4. Minerals and Energy Resources -->
+        <div class="chapter-card" style="color:var(--emerald);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <polygon points="6 2 18 2 22 8 12 22 2 8 6 2"/>
+            <line x1="2" y1="8" x2="22" y2="8"/>
+          </svg>
           <div class="chapter-info">
             <h4>Minerals and Energy Resources</h4>
             <p>Conventional and non-conventional energy reserves.</p>
           </div>
-          <span class="soon-badge">Notes Coming Soon</span>
+          <div class="card-action">
+            <span class="soon-badge">Notes Coming Soon</span>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 5. Manufacturing Industries -->
+        <div class="chapter-card" style="color:var(--emerald);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
           <div class="chapter-info">
             <h4>Manufacturing Industries</h4>
             <p>Agro-based and mineral-based industrial manufacturing hubs.</p>
           </div>
-          <span class="soon-badge">Notes Coming Soon</span>
+          <div class="card-action">
+            <span class="soon-badge">Notes Coming Soon</span>
+          </div>
         </div>
       </section>
             <!-- Civics -->
       <section class="subject-section">
         <div class="subject-title">🏛️ Political Science</div>
-        <div class="chapter-card">
+
+        <!-- 1. Power-sharing -->
+        <div class="chapter-card" style="color:var(--blue);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <rect width="18" height="18" x="3" y="3" rx="2"/>
+            <path d="M3 9h18M9 21V9"/>
+          </svg>
           <div class="chapter-info">
             <h4>Power-sharing</h4>
             <p>Comparative case studies: Belgium and Sri Lanka.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1O5JCDVBoiQNJKQcm-aKuoPDKMb0pBgmi/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1O5JCDVBoiQNJKQcm-aKuoPDKMb0pBgmi/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 2. Federalism -->
+        <div class="chapter-card" style="color:var(--blue);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M4 22h16M2 6h20M12 2 2 6v2h20V6L12 2ZM6 8v14M10 8v14M14 8v14M18 8v14"/>
+          </svg>
           <div class="chapter-info">
             <h4>Federalism</h4>
             <p>Vertical decentralisation and the three-tier system in India.</p>
           </div>
-          <a href="https://drive.google.com/file/d/19aqJCABr5dh7K93Yh64nFmWu9sczqi9R/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/19aqJCABr5dh7K93Yh64nFmWu9sczqi9R/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 3. Gender, Religion and Caste -->
+        <div class="chapter-card" style="color:var(--blue);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1ZM2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1ZM7 21h10M12 3v18M3 7h18"/>
+          </svg>
           <div class="chapter-info">
             <h4>Gender, Religion and Caste</h4>
             <p>Social divisions, women's representation, and secularism.</p>
           </div>
-          <a href="https://drive.google.com/file/d/125UM70CT3pA5JT37B2ZhN-jKyihByz_b/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/125UM70CT3pA5JT37B2ZhN-jKyihByz_b/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 4. Political Parties -->
+        <div class="chapter-card" style="color:var(--blue);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          </svg>
           <div class="chapter-info">
             <h4>Political Parties</h4>
             <p>National vs State parties, functions, and electoral challenges.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1jVPiNrs5RmAw86OYNsW_R4Og94wY8kNw/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1jVPiNrs5RmAw86OYNsW_R4Og94wY8kNw/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 5. Outcomes of Democracy -->
+        <div class="chapter-card" style="color:var(--blue);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
           <div class="chapter-info">
             <h4>Outcomes of Democracy</h4>
             <p>Accountable, responsive, and legitimate governance.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1eyH1-GoeZuoKsRPYKLK_b8DwR8W6JzKZ/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1eyH1-GoeZuoKsRPYKLK_b8DwR8W6JzKZ/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
       </section>
 
       <!-- Economics -->
       <section class="subject-section">
         <div class="subject-title">📊 Economics</div>
-        <div class="chapter-card">
+
+        <!-- 1. Development -->
+        <div class="chapter-card" style="color:var(--teal);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M3 3v18h18M18 9l-5 5-4-4-3 3"/>
+            <path d="M14 9h4v4"/>
+          </svg>
           <div class="chapter-info">
             <h4>Development</h4>
             <p>Per capita income, HDI metrics, and sustainable growth.</p>
           </div>
-          <a href="https://drive.google.com/file/d/12YXkDPJREVkf36d7RcFwuC-iN67ploPW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/12YXkDPJREVkf36d7RcFwuC-iN67ploPW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 2. Sectors of the Indian Economy (Interlocking Gears Watermark) -->
+        <div class="chapter-card" style="color:var(--teal);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
           <div class="chapter-info">
             <h4>Sectors of the Indian Economy</h4>
             <p>Primary, secondary, and tertiary sectors; disguised unemployment.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1vLJT1Uh2lHuYSfYQHeiJUcv7g56NkgYi/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1vLJT1Uh2lHuYSfYQHeiJUcv7g56NkgYi/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 3. Money and Credit -->
+        <div class="chapter-card" style="color:var(--teal);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <rect width="20" height="14" x="2" y="5" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
           <div class="chapter-info">
             <h4>Money and Credit</h4>
             <p>Banking operations, collateral, and formal vs informal credit.</p>
           </div>
-          <a href="https://drive.google.com/file/d/1NJ_d1dtG5cVH3TEIHqtWHB5VCvvDR3iW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/1NJ_d1dtG5cVH3TEIHqtWHB5VCvvDR3iW/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 4. Globalisation and the Indian Economy -->
+        <div class="chapter-card" style="color:var(--teal);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"/>
+            <circle cx="12" cy="12" r="4"/>
+          </svg>
           <div class="chapter-info">
             <h4>Globalisation and the Indian Economy</h4>
             <p>MNC operations, SEZ zones, and foreign trade integration.</p>
           </div>
-          <a href="https://drive.google.com/file/d/10J7EIdUOQA6qaF-N5SfyFCwD_OHgQGJA/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          <div class="card-action">
+            <a href="https://drive.google.com/file/d/10J7EIdUOQA6qaF-N5SfyFCwD_OHgQGJA/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="view-btn">View Notes ↗</a>
+          </div>
         </div>
-        <div class="chapter-card">
+
+        <!-- 5. Consumer Rights -->
+        <div class="chapter-card" style="color:var(--teal);">
+          <svg class="card-watermark" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4M12 16h.01"/>
+          </svg>
           <div class="chapter-info">
             <h4>Consumer Rights</h4>
             <p>COPRA legal mechanisms and consumer redressal forums.</p>
           </div>
-          <span class="excluded-badge">🚫 Excluded from Board</span>
+          <div class="card-action">
+            <span class="excluded-badge">🚫 Excluded from Board</span>
+          </div>
         </div>
       </section>
     </main>
