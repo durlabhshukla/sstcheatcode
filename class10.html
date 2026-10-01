@@ -8,7 +8,7 @@
   <style>
     :root {
       --bg: #090d16;
-      --card-bg: rgba(16, 24, 40, 0.85);
+      --card-bg: linear-gradient(135deg, rgba(16, 24, 40, 0.9) 0%, rgba(20, 32, 54, 0.65) 100%);
       --border: rgba(255, 255, 255, 0.08);
       --amber: #f59e0b;
       --blue: #3b82f6;
@@ -74,35 +74,41 @@
     .hero-h1 { font-size: 2.3rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
     .hero-p { color: var(--muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 2rem; }
 
-    /* Subject Section */
+    /* Section & Cards */
     .subject-section { margin-bottom: 2.4rem; }
     .subject-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
     
-    /* Chapter Card with Minimal Vector Watermark */
     .chapter-card {
       position: relative; overflow: hidden;
       background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 20px; padding: 1.3rem 1.4rem; margin-bottom: 0.9rem;
+      border-radius: 20px; padding: 1.35rem 1.45rem; margin-bottom: 0.9rem;
       display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
-    .chapter-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); }
+    .chapter-card:hover {
+      transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
     
+    /* Moderate-Level Watermark Engravings */
     .card-watermark {
-      position: absolute; right: -10px; bottom: -12px;
-      width: 110px; height: 110px; pointer-events: none;
-      opacity: 0.08; transition: opacity 0.3s, transform 0.3s;
-      fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+      position: absolute; right: -12px; bottom: -14px;
+      width: 145px; height: 145px; pointer-events: none;
+      opacity: 0.10; transition: opacity 0.3s ease, transform 0.3s ease;
+      fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+      z-index: 1;
     }
-    .chapter-card:hover .card-watermark { opacity: 0.14; transform: scale(1.05); }
+    .chapter-card:hover .card-watermark {
+      opacity: 0.18; transform: scale(1.06) rotate(-2deg);
+    }
 
-    .chapter-info { position: relative; z-index: 1; max-width: 70%; }
+    .chapter-info { position: relative; z-index: 2; max-width: 68%; }
     .chapter-info h4 { font-size: 1.02rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
-    .chapter-info p { font-size: 0.83rem; color: var(--muted); line-height: 1.4; }
+    .chapter-info p { font-size: 0.83rem; color: var(--muted); line-height: 1.42; }
     
-    .card-action { position: relative; z-index: 1; }
+    .card-action { position: relative; z-index: 2; }
     .view-btn {
-      padding: 0.65rem 1.05rem; border-radius: 12px; background: rgba(59,130,246,0.15);
+      padding: 0.65rem 1.1rem; border-radius: 12px; background: rgba(59,130,246,0.15);
       border: 1px solid var(--blue); color: #93c5fd; text-decoration: none;
       font-size: 0.84rem; font-weight: 700; white-space: nowrap; display: inline-block;
       transition: all 0.2s;
@@ -149,11 +155,25 @@
       <section class="subject-section">
         <div class="subject-title">📜 History</div>
 
-        <!-- 1. Rise of Nationalism in Europe -->
+        <!-- 1. Rise of Nationalism in Europe (Triumphal Arch + Sunburst + Laurels) -->
         <div class="chapter-card" style="color:var(--amber);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16l-3-2-3 2-3-2-3 2-3-2-3 2Z"/>
-            <path d="M9 8h6M9 12h6M9 16h4"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Radiating Rays -->
+            <path d="M50 8 L50 2M22 20 L16 16M78 20 L84 16M10 40 L4 38M90 40 L96 38" stroke-dasharray="2 3"/>
+            <!-- Pediment & Capital -->
+            <polygon points="20 32, 50 16, 80 32"/>
+            <rect x="22" y="32" width="56" height="5"/>
+            <!-- Pillars -->
+            <rect x="24" y="37" width="14" height="48" rx="1"/>
+            <rect x="62" y="37" width="14" height="48" rx="1"/>
+            <line x1="28" y1="41" x2="28" y2="81"/><line x1="34" y1="41" x2="34" y2="81"/>
+            <line x1="66" y1="41" x2="66" y2="81"/><line x1="72" y1="41" x2="72" y2="81"/>
+            <!-- Central Arch Vault -->
+            <path d="M38 85 V56 A12 12 0 0 1 62 56 V85"/>
+            <path d="M42 56 A8 8 0 0 1 58 56"/>
+            <circle cx="50" cy="50" r="2.5" fill="currentColor"/>
+            <!-- Base Plinth -->
+            <rect x="18" y="85" width="64" height="6" rx="1"/>
           </svg>
           <div class="chapter-info">
             <h4>The Rise of Nationalism in Europe</h4>
@@ -164,11 +184,24 @@
           </div>
         </div>
 
-        <!-- 2. Nationalism in India -->
+        <!-- 2. Nationalism in India (Ashoka Chakra + Lotus + Unity Ribbons) -->
         <div class="chapter-card" style="color:var(--amber);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Concentric Outer Rings -->
+            <circle cx="50" cy="46" r="32"/>
+            <circle cx="50" cy="46" r="28" stroke-dasharray="2 2"/>
+            <circle cx="50" cy="46" r="6"/>
+            <circle cx="50" cy="46" r="2" fill="currentColor"/>
+            <!-- 12 Paired Radiating Spokes -->
+            <line x1="50" y1="18" x2="50" y2="40"/><line x1="50" y1="52" x2="50" y2="74"/>
+            <line x1="22" y1="46" x2="44" y2="46"/><line x1="56" y1="46" x2="78" y2="46"/>
+            <line x1="30" y1="26" x2="46" y2="42"/><line x1="54" y1="50" x2="70" y2="66"/>
+            <line x1="30" y1="66" x2="46" y2="50"/><line x1="54" y1="42" x2="70" y2="26"/>
+            <line x1="39" y1="20" x2="48" y2="40"/><line x1="52" y1="52" x2="61" y2="72"/>
+            <line x1="61" y1="20" x2="52" y2="40"/><line x1="48" y1="52" x2="39" y2="72"/>
+            <!-- Lotus Base Arc -->
+            <path d="M26 82 C34 76, 44 80, 50 86 C56 80, 66 76, 74 82 C68 90, 56 90, 50 86 C44 90, 32 90, 26 82 Z"/>
+            <path d="M18 90 C36 84, 64 84, 82 90"/>
           </svg>
           <div class="chapter-info">
             <h4>Nationalism in India</h4>
@@ -179,11 +212,19 @@
           </div>
         </div>
 
-        <!-- 3. The Making of a Global World -->
+        <!-- 3. The Making of a Global World (Armillary Globe + Silk Route Caravel) -->
         <div class="chapter-card" style="color:var(--amber);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Globe & Latitudes -->
+            <circle cx="50" cy="50" r="36"/>
+            <ellipse cx="50" cy="50" rx="36" ry="14"/>
+            <ellipse cx="50" cy="50" rx="16" ry="36"/>
+            <line x1="14" y1="50" x2="86" y2="50"/>
+            <line x1="50" y1="14" x2="50" y2="86"/>
+            <!-- Maritime Compass Rose Star -->
+            <polygon points="50 26, 53 37, 64 40, 53 43, 50 54, 47 43, 36 40, 47 37" fill="currentColor" opacity="0.3"/>
+            <!-- Navigation Wave Arcs -->
+            <path d="M20 78 Q30 72 40 78 T60 78 T80 78"/>
           </svg>
           <div class="chapter-info">
             <h4>The Making of a Global World</h4>
@@ -194,10 +235,21 @@
           </div>
         </div>
 
-        <!-- 4. The Age of Industrialisation -->
+        <!-- 4. The Age of Industrialisation (Mechanical Cog Matrix & Industrial Chimneys) -->
         <div class="chapter-card" style="color:var(--amber);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M2 20h20M6 20V10l6 4V8l6 4V4l4 4v12"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Chimneys with Plume -->
+            <rect x="22" y="22" width="8" height="42"/>
+            <rect x="36" y="16" width="10" height="48"/>
+            <path d="M24 18 Q28 12 34 14 Q40 8 46 10" stroke-dasharray="2 2"/>
+            <!-- Factory Roofline -->
+            <polygon points="14 64, 28 50, 28 64, 46 46, 46 64, 58 54, 58 64"/>
+            <rect x="14" y="64" width="44" height="24"/>
+            <!-- Intermeshing Large Gear -->
+            <circle cx="70" cy="68" r="18"/>
+            <circle cx="70" cy="68" r="8"/>
+            <circle cx="70" cy="68" r="3" fill="currentColor"/>
+            <path d="M70 46 V50 M70 86 V90 M48 68 H52 M88 68 H92 M55 53 L58 56 M82 80 L85 83 M55 83 L58 80 M82 56 L85 53" stroke-width="2.5"/>
           </svg>
           <div class="chapter-info">
             <h4>The Age of Industrialisation</h4>
@@ -208,11 +260,20 @@
           </div>
         </div>
 
-        <!-- 5. Print Culture and the Modern World -->
+        <!-- 5. Print Culture and the Modern World (Movable Type Gutenberg & Open Folio) -->
         <div class="chapter-card" style="color:var(--amber);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-            <path d="M6 6h10M6 10h10M6 14h6"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Open Ancient Tome -->
+            <path d="M16 36 C30 30, 44 32, 50 36 C56 32, 70 30, 84 36 V76 C70 70, 56 72, 50 76 C44 72, 30 70, 16 76 Z"/>
+            <line x1="50" y1="36" x2="50" y2="76"/>
+            <!-- Book Spine Base -->
+            <path d="M16 76 C30 74, 44 76, 50 80 C56 76, 70 74, 84 76"/>
+            <!-- Text Ledger Lines -->
+            <line x1="24" y1="44" x2="42" y2="44"/><line x1="24" y1="52" x2="42" y2="52"/><line x1="24" y1="60" x2="38" y2="60"/>
+            <line x1="58" y1="44" x2="76" y2="44"/><line x1="58" y1="52" x2="76" y2="52"/><line x1="58" y1="60" x2="72" y2="60"/>
+            <!-- Gutenberg Screw Press Spindle Top -->
+            <path d="M42 16 H58 M50 16 V30"/>
+            <ellipse cx="50" cy="22" rx="12" ry="3"/>
           </svg>
           <div class="chapter-info">
             <h4>Print Culture and the Modern World</h4>
@@ -228,11 +289,20 @@
       <section class="subject-section">
         <div class="subject-title">🌍 Geography</div>
 
-        <!-- 1. Resources and Development -->
+        <!-- 1. Resources and Development (Terrain Topography & Sustainable Leaf) -->
         <div class="chapter-card" style="color:var(--emerald);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M8 3v3a6 6 0 0 1-6 6v0a12 12 0 0 0 12 12h0a6 6 0 0 0 6-6V3"/>
-            <path d="M2 12h10"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Topographic Relief Contour Elevation Rings -->
+            <path d="M16 80 C24 64, 48 70, 60 56 C70 44, 82 52, 90 40"/>
+            <path d="M14 66 C28 50, 46 54, 58 40 C66 30, 80 34, 86 24" stroke-dasharray="3 2"/>
+            <path d="M18 90 C34 82, 54 86, 72 74 C80 68, 86 72, 92 64"/>
+            <!-- Rising Sustainable Resource Sprout -->
+            <path d="M50 84 V46"/>
+            <path d="M50 58 C40 54, 32 40, 36 28 C48 30, 50 46, 50 58 Z" fill="currentColor" opacity="0.2"/>
+            <path d="M50 50 C60 46, 68 32, 64 20 C52 22, 50 38, 50 50 Z" fill="currentColor" opacity="0.2"/>
+            <!-- Compass Quadrant Needle -->
+            <circle cx="78" cy="24" r="8"/>
+            <line x1="78" y1="18" x2="78" y2="30"/><line x1="72" y1="24" x2="84" y2="24"/>
           </svg>
           <div class="chapter-info">
             <h4>Resources and Development</h4>
@@ -243,11 +313,22 @@
           </div>
         </div>
 
-        <!-- 2. Water Resources -->
+        <!-- 2. Water Resources (Gravity Arch Dam Wall & Hydrodynamic Crest Waves) -->
         <div class="chapter-card" style="color:var(--emerald);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M12 2.7A12 12 0 0 0 4 14a8 8 0 0 0 16 0 12 12 0 0 0-8-11.3Z"/>
-            <path d="M8 15a4 4 0 0 0 4 4"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Concrete Dam Crest & Abutments -->
+            <path d="M12 28 Q50 34 88 28"/>
+            <path d="M12 36 Q50 42 88 36"/>
+            <path d="M16 28 L24 86 Q50 92 76 86 L84 28"/>
+            <!-- Spillway Vertical Chute Piers -->
+            <line x1="38" y1="40" x2="40" y2="82"/>
+            <line x1="50" y1="41" x2="50" y2="84"/>
+            <line x1="62" y1="40" x2="60" y2="82"/>
+            <!-- Radial Water Discharge Jets -->
+            <path d="M40 82 C42 90, 48 94, 50 94 C52 94, 58 90, 60 82"/>
+            <!-- Reservoir Upstream Ripples -->
+            <path d="M26 22 Q50 26 74 22" stroke-dasharray="2 3"/>
+            <path d="M34 16 Q50 19 66 16" stroke-dasharray="2 3"/>
           </svg>
           <div class="chapter-info">
             <h4>Water Resources</h4>
@@ -258,10 +339,23 @@
           </div>
         </div>
 
-        <!-- 3. Agriculture -->
+        <!-- 3. Agriculture (Agrarian Wheat Sheaves, Furrows & Solar Crest) -->
         <div class="chapter-card" style="color:var(--emerald);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M2 22 12 2l10 20M5 16h14M7 11h10"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Rising Sun Rays -->
+            <circle cx="50" cy="38" r="14" stroke-dasharray="2 2"/>
+            <path d="M50 16 V10 M34 22 L30 18 M66 22 L70 18 M24 38 H18 M76 38 H82"/>
+            <!-- Central Braided Wheat Ears -->
+            <line x1="50" y1="36" x2="50" y2="90" stroke-width="2"/>
+            <ellipse cx="44" cy="46" rx="5" ry="9" transform="rotate(-30 44 46)"/>
+            <ellipse cx="56" cy="46" rx="5" ry="9" transform="rotate(30 56 46)"/>
+            <ellipse cx="44" cy="60" rx="5" ry="9" transform="rotate(-30 44 60)"/>
+            <ellipse cx="56" cy="60" rx="5" ry="9" transform="rotate(30 56 60)"/>
+            <ellipse cx="45" cy="74" rx="4" ry="8" transform="rotate(-30 45 74)"/>
+            <ellipse cx="55" cy="74" rx="4" ry="8" transform="rotate(30 55 74)"/>
+            <!-- Curving Field Furrows -->
+            <path d="M12 90 Q30 76 50 82 Q70 88 88 82"/>
+            <path d="M16 96 Q32 86 50 90 Q68 94 84 90"/>
           </svg>
           <div class="chapter-info">
             <h4>Agriculture</h4>
@@ -272,11 +366,18 @@
           </div>
         </div>
 
-        <!-- 4. Minerals and Energy Resources -->
+        <!-- 4. Minerals and Energy Resources (Crystalline Geometry & Atomic Orbital Loops) -->
         <div class="chapter-card" style="color:var(--emerald);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <polygon points="6 2 18 2 22 8 12 22 2 8 6 2"/>
-            <line x1="2" y1="8" x2="22" y2="8"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Geometric Mineral Gem Facets -->
+            <polygon points="32 20, 68 20, 84 38, 50 84, 16 38"/>
+            <line x1="32" y1="20" x2="50" y2="84"/><line x1="68" y1="20" x2="50" y2="84"/>
+            <line x1="16" y1="38" x2="84" y2="38"/>
+            <line x1="32" y1="20" x2="50" y2="38"/><line x1="68" y1="20" x2="50" y2="38"/>
+            <!-- Nuclear Energy Elliptical Orbits -->
+            <ellipse cx="50" cy="50" rx="42" ry="16" transform="rotate(35 50 50)" stroke-dasharray="3 3"/>
+            <ellipse cx="50" cy="50" rx="42" ry="16" transform="rotate(-35 50 50)" stroke-dasharray="3 3"/>
+            <circle cx="50" cy="50" r="3" fill="currentColor"/>
           </svg>
           <div class="chapter-info">
             <h4>Minerals and Energy Resources</h4>
@@ -287,11 +388,21 @@
           </div>
         </div>
 
-        <!-- 5. Manufacturing Industries -->
+        <!-- 5. Manufacturing Industries (Industrial Complex Sawtooth & Precision Vernier) -->
         <div class="chapter-card" style="color:var(--emerald);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <rect x="2" y="7" width="20" height="14" rx="2"/>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Modern Petrochem / Steel Smelter Silhouettes -->
+            <path d="M14 84 V52 L30 38 V84"/>
+            <circle cx="22" cy="48" r="4"/>
+            <rect x="36" y="24" width="16" height="60"/>
+            <line x1="40" y1="24" x2="40" y2="84"/><line x1="48" y1="24" x2="48" y2="84"/>
+            <path d="M56 84 V46 L72 34 L72 84"/>
+            <rect x="76" y="16" width="8" height="68"/>
+            <!-- Cooling Tower Hyperboloid Arcs -->
+            <path d="M60 84 Q66 64 64 54 H78 Q76 64 82 84 Z" opacity="0.3"/>
+            <!-- Precision Assembly Circuit Connectors -->
+            <circle cx="22" cy="24" r="3" fill="currentColor"/>
+            <path d="M22 27 V34 H36"/>
           </svg>
           <div class="chapter-info">
             <h4>Manufacturing Industries</h4>
@@ -306,11 +417,26 @@
       <section class="subject-section">
         <div class="subject-title">🏛️ Political Science</div>
 
-        <!-- 1. Power-sharing -->
+        <!-- 1. Power-sharing (Balanced Scales of Justice & Multi-Tier Portico) -->
         <div class="chapter-card" style="color:var(--blue);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <rect width="18" height="18" x="3" y="3" rx="2"/>
-            <path d="M3 9h18M9 21V9"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Classical Fulcrum Beam -->
+            <line x1="50" y1="16" x2="50" y2="82" stroke-width="2"/>
+            <path d="M38 82 H62 M32 88 H68"/>
+            <line x1="22" y1="30" x2="78" y2="30" stroke-width="2"/>
+            <circle cx="50" cy="30" r="4" fill="currentColor"/>
+            <circle cx="50" cy="18" r="3"/>
+            <!-- Left Balance Pan -->
+            <line x1="24" y1="31" x2="16" y2="52"/>
+            <line x1="24" y1="31" x2="32" y2="52"/>
+            <path d="M14 52 Q24 58 34 52 Z" fill="currentColor" opacity="0.2"/>
+            <!-- Right Balance Pan -->
+            <line x1="76" y1="31" x2="68" y2="52"/>
+            <line x1="76" y1="31" x2="84" y2="52"/>
+            <path d="M66 52 Q76 58 86 52 Z" fill="currentColor" opacity="0.2"/>
+            <!-- Harmonious Intersecting Power Rings -->
+            <circle cx="38" cy="62" r="14" stroke-dasharray="2 3"/>
+            <circle cx="62" cy="62" r="14" stroke-dasharray="2 3"/>
           </svg>
           <div class="chapter-info">
             <h4>Power-sharing</h4>
@@ -321,10 +447,26 @@
           </div>
         </div>
 
-        <!-- 2. Federalism -->
+        <!-- 2. Federalism (Three-Tier Legislative Assembly Dome & Union Rays) -->
         <div class="chapter-card" style="color:var(--blue);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M4 22h16M2 6h20M12 2 2 6v2h20V6L12 2ZM6 8v14M10 8v14M14 8v14M18 8v14"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Dome & Cupola -->
+            <path d="M32 40 C32 24, 68 24, 68 40 Z"/>
+            <rect x="47" y="16" width="6" height="8"/>
+            <line x1="50" y1="16" x2="50" y2="10"/>
+            <circle cx="50" cy="9" r="2" fill="currentColor"/>
+            <!-- Tier 1: Union Architrave -->
+            <rect x="28" y="40" width="44" height="6" rx="1"/>
+            <!-- Tier 2: State Pillars -->
+            <rect x="32" y="46" width="6" height="20"/>
+            <rect x="42" y="46" width="6" height="20"/>
+            <rect x="52" y="46" width="6" height="20"/>
+            <rect x="62" y="46" width="6" height="20"/>
+            <!-- Tier 3: Local Self-Government Foundations -->
+            <rect x="24" y="66" width="52" height="6"/>
+            <rect x="18" y="72" width="64" height="6"/>
+            <rect x="12" y="78" width="76" height="8" rx="1"/>
+            <path d="M20 86 Q50 92 80 86" stroke-dasharray="2 2"/>
           </svg>
           <div class="chapter-info">
             <h4>Federalism</h4>
@@ -335,10 +477,19 @@
           </div>
         </div>
 
-        <!-- 3. Gender, Religion and Caste -->
+        <!-- 3. Gender, Religion and Caste (Interlocking Civic Diversity Rings & Equal Emblem) -->
         <div class="chapter-card" style="color:var(--blue);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1ZM2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1ZM7 21h10M12 3v18M3 7h18"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Interlocking Inclusivity Tri-Circles -->
+            <circle cx="40" cy="38" r="20"/>
+            <circle cx="60" cy="38" r="20"/>
+            <circle cx="50" cy="56" r="20"/>
+            <!-- Central Universal Parity Equal Sign -->
+            <line x1="42" y1="44" x2="58" y2="44" stroke-width="2.5"/>
+            <line x1="42" y1="50" x2="58" y2="50" stroke-width="2.5"/>
+            <!-- Civic Shield Foundation -->
+            <path d="M24 74 Q50 94 76 74" stroke-width="1.8"/>
+            <path d="M30 80 Q50 98 70 80" stroke-dasharray="2 3"/>
           </svg>
           <div class="chapter-info">
             <h4>Gender, Religion and Caste</h4>
@@ -349,10 +500,21 @@
           </div>
         </div>
 
-        <!-- 4. Political Parties -->
+        <!-- 4. Political Parties (Electoral Rostrum, Ballot Box & Democratic Laurel) -->
         <div class="chapter-card" style="color:var(--blue);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Ballot Box & Casting Slot -->
+            <polygon points="34 38, 66 38, 74 54, 26 54"/>
+            <rect x="28" y="54" width="44" height="30" rx="2"/>
+            <line x1="42" y1="46" x2="58" y2="46" stroke-width="2.5"/>
+            <!-- Inserting Ballot Paper Leaf -->
+            <polygon points="44 26, 56 26, 56 44, 44 44" fill="currentColor" opacity="0.2"/>
+            <line x1="46" y1="32" x2="54" y2="32"/><line x1="46" y1="36" x2="52" y2="36"/>
+            <!-- Encircling Civic Laurel Wreath -->
+            <path d="M18 64 C14 48, 24 32, 34 26"/>
+            <path d="M82 64 C86 48, 76 32, 66 26"/>
+            <circle cx="18" cy="50" r="2.5" fill="currentColor"/>
+            <circle cx="82" cy="50" r="2.5" fill="currentColor"/>
           </svg>
           <div class="chapter-info">
             <h4>Political Parties</h4>
@@ -363,11 +525,16 @@
           </div>
         </div>
 
-        <!-- 5. Outcomes of Democracy -->
+        <!-- 5. Outcomes of Democracy (Constitutional Aegis Shield & Civic Verification) -->
         <div class="chapter-card" style="color:var(--blue);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
-            <path d="m9 12 2 2 4-4"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Heraldic Shield Outline -->
+            <path d="M50 16 L80 26 V52 C80 72, 50 88, 50 88 C50 88, 20 72, 20 52 V26 Z" stroke-width="1.8"/>
+            <path d="M50 22 L74 30 V50 C74 68, 50 80, 50 80 C50 80, 26 68, 26 50 V30 Z" stroke-dasharray="2 3"/>
+            <!-- Clean Accountability Checkmark -->
+            <polyline points="38 52, 46 60, 64 42" stroke-width="2.5"/>
+            <!-- Central Star of Legitimacy -->
+            <circle cx="50" cy="30" r="2.5" fill="currentColor"/>
           </svg>
           <div class="chapter-info">
             <h4>Outcomes of Democracy</h4>
@@ -383,11 +550,22 @@
       <section class="subject-section">
         <div class="subject-title">📊 Economics</div>
 
-        <!-- 1. Development -->
+        <!-- 1. Development (HDI Elevation Staircase & Ascending Growth Curves) -->
         <div class="chapter-card" style="color:var(--teal);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M3 3v18h18M18 9l-5 5-4-4-3 3"/>
-            <path d="M14 9h4v4"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Quantitative Axes -->
+            <line x1="16" y1="84" x2="88" y2="84" stroke-width="1.8"/>
+            <line x1="16" y1="84" x2="16" y2="16" stroke-width="1.8"/>
+            <!-- Bar Metrics Progress -->
+            <rect x="24" y="64" width="8" height="20" rx="1"/>
+            <rect x="38" y="52" width="8" height="32" rx="1"/>
+            <rect x="52" y="40" width="8" height="44" rx="1"/>
+            <rect x="66" y="26" width="8" height="58" rx="1"/>
+            <!-- Dynamic Vector Exponential Trajectory -->
+            <path d="M18 78 Q42 66 54 44 T84 18" stroke-width="2"/>
+            <polygon points="84 18, 74 20, 80 26" fill="currentColor"/>
+            <!-- Quality of Life Benchmark Ring -->
+            <circle cx="84" cy="18" r="4" stroke-dasharray="1 2"/>
           </svg>
           <div class="chapter-info">
             <h4>Development</h4>
@@ -398,11 +576,27 @@
           </div>
         </div>
 
-        <!-- 2. Sectors of the Indian Economy (Interlocking Gears Watermark) -->
+        <!-- 2. Sectors of the Indian Economy (Tri-Sector Cyclical Nexus: Sheaf -> Cog -> Signal Waves) -->
         <div class="chapter-card" style="color:var(--teal);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-            <circle cx="12" cy="12" r="3"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Tripartite Interconnecting Triangle Orbit -->
+            <circle cx="50" cy="50" r="34" stroke-dasharray="3 3"/>
+            <!-- Primary Sector Node (Agricultural Ear) -->
+            <circle cx="50" cy="20" r="10"/>
+            <line x1="50" y1="14" x2="50" y2="26"/>
+            <path d="M47 18 Q50 14 53 18"/>
+            <!-- Secondary Sector Node (Industrial Cog) -->
+            <circle cx="24" cy="68" r="11"/>
+            <circle cx="24" cy="68" r="5"/>
+            <path d="M24 54 V57 M24 79 V82 M10 68 H13 M35 68 H38" stroke-width="2"/>
+            <!-- Tertiary Sector Node (Service / Tech Radiowaves) -->
+            <circle cx="76" cy="68" r="11"/>
+            <path d="M72 72 Q76 66 80 72"/>
+            <path d="M69 75 Q76 63 83 75"/>
+            <!-- Interlocking Flow Arrows -->
+            <path d="M38 24 Q30 32 26 44"/>
+            <path d="M38 78 Q50 82 62 78"/>
+            <path d="M78 52 Q76 34 62 24"/>
           </svg>
           <div class="chapter-info">
             <h4>Sectors of the Indian Economy</h4>
@@ -413,11 +607,22 @@
           </div>
         </div>
 
-        <!-- 3. Money and Credit -->
+        <!-- 3. Money and Credit (Institutional Vault Dial & Secure Guilloche Bands) -->
         <div class="chapter-card" style="color:var(--teal);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <rect width="20" height="14" x="2" y="5" rx="2"/>
-            <line x1="2" y1="10" x2="22" y2="10"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Vault Door Rim -->
+            <circle cx="50" cy="50" r="36" stroke-width="2"/>
+            <circle cx="50" cy="50" r="30" stroke-dasharray="2 3"/>
+            <circle cx="50" cy="50" r="18"/>
+            <circle cx="50" cy="50" r="6" fill="currentColor"/>
+            <!-- Locking Spokes -->
+            <line x1="50" y1="14" x2="50" y2="24"/><line x1="50" y1="76" x2="50" y2="86"/>
+            <line x1="14" y1="50" x2="24" y2="50"/><line x1="76" y1="50" x2="86" y2="50"/>
+            <line x1="24" y1="24" x2="32" y2="32"/><line x1="68" y1="68" x2="76" y2="76"/>
+            <line x1="76" y1="24" x2="68" y2="32"/><line x1="24" y1="76" x2="32" y2="68"/>
+            <!-- Currency Note Edge Curves -->
+            <path d="M10 24 H24 V38" stroke-dasharray="2 2"/>
+            <path d="M90 76 H76 V62" stroke-dasharray="2 2"/>
           </svg>
           <div class="chapter-info">
             <h4>Money and Credit</h4>
@@ -428,12 +633,19 @@
           </div>
         </div>
 
-        <!-- 4. Globalisation and the Indian Economy -->
+        <!-- 4. Globalisation and the Indian Economy (Intermodal Trade Trajectories & Orbital Grid) -->
         <div class="chapter-card" style="color:var(--teal);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"/>
-            <circle cx="12" cy="12" r="4"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Multi-Axis World Ellipses -->
+            <circle cx="50" cy="50" r="32"/>
+            <ellipse cx="50" cy="50" rx="32" ry="12"/>
+            <ellipse cx="50" cy="50" rx="12" ry="32"/>
+            <!-- Cross-Continental Shipping Flight Paths -->
+            <path d="M18 36 C34 16, 70 20, 84 46" stroke-dasharray="3 2"/>
+            <path d="M16 64 C32 84, 68 80, 82 54" stroke-dasharray="3 2"/>
+            <!-- Orbital Satellite Node -->
+            <circle cx="84" cy="46" r="3" fill="currentColor"/>
+            <circle cx="16" cy="64" r="3" fill="currentColor"/>
           </svg>
           <div class="chapter-info">
             <h4>Globalisation and the Indian Economy</h4>
@@ -444,11 +656,19 @@
           </div>
         </div>
 
-        <!-- 5. Consumer Rights -->
+        <!-- 5. Consumer Rights (Statutory COPRA Shield & Balance Seal) -->
         <div class="chapter-card" style="color:var(--teal);">
-          <svg class="card-watermark" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 8v4M12 16h.01"/>
+          <svg class="card-watermark" viewBox="0 0 100 100">
+            <!-- Guardian Crest -->
+            <polygon points="50 16, 82 30, 74 68, 50 86, 26 68, 18 30"/>
+            <circle cx="50" cy="46" r="16"/>
+            <!-- Redressal Scales -->
+            <line x1="42" y1="46" x2="58" y2="46"/>
+            <line x1="50" y1="40" x2="50" y2="52"/>
+            <path d="M40 50 Q44 54 48 50 Z"/>
+            <path d="M52 50 Q56 54 60 50 Z"/>
+            <!-- Seal Ribbons -->
+            <path d="M38 78 L32 92 L44 86 L50 90 L56 86 L68 92 L62 78"/>
           </svg>
           <div class="chapter-info">
             <h4>Consumer Rights</h4>
