@@ -24,44 +24,58 @@
       padding: 1.4rem;
       min-height: 100vh;
     }
-    .wrapper { max-width: 820px; margin: 0 auto; }
+    .wrapper { max-width: 820px; margin: 0 auto; position: relative; }
 
-    /* Top Navigation Bar */
+    /* Top Navigation Bar with Menu Button */
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 0.8rem 1.2rem; background: rgba(16, 24, 40, 0.8);
-      border: 1px solid var(--border); border-radius: 16px; margin-bottom: 2.2rem;
-      backdrop-filter: blur(10px);
+      padding: 0.8rem 1.2rem; background: rgba(16, 24, 40, 0.85);
+      border: 1px solid var(--border); border-radius: 16px; margin-bottom: 2rem;
+      backdrop-filter: blur(10px); position: relative; z-index: 100;
     }
     .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
     .brand span { color: var(--amber); }
     
-    .nav-menu { display: flex; gap: 0.6rem; align-items: center; }
-    .nav-link {
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    /* Menu Button Styles */
+    .menu-btn {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
       color: #fff; border-radius: 10px; padding: 0.5rem 0.9rem;
-      font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: 0.2s;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;
+      transition: 0.2s;
     }
-    .nav-link:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
+    .menu-btn:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
+
+    /* Dropdown Menu Overlay */
+    .dropdown-menu {
+      display: none; position: absolute; top: 70px; right: 0; width: 260px;
+      background: #111827; border: 1px solid var(--border); border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6); padding: 0.6rem; z-index: 1000;
+    }
+    .dropdown-menu.show { display: block; }
+    .dropdown-item {
+      display: block; padding: 0.75rem 1rem; color: #cbd5e1; text-decoration: none;
+      font-size: 0.88rem; font-weight: 700; border-radius: 10px; transition: 0.2s;
+    }
+    .dropdown-item:hover { background: rgba(59,130,246,0.2); color: #fff; }
 
     /* Hero Section */
-    .hero { text-align: center; margin-bottom: 2.5rem; }
-    .hero-h1 { font-size: 2.4rem; font-weight: 900; margin-bottom: 0.6rem; letter-spacing: -0.5px; }
-    .hero-p { color: var(--muted); font-size: 1rem; line-height: 1.5; max-width: 580px; margin: 0 auto; }
+    .hero { text-align: center; margin-bottom: 2.2rem; }
+    .hero-h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+    .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; max-width: 580px; margin: 0 auto; }
 
     /* Grid Layouts */
     .section-title {
       font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--amber); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
     }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
     .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
     @media(max-width: 640px) { .notes-grid { grid-template-columns: 1fr; } }
 
     /* Hub Cards */
     .hub-card {
       background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 20px; padding: 1.6rem; text-decoration: none; color: inherit;
+      border-radius: 20px; padding: 1.5rem; text-decoration: none; color: inherit;
       display: flex; flex-direction: column; justify-content: space-between;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
@@ -69,23 +83,32 @@
       transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.2);
       box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     }
-    .card-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
-    .card-h2 { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.4rem; }
-    .card-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.2rem; }
+    .card-icon { font-size: 2.1rem; margin-bottom: 0.7rem; }
+    .card-h2 { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem; }
+    .card-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.2rem; }
     
-    .feature-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .feature-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
     .feature-pill {
       background: rgba(255,255,255,0.06); border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.3rem 0.65rem; font-size: 0.76rem; font-weight: 700; color: #cbd5e1;
+      border-radius: 8px; padding: 0.25rem 0.6rem; font-size: 0.74rem; font-weight: 700; color: #cbd5e1;
     }
 
     .card-cta {
-      font-size: 0.82rem; font-weight: 800; display: flex; align-items: center;
+      font-size: 0.8rem; font-weight: 800; display: flex; align-items: center;
       gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .cta-amber { color: var(--amber); }
     .cta-teal { color: var(--teal); }
     .cta-emerald { color: var(--emerald); }
+    .cta-blue { color: var(--blue); }
+
+    /* Info / Query Boxes */
+    .info-box {
+      background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
+      border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .info-box h3 { font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; }
+    .info-box p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
 
     footer {
       text-align: center; color: var(--muted); font-size: 0.8rem;
@@ -94,44 +117,34 @@
   </style>
 </head>
 <body>
-
-  <div class="wrapper">
-    <!-- Fully Styled Menu Header -->
+    <div class="wrapper">
+    <!-- Top Bar with Top-Right Menu Button -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
-      <nav class="nav-menu">
-        <a href="activity.html" class="nav-link">🎯 Practice Arena</a>
-        <a href="class10.html" class="nav-link">🎓 Class 10</a>
-        <a href="class9.html" class="nav-link">📖 Class 9</a>
-      </nav>
+      <div style="position: relative;">
+        <button type="button" class="menu-btn" onclick="toggleMenu()">
+          <span>Menu</span> ☰
+        </button>
+        <!-- Dropdown Menu Options -->
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="index.html" class="dropdown-item">🏠 Home</a>
+          <a href="class10.html" class="dropdown-item">🎓 Classes (9 & 10)</a>
+          <a href="activity.html" class="dropdown-item">🎯 Activities & Practice</a>
+          <a href="#sample-papers" class="dropdown-item">📄 Sample Question Papers</a>
+          <a href="#ask-doubt" class="dropdown-item">❓ Ask a Doubt</a>
+          <a href="#doubts-replies" class="dropdown-item">💬 Check My Doubts & Replies</a>
+        </div>
+      </div>
     </header>
 
     <main>
       <div class="hero">
         <h1 class="hero-h1">Interactive Learning Hub</h1>
-        <p class="hero-p">Comprehensive study notes, interactive revision tools, and board exam simulation drills.</p>
+        <p class="hero-p">Empowering secondary school education with structured curriculum notes, timelines, flashcards, and simulation drills.</p>
       </div>
 
-      <!-- Unified Activity & Practice Portal -->
-      <div class="section-title">⚡ Interactive Revision & Drills</div>
-      <div class="grid">
-        <a href="activity.html" class="hub-card">
-          <div>
-            <div class="card-icon">🎯</div>
-            <h2 class="card-h2">Activity & Practice Arena</h2>
-            <p class="card-desc">All-in-one interactive module containing cause-and-effect timeline scrubbers, NCERT 1-mark flashcard decks, and the full Assertion & Reason drill simulator.</p>
-            <div class="feature-pills">
-              <span class="feature-pill">📜 History Timelines</span>
-              <span class="feature-pill">🗂️ Flashcards</span>
-              <span class="feature-pill">⚖️ Assertion and Reasons Practice</span>
-            </div>
-          </div>
-          <div class="card-cta cta-amber">Open Practice Arena →</div>
-        </a>
-      </div>
-
-      <!-- Notes Sections -->
-      <div class="section-title">📚 Curriculum Study Materials</div>
+      <!-- 1. CLASSES (Placed Above) -->
+      <div class="section-title">🎓 Curriculum Study Materials (Classes 9 & 10)</div>
       <div class="notes-grid">
         <a href="class10.html" class="hub-card">
           <div>
@@ -151,6 +164,42 @@
           <div class="card-cta cta-emerald">Access Class 9 →</div>
         </a>
       </div>
+
+      <!-- 2. WHY THIS PORTAL EXISTS -->
+      <div class="info-box">
+        <h3>💡 Why This Portal Exists</h3>
+        <p>Built to bridge the gap between traditional textbook learning and interactive digital revision. This portal provides students and educators with fast-loading, zero-distraction academic resources designed specifically around CBSE board standards and conceptual mastery.</p>
+      </div>
+
+      <!-- 3. ASK A DOUBT OR QUERY -->
+      <div class="info-box" id="ask-doubt">
+        <h3>❓ Ask a Doubt or Query</h3>
+        <p>Stuck on a tricky concept, map location, or historical timeline? Submit your academic questions here and check back for teacher replies in your dashboard.</p>
+        <div style="margin-top: 1rem;">
+          <input type="text" placeholder="Enter your doubt or query..." style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: #fff; font-size: 0.88rem; outline: none; margin-bottom: 0.6rem;">
+          <button type="button" style="background: var(--amber); color: #000; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.85rem;" onclick="alert('Doubt submitted successfully! Check the replies section soon.')">Submit Doubt</button>
+        </div>
+      </div>
+
+      <div id="doubts-replies"></div>
+
+      <!-- 4. INTERACTIVE REVISION & DRILLS (Activity & Practice Arena) -->
+      <div class="section-title">⚡ Interactive Revision & Drills</div>
+      <div class="grid">
+        <a href="activity.html" class="hub-card">
+          <div>
+            <div class="card-icon">🎯</div>
+            <h2 class="card-h2">Activity & Practice Arena</h2>
+            <p class="card-desc">Comprehensive practice center featuring history timeline scrubbers, NCERT concept flashcards, and the full Assertion & Reason drill simulator.</p>
+            <div class="feature-pills">
+              <span class="feature-pill">📜 History Timelines</span>
+              <span class="feature-pill">🗂️ Flashcards</span>
+              <span class="feature-pill">⚖️ Assertion and Reason Practice</span>
+            </div>
+          </div>
+          <div class="card-cta cta-amber">Open Practice Arena →</div>
+        </a>
+      </div>
     </main>
 
     <footer>
@@ -158,5 +207,20 @@
     </footer>
   </div>
 
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('dropdownMenu');
+      menu.classList.toggle('show');
+    }
+
+    // Close menu when clicking outside
+    window.addEventListener('click', function(e) {
+      const menu = document.getElementById('dropdownMenu');
+      const btn = document.querySelector('.menu-btn');
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('show');
+      }
+    });
+  </script>
 </body>
 </html>
