@@ -55,28 +55,42 @@
     .cat-pill.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #93c5fd; }
 
     /* Map Layout */
-    .map-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.2rem; align-items: start; }
+    .map-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.2rem; align-items: start; }
     @media(max-width: 680px) { .map-grid { grid-template-columns: 1fr; } }
 
+    /* Percentage-Locked Map Stage */
     .map-stage {
       position: relative; background: #0c1220; border: 1px solid var(--border);
       border-radius: 20px; overflow: hidden; padding: 0.4rem;
-      display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     }
-    .map-svg { width: 100%; height: auto; max-height: 480px; display: block; }
+    .map-wrapper {
+      position: relative; width: 100%; display: block; border-radius: 16px; overflow: hidden;
+    }
+    .map-img {
+      width: 100%; height: auto; display: block; user-select: none; pointer-events: none;
+    }
 
-    /* Interactive Pins */
-    .map-pin { cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .map-pin:hover { transform: scale(1.35); }
-    .map-pin circle {
-      fill: #1d4ed8; stroke: #ffffff; stroke-width: 2.5; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.6));
+    /* Interactive Percentage Pins */
+    .pin-marker {
+      position: absolute; transform: translate(-50%, -50%);
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #1d4ed8; border: 2.5px solid #ffffff;
+      color: #ffffff; font-size: 14px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+      z-index: 10;
     }
-    .map-pin text {
-      font-size: 14px; font-weight: 900; fill: #ffffff; text-anchor: middle; dominant-baseline: central;
-      pointer-events: none;
+    .pin-marker:hover { transform: translate(-50%, -50%) scale(1.3); }
+    .pin-marker.correct {
+      background: #10b981 !important; border-color: #ffffff !important;
+      box-shadow: 0 0 16px #10b981 !important;
     }
-    .map-pin.correct circle { fill: #10b981 !important; filter: drop-shadow(0 0 12px #10b981) !important; }
-    .map-pin.wrong circle { fill: #ef4444 !important; filter: drop-shadow(0 0 12px #ef4444) !important; }
+    .pin-marker.wrong {
+      background: #ef4444 !important; border-color: #ffffff !important;
+      box-shadow: 0 0 16px #ef4444 !important;
+    }
 
     /* Control Column */
     .control-col { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -127,28 +141,16 @@
       </div>
 
       <div class="map-grid">
-        <!-- SVG Vector Map Canvas (Calibrated 800x600) -->
+        <!-- Percentage-Locked Map Container -->
         <div class="map-stage">
-          <svg class="map-svg" viewBox="0 0 800 600" id="mapSvg">
-            <image href="india-map.png" x="0" y="0" width="800" height="600" preserveAspectRatio="none" />
+          <div class="map-wrapper" id="mapWrapper">
+            <img src="india-map.png" alt="India Map" class="map-img">
             
-            <g class="map-pin" id="pinA" onclick="checkChoice('A')">
-              <circle cx="290" cy="145" r="15"/>
-              <text x="290" y="145">A</text>
-            </g>
-            <g class="map-pin" id="pinB" onclick="checkChoice('B')">
-              <circle cx="245" cy="350" r="15"/>
-              <text x="245" y="350">B</text>
-            </g>
-            <g class="map-pin" id="pinC" onclick="checkChoice('C')">
-              <circle cx="525" cy="320" r="15"/>
-              <text x="525" y="320">C</text>
-            </g>
-            <g class="map-pin" id="pinD" onclick="checkChoice('D')">
-              <circle cx="330" cy="570" r="15"/>
-              <text x="330" y="570">D</text>
-            </g>
-          </svg>
+            <div class="pin-marker" id="pinA" onclick="checkChoice('A')">A</div>
+            <div class="pin-marker" id="pinB" onclick="checkChoice('B')">B</div>
+            <div class="pin-marker" id="pinC" onclick="checkChoice('C')">C</div>
+            <div class="pin-marker" id="pinD" onclick="checkChoice('D')">D</div>
+          </div>
         </div>
 
         <!-- Controls -->
@@ -187,84 +189,85 @@
     </footer>
   </div>
     <script>
-    /* 1. CALIBRATED COORDINATE REGISTRY (Accurately positioned inside state borders) */
+    /* 1. COORDINATE REGISTRY (MAPPED AS PERCENTAGES FROM CBSE STUDY GUIDE) */
     const COORDS = {
-      // History
-      calcutta: ["Calcutta (Kolkata), West Bengal", 518, 320],
-      nagpur: ["Nagpur, Maharashtra", 375, 345],
-      madras: ["Madras (Chennai), Tamil Nadu", 382, 498],
-      champaran: ["Champaran, Bihar", 455, 235],
-      kheda: ["Kheda, Gujarat", 258, 316],
-      ahmedabad: ["Ahmedabad, Gujarat", 255, 305],
-      amritsar: ["Amritsar, Punjab", 292, 160],
-      chauri_chaura: ["Chauri Chaura, Uttar Pradesh", 448, 248],
-      dandi: ["Dandi, Gujarat", 265, 356],
+      // History (Movement Centres & Congress Sessions)
+      calcutta: ["Calcutta (Kolkata), West Bengal", 68.5, 50.5],
+      nagpur: ["Nagpur, Maharashtra", 39.5, 53.5],
+      madras: ["Madras (Chennai), Tamil Nadu", 42.0, 76.5],
+      champaran: ["Champaran, Bihar", 56.5, 36.8],
+      kheda: ["Kheda, Gujarat", 19.5, 48.0],
+      ahmedabad: ["Ahmedabad, Gujarat", 16.5, 48.8],
+      amritsar: ["Amritsar, Punjab", 25.5, 23.5],
+      chauri_chaura: ["Chauri Chaura, Uttar Pradesh", 52.5, 37.5],
+      dandi: ["Dandi, Gujarat", 20.5, 54.5],
 
       // Dams
-      salal: ["Salal Dam, J&K", 298, 95],
-      bhakra: ["Bhakra Nangal Dam, HP/Punjab", 320, 165],
-      tehri: ["Tehri Dam, Uttarakhand", 342, 172],
-      rana_pratap: ["Rana Pratap Sagar, Rajasthan", 308, 282],
-      sardar_sarovar: ["Sardar Sarovar Dam, Gujarat", 278, 332],
-      hirakud: ["Hirakud Dam, Odisha", 460, 340],
-      nagarjuna: ["Nagarjuna Sagar Dam, AP/Telangana", 380, 440],
-      tungabhadra: ["Tungabhadra Dam, Karnataka", 330, 450],
+      salal: ["Salal Dam, J&K", 26.5, 19.5],
+      bhakra: ["Bhakra Nangal Dam, HP/Punjab", 31.0, 23.5],
+      tehri: ["Tehri Dam, Uttarakhand", 37.2, 28.0],
+      rana_pratap: ["Rana Pratap Sagar, Rajasthan", 28.8, 43.0],
+      sardar_sarovar: ["Sardar Sarovar Dam, Gujarat", 21.8, 52.8],
+      hirakud: ["Hirakud Dam, Odisha", 54.5, 52.8],
+      nagarjuna: ["Nagarjuna Sagar Dam, AP/Telangana", 38.5, 67.5],
+      tungabhadra: ["Tungabhadra Dam, Karnataka", 30.5, 69.5],
 
       // Mines & Energy
-      mayurbhanj: ["Mayurbhanj Iron Ore, Odisha", 498, 318],
-      durg: ["Durg Iron Ore, Chhattisgarh", 415, 355],
-      bailadila: ["Bailadila Iron Ore, Chhattisgarh", 410, 420],
-      ballari: ["Ballari Iron Ore, Karnataka", 330, 450],
-      kudremukh: ["Kudremukh Iron Ore, Karnataka", 292, 495],
-      raniganj: ["Raniganj Coal Mine, West Bengal", 500, 292],
-      bokaro: ["Bokaro Coal / Steel, Jharkhand", 485, 285],
-      talcher: ["Talcher Coal Mine, Odisha", 480, 348],
-      neyveli: ["Neyveli Lignite, Tamil Nadu", 368, 525],
-      digboi: ["Digboi Oil Field, Assam", 625, 202],
-      naharkatia: ["Naharkatia Oil Field, Assam", 610, 215],
-      mumbai_high: ["Mumbai High Offshore, Arabian Sea", 235, 385],
-      bassein: ["Bassein Offshore, Arabian Sea", 238, 400],
-      kalol: ["Kalol Oil Field, Gujarat", 255, 298],
-      ankaleshwar: ["Ankaleshwar Oil Field, Gujarat", 265, 338],
-      namrup: ["Namrup Thermal Power, Assam", 610, 215],
-      singrauli: ["Singrauli Thermal Power, MP", 450, 285],
-      ramagundam: ["Ramagundam Thermal Power, Telangana", 378, 390],
-      narora: ["Narora Nuclear Power, UP", 350, 225],
-      rawatbhata: ["Rawatbhata Nuclear Power, Rajasthan", 308, 282],
-      kakrapar: ["Kakrapar Nuclear Power, Gujarat", 265, 348],
-      tarapur: ["Tarapur Nuclear Power, Maharashtra", 260, 375],
-      kaiga: ["Kaiga Nuclear Power, Karnataka", 280, 470],
-      kalpakkam: ["Kalpakkam Nuclear Power, Tamil Nadu", 382, 510],
+      mayurbhanj: ["Mayurbhanj Iron Ore, Odisha", 63.0, 52.0],
+      durg: ["Durg Iron Ore, Chhattisgarh", 47.8, 53.2],
+      bailadila: ["Bailadila Iron Ore, Chhattisgarh", 46.2, 61.2],
+      ballari: ["Bellary (Ballari) Iron Ore, Karnataka", 32.0, 70.8],
+      kudremukh: ["Kudremukh Iron Ore, Karnataka", 27.5, 76.5],
+      raniganj: ["Raniganj Coal Mine, West Bengal", 66.2, 46.8],
+      bokaro_c: ["Bokaro Coal Mine, Jharkhand", 60.8, 46.0],
+      talcher: ["Talcher Coal Mine, Odisha", 60.0, 53.5],
+      neyveli: ["Neyveli Lignite, Tamil Nadu", 39.8, 81.5],
+      digboi: ["Digboi Oil Field, Assam", 91.5, 35.0],
+      naharkatia: ["Naharkatia Oil Field, Assam", 89.2, 36.5],
+      mumbai_high: ["Mumbai High Offshore, Arabian Sea", 17.0, 61.2],
+      bassein: ["Bassein Offshore, Arabian Sea", 15.5, 58.2],
+      kalol: ["Kalol Oil Field, Gujarat", 21.0, 49.2],
+      ankaleshwar: ["Ankleshwar Oil Field, Gujarat", 20.0, 52.5],
+      namrup: ["Namrup Thermal Power, Assam", 90.5, 34.2],
+      singrauli: ["Singrauli Thermal Power, MP", 49.0, 44.0],
+      ramagundam: ["Ramagundam Thermal Power, Telangana", 40.0, 59.5],
+      narora: ["Narora Nuclear Power, UP", 37.8, 33.5],
+      rawatbhata: ["Rawatbhata Nuclear Power, Rajasthan", 28.8, 43.0],
+      kakrapar: ["Kakrapar Nuclear Power, Gujarat", 20.5, 53.5],
+      tarapur: ["Tarapur Nuclear Power, Maharashtra", 19.8, 57.2],
+      kaiga: ["Kaiga Nuclear Power, Karnataka", 25.5, 72.8],
+      kalpakkam: ["Kalpakkam Nuclear Power, Tamil Nadu", 41.5, 76.2],
 
       // Industries & STPs
-      mumbai: ["Mumbai, Maharashtra", 260, 390],
-      indore: ["Indore, Madhya Pradesh", 315, 320],
-      surat: ["Surat, Gujarat", 265, 348],
-      kanpur: ["Kanpur, Uttar Pradesh", 395, 260],
-      coimbatore: ["Coimbatore, Tamil Nadu", 320, 530],
-      durgapur: ["Durgapur Steel Plant, West Bengal", 505, 295],
-      jamshedpur: ["Jamshedpur (TISCO), Jharkhand", 488, 312],
-      rourkela: ["Rourkela Steel Plant, Odisha", 470, 320],
-      bhilai: ["Bhilai Steel Plant, Chhattisgarh", 415, 355],
-      vijayanagar: ["Vijayanagar Steel Plant, Karnataka", 330, 450],
-      salem: ["Salem Steel Plant, Tamil Nadu", 342, 518],
-      noida: ["Noida STP, Uttar Pradesh", 332, 218],
-      gandhinagar: ["Gandhinagar STP, Gujarat", 255, 298],
-      pune: ["Pune STP, Maharashtra", 280, 405],
-      hyderabad: ["Hyderabad STP / Airport, Telangana", 360, 422],
-      bengaluru: ["Bengaluru STP, Karnataka", 338, 495],
-      thiruvananthapuram: ["Thiruvananthapuram STP, Kerala", 322, 572],
+      mumbai: ["Mumbai, Maharashtra", 19.8, 60.5],
+      indore: ["Indore, Madhya Pradesh", 28.0, 50.8],
+      surat: ["Surat, Gujarat", 20.0, 53.8],
+      kanpur: ["Kanpur, Uttar Pradesh", 42.0, 39.2],
+      coimbatore: ["Coimbatore, Tamil Nadu", 32.0, 82.0],
+      durgapur: ["Durgapur Steel Plant, West Bengal", 66.5, 47.0],
+      bokaro_s: ["Bokaro Steel Plant, Jharkhand", 61.0, 46.5],
+      jamshedpur: ["Jamshedpur (TISCO), Jharkhand", 62.5, 50.0],
+      rourkela: ["Rourkela Steel Plant, Odisha", 57.5, 51.5],
+      bhilai: ["Bhilai Steel Plant, Chhattisgarh", 45.0, 54.5],
+      vijayanagar: ["Vijaynagar Steel Plant, Karnataka", 32.0, 67.5],
+      salem: ["Salem Steel Plant, Tamil Nadu", 36.8, 81.0],
+      noida: ["Noida STP, Uttar Pradesh", 34.0, 32.5],
+      gandhinagar: ["Gandhinagar STP, Gujarat", 17.5, 47.5],
+      pune: ["Pune STP, Maharashtra", 21.8, 62.5],
+      hyderabad: ["Hyderabad STP / Airport, Telangana", 37.5, 65.0],
+      bengaluru: ["Bengaluru STP, Karnataka", 34.5, 76.5],
+      thiruvananthapuram: ["Thiruvananthapuram, Kerala", 32.8, 88.5],
 
       // Ports & Airports
-      kandla: ["Kandla (Deendayal) Port, Gujarat", 220, 290],
-      marmagao: ["Marmagao Port, Goa", 270, 465],
-      new_mangalore: ["New Mangalore Port, Karnataka", 288, 502],
-      kochi: ["Kochi Port, Kerala", 308, 545],
-      tuticorin: ["Tuticorin Port, Tamil Nadu", 338, 570],
-      visakhapatnam: ["Visakhapatnam Port, Andhra Pradesh", 450, 410],
-      paradip: ["Paradip Port, Odisha", 515, 360],
-      haldia: ["Haldia Port, West Bengal", 515, 338],
-      delhi: ["IGI Airport, New Delhi", 332, 218]
+      kandla: ["Kandla (Deendayal) Port, Gujarat", 8.0, 48.5],
+      marmagao: ["Marmagao Port, Goa", 23.0, 69.5],
+      new_mangalore: ["New Mangalore Port, Karnataka", 26.5, 77.5],
+      kochi: ["Kochi Port, Kerala", 31.0, 85.0],
+      tuticorin: ["Tuticorin Port, Tamil Nadu", 36.5, 87.5],
+      visakhapatnam: ["Visakhapatnam Port, Andhra Pradesh", 52.5, 63.5],
+      paradip: ["Paradip Port, Odisha", 66.8, 52.5],
+      haldia: ["Haldia Port, West Bengal", 70.0, 48.5],
+      delhi: ["IGI Airport, New Delhi", 33.5, 33.0]
     };
 
     /* 2. DEDUPLICATED MAP QUESTIONS */
@@ -289,10 +292,10 @@
       ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Mayurbhanj Iron Ore Mine.", "Northernmost district of Odisha.", "mayurbhanj", "Mayurbhanj holds high-grade hematite deposits in the Badampahar range."],
       ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Durg Iron Ore Mine.", "Central-western Chhattisgarh.", "durg", "Durg supplies essential iron ore to the Bhilai Steel Plant."],
       ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Bailadila Iron Ore Mine.", "Southern Bastar district of Chhattisgarh.", "bailadila", "Bailadila produces high-grade hematite exported via Visakhapatnam port."],
-      ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Ballari Iron Ore Mine.", "Eastern-central Karnataka border.", "ballari", "Ballari is an essential iron ore mining hub in Karnataka."],
+      ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Bellary Iron Ore Mine.", "Eastern-central Karnataka border.", "ballari", "Ballari is an essential iron ore mining hub in Karnataka."],
       ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Kudremukh Iron Ore Mine.", "Western Ghats in Chikkamagaluru, Karnataka.", "kudremukh", "Kudremukh was known for exporting iron ore slurry via Mangalore port."],
       ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Raniganj Coal Mine.", "Damodar Valley in western West Bengal.", "raniganj", "Raniganj is India's oldest commercial coalfield, started in 1774."],
-      ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Bokaro Coal Mine.", "Damodar Valley in eastern Jharkhand.", "bokaro", "Bokaro supplies coking coal to major metallurgical plants in Jharkhand."],
+      ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Bokaro Coal Mine.", "Damodar Valley in eastern Jharkhand.", "bokaro_c", "Bokaro supplies coking coal to major metallurgical plants in Jharkhand."],
       ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Talcher Coal Mine.", "Mahanadi Valley in central Odisha.", "talcher", "Talcher supplies thermal coal to power stations across eastern and southern India."],
       ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Neyveli Lignite Coal Mine.", "Cuddalore district in east-central Tamil Nadu.", "neyveli", "Neyveli holds India's largest lignite deposits used for thermal power."],
       ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Digboi Oil Field.", "Oldest operating oil field in India, far north-eastern Assam.", "digboi", "Digboi in Assam is India's oldest operating oil field, drilled in 1889."],
@@ -300,7 +303,7 @@
       ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Mumbai High Offshore Oil Field.", "Arabian Sea, ~160 km west of Mumbai coast.", "mumbai_high", "Mumbai High is India's leading offshore oilfield operated by ONGC."],
       ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Bassein Offshore Oil Field.", "Offshore Arabian Sea, south of Mumbai High.", "bassein", "Bassein is a major offshore gas and oil field south of Mumbai High."],
       ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Kalol Oil Field.", "North of Ahmedabad in central Gujarat.", "kalol", "Kalol is an active onshore oil field in the Cambay basin."],
-      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Ankaleshwar Oil Field.", "South Gujarat near the mouth of Narmada River.", "ankaleshwar", "Ankaleshwar is one of Gujarat's most prolific onshore oilfields."],
+      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Ankleshwar Oil Field.", "South Gujarat near the mouth of Narmada River.", "ankaleshwar", "Ankleshwar is one of Gujarat's most prolific onshore oilfields."],
       ["Mines", "GEOGRAPHY – THERMAL PLANTS", "Locate and label Namrup Thermal Power Plant.", "Eastern Assam valley region.", "namrup", "Namrup is a gas-based thermal power station located in Dibrugarh, Assam."],
       ["Mines", "GEOGRAPHY – THERMAL PLANTS", "Locate and label Singrauli Thermal Power Plant.", "Easternmost tip of Madhya Pradesh near UP border.", "singrauli", "Singrauli Super Thermal Power Plant is operated by NTPC in MP."],
       ["Mines", "GEOGRAPHY – THERMAL PLANTS", "Locate and label Ramagundam Thermal Power Plant.", "Northern Telangana in the Godavari basin.", "ramagundam", "Ramagundam is a major coal-fired NTPC power station in Telangana."],
@@ -316,10 +319,11 @@
       ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Kanpur Cotton Textile Centre.", "Central Uttar Pradesh on the Ganga River.", "kanpur", "Kanpur is historically known as the Manchester of Northern India."],
       ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Coimbatore Cotton Textile Centre.", "Western inland Tamil Nadu.", "coimbatore", "Coimbatore is widely called the Manchester of South India."],
       ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Durgapur Iron and Steel Plant.", "Damodar Valley in western West Bengal.", "durgapur", "Durgapur Steel Plant in West Bengal was built with British collaboration."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Bokaro Steel Plant.", "Eastern Jharkhand.", "bokaro_s", "Bokaro Steel Plant in Jharkhand was built with Soviet assistance."],
       ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Jamshedpur (TISCO) Steel Plant.", "Singhbhum region in south-eastern Jharkhand.", "jamshedpur", "TISCO at Jamshedpur was founded by Jamsetji Tata in 1907."],
       ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Rourkela Iron and Steel Plant.", "Northern Odisha near Jharkhand border.", "rourkela", "Rourkela Steel Plant was built in collaboration with German firms."],
       ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Bhilai Iron and Steel Plant.", "Central Chhattisgarh near Raipur.", "bhilai", "Bhilai Steel Plant produces rails and heavy structural steel."],
-      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Vijayanagar Iron and Steel Plant.", "Ballari district in central-eastern Karnataka.", "vijayanagar", "Vijayanagar Steel Plant in Toranagallu, Karnataka uses corex technology."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Vijaynagar Iron and Steel Plant.", "Ballari district in central-eastern Karnataka.", "vijayanagar", "Vijayanagar Steel Plant in Toranagallu, Karnataka uses corex technology."],
       ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Salem Iron and Steel Plant.", "North-central Tamil Nadu.", "salem", "Salem Steel Plant produces high-grade stainless steel products."],
       ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Noida Software Technology Park.", "Western Uttar Pradesh bordering New Delhi.", "noida", "Noida is a major IT and software export cluster in northern India."],
       ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Gandhinagar Software Technology Park.", "Capital city north of Ahmedabad, Gujarat.", "gandhinagar", "Infocity at Gandhinagar is the primary IT/STP hub of Gujarat."],
@@ -405,23 +409,18 @@
       document.getElementById('feedbackBox').style.display = 'none';
       document.getElementById('nextBtn').style.display = 'none';
 
-      // Reposition SVG pins and clear revealed names from buttons
+      // Reposition percentage-locked pins and reset options
       ['A', 'B', 'C', 'D'].forEach(letter => {
         const item = activeMapping[letter];
-        const gPin = document.getElementById('pin' + letter);
-        const circle = gPin.querySelector('circle');
-        const text = gPin.querySelector('text');
+        const marker = document.getElementById('pin' + letter);
 
-        circle.setAttribute('cx', item.x);
-        circle.setAttribute('cy', item.y);
-        text.setAttribute('x', item.x);
-        text.setAttribute('y', item.y);
-
-        gPin.className.baseVal = "map-pin";
+        marker.style.left = item.x + '%';
+        marker.style.top = item.y + '%';
+        marker.className = "pin-marker";
 
         const btn = document.getElementById('btn' + letter);
         btn.querySelector('span:first-child').innerText = `📍 Choose Pin ${letter}`;
-        document.getElementById('label' + letter).innerText = ''; // Hide place name before answer
+        document.getElementById('label' + letter).innerText = ''; // Hide place name initially
         btn.className = "opt-btn";
         btn.disabled = false;
       });
@@ -437,7 +436,7 @@
         if (activeMapping[letter].isCorrect) correctLetter = letter;
         const btn = document.getElementById('btn' + letter);
         btn.disabled = true;
-        // Reveal location names on buttons after answering
+        // Reveal location names after guessing
         document.getElementById('label' + letter).innerText = activeMapping[letter].name;
       });
 
@@ -446,14 +445,14 @@
 
       if (chosen.isCorrect) {
         score++;
-        chosenPin.className.baseVal = "map-pin correct";
+        chosenPin.classList.add('correct');
         document.getElementById('btn' + choice).classList.add('correct');
-        fbBox.innerHTML = `<strong>✓ Correct!</strong> Pin ${choice} marks <strong>${chosen.name}</strong>.<br>${currentQ[5]}`;
+        fbBox.innerHTML = `<strong>✓ Correct!</strong> Pin ${choice} is <strong>${chosen.name}</strong>.<br>${currentQ[5]}`;
         fbBox.style.background = "rgba(16,185,129,0.18)";
         fbBox.style.color = "#6ee7b7";
       } else {
-        chosenPin.className.baseVal = "map-pin wrong";
-        correctPin.className.baseVal = "map-pin correct";
+        chosenPin.classList.add('wrong');
+        correctPin.classList.add('correct');
         document.getElementById('btn' + choice).classList.add('wrong');
         document.getElementById('btn' + correctLetter).classList.add('correct');
         fbBox.innerHTML = `<strong>✗ Incorrect.</strong> Pin ${choice} is ${chosen.name}.<br>The correct position for <strong>${activeMapping[correctLetter].name}</strong> is <strong>Pin ${correctLetter}</strong>.<br>${currentQ[5]}`;
