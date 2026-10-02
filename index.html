@@ -27,7 +27,6 @@
     }
     .wrapper { max-width: 680px; margin: 0 auto; }
     
-    /* Top Bar */
     .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.8rem; }
     .brand { font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; }
     .brand span { color: var(--amber); }
@@ -45,7 +44,6 @@
     }
     .nav-toggle div { width: 18px; height: 2px; background: #fff; border-radius: 2px; }
 
-    /* Modals */
     .modal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.82);
       backdrop-filter: blur(16px); z-index: 9999;
@@ -68,7 +66,6 @@
     }
     .menu-link:hover { background: rgba(59,130,246,0.15); border-color: var(--blue); }
 
-    /* Hero & Reference Class Cards */
     .hero-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--blue); text-transform: uppercase; margin-bottom: 0.5rem; }
     .hero-h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.6rem; letter-spacing: -1px; }
     .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 2rem; }
@@ -90,7 +87,6 @@
       display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem;
     }
 
-    /* Purpose / Aim Section */
     .aim-card {
       background: rgba(255,255,255,0.02); border: 1px solid var(--border);
       border-radius: 24px; padding: 1.8rem; margin: 3rem 0;
@@ -100,7 +96,6 @@
     .aim-item h4 { color: #fff; font-size: 0.95rem; margin-bottom: 0.3rem; }
     .aim-item p { color: var(--muted); font-size: 0.82rem; line-height: 1.4; }
 
-    /* Doubt Box */
     .doubt-box {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 28px; padding: 2rem; margin-bottom: 3rem;
@@ -128,7 +123,6 @@
     .alert-ok { background: rgba(45,212,191,0.15); border: 1px solid #2dd4bf; color: #2dd4bf; }
     .alert-err { background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #f87171; }
 
-    /* Inbox Display */
     .doubt-card-item {
       background: rgba(255,255,255,0.04); border: 1px solid var(--border);
       border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem; text-align: left;
@@ -145,7 +139,6 @@
 <body>
 
   <div class="wrapper">
-    <!-- Navbar -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <div class="nav-actions">
@@ -158,13 +151,11 @@
       </div>
     </header>
 
-    <!-- Hero -->
     <main>
       <div class="hero-tag">ACADEMIC HUB</div>
       <h1 class="hero-h1">Choose<br>your class.</h1>
       <p class="hero-p">Select your class to access chapter frameworks, primary sources, downloadable PDFs, and practice tests.</p>
 
-      <!-- Reference Style Class Cards -->
       <section id="classes">
         <a href="class9.html" class="class-card">
           <div class="watermark">09</div>
@@ -183,7 +174,6 @@
         </a>
       </section>
 
-      <!-- Aim of the Platform -->
       <section class="aim-card">
         <div class="hero-tag" style="color:var(--amber);">OUR PURPOSE</div>
         <h3 style="font-size:1.3rem; color:#fff; margin-bottom:0.4rem;">Why This Portal Exists</h3>
@@ -204,7 +194,7 @@
           </div>
         </div>
       </section>
-            <!-- Doubt / Query Help Desk -->
+
       <section class="doubt-box" id="doubt-desk">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:0.4rem;">
           <div class="hero-tag" style="color:var(--amber); margin-bottom:0;">FACULTY HELP DESK</div>
@@ -290,14 +280,14 @@
         </div>
         <a href="index.html" class="menu-link"><span>🏛 Home</span><span style="color:var(--amber);">→</span></a>
         <a href="#classes" class="menu-link" onclick="closeMenu()"><span>📚 Classes</span><span style="color:var(--amber);">→</span></a>
-        <a href="quiz.html" class="menu-link"><span>⚡ Quiz Arena</span><span style="color:var(--amber);">→</span></a>
+        <a href="activity.html" class="menu-link"><span>🎯 Activity & Practice Arena</span><span style="color:var(--amber);">→</span></a>
         <div class="menu-link" onclick="openPapers()"><span>📄 Sample Question Papers</span><span style="color:var(--amber);">→</span></div>
         <div class="menu-link" onclick="openInboxFromMenu()"><span>📬 Check My Doubts & Replies</span><span style="color:var(--teal);">→</span></div>
         <a href="#doubt-desk" class="menu-link" onclick="closeMenu()"><span>💬 Ask a New Doubt</span><span style="color:var(--amber);">→</span></a>
       </div>
     </div>
 
-    <!-- Sample Papers Modal (Class 10 Exclusive) -->
+    <!-- Sample Papers Modal (Class 10 Dedicated) -->
     <div class="modal" id="papersModal" onclick="closeIfBackdrop(event, 'papersModal')">
       <div class="modal-box">
         <div class="modal-head">
@@ -309,7 +299,6 @@
         </p>
 
         <div style="display:flex; flex-direction:column; gap:0.8rem;">
-          <!-- Question Paper Option -->
           <a href="https://drive.google.com/file/d/1v_zk-ouEZCNetdISDJTHVfIQoKUnnDB9/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="menu-link" style="margin-bottom:0; background:rgba(59,130,246,0.12); border-color:rgba(59,130,246,0.4);">
             <div>
               <div style="color:#fff; font-weight:700; font-size:0.95rem;">📄 Question Paper</div>
@@ -318,7 +307,6 @@
             <span style="color:var(--blue); font-weight:800; font-size:0.85rem;">View PDF ↗</span>
           </a>
 
-          <!-- Solutions Option with Coming Soon -->
           <div class="menu-link" style="margin-bottom:0; opacity:0.85; cursor:default; background:rgba(255,255,255,0.03);">
             <div>
               <div style="color:#fff; font-weight:700; font-size:0.95rem;">💡 Solutions & Answers</div>
@@ -338,7 +326,6 @@
           <button type="button" class="modal-close" onclick="closeInboxModal()">✕</button>
         </div>
 
-        <!-- Lookup Form -->
         <div id="inboxAuthBox">
           <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.2rem;">
             Enter your Name, Class, and your 4-digit secret PIN to view all your questions and replies.
@@ -364,7 +351,6 @@
           <div class="alert-box alert-err" id="inboxErr"></div>
         </div>
 
-        <!-- Results List -->
         <div id="inboxResultsBox" style="display:none;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
             <span style="font-size:0.85rem; color:var(--teal); font-weight:700;" id="inboxStudentHeader"></span>
@@ -404,7 +390,6 @@
       if (e.target.id === id) document.getElementById(id).style.display = 'none';
     }
 
-    // Submit Doubt
     const form = document.getElementById('askDoubtForm');
     const submitBtn = document.getElementById('submitDoubtBtn');
     const okMsg = document.getElementById('doubtOkMsg');
@@ -444,7 +429,6 @@
       });
     });
 
-    // Check Replies
     function fetchStudentDoubts() {
       const cls = document.getElementById('inboxClass').value;
       const name = document.getElementById('inboxName').value.trim();
