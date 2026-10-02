@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Activity & Practice Arena | Social Science Hub</title>
+  <title>2D Map Trainer | Social Science Hub</title>
   <link rel="stylesheet" href="style.css">
   <style>
     :root {
       --bg: #090d16;
-      --card-bg: linear-gradient(135deg, rgba(16, 24, 40, 0.9) 0%, rgba(20, 32, 54, 0.7) 100%);
+      --card-bg: linear-gradient(135deg, rgba(16, 24, 40, 0.94) 0%, rgba(20, 32, 54, 0.8) 100%);
       --border: rgba(255, 255, 255, 0.08);
       --amber: #f59e0b;
       --blue: #3b82f6;
@@ -19,7 +19,6 @@
       --muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-    html { scroll-behavior: smooth; }
     body {
       background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
       color: var(--text);
@@ -27,116 +26,81 @@
       padding: 1.2rem;
       min-height: 100vh;
     }
-    .wrapper { max-width: 740px; margin: 0 auto; }
+    .wrapper { max-width: 760px; margin: 0 auto; }
     
-    /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.6rem; }
-    .brand { font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.4rem; }
+    .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; }
     .brand span { color: var(--amber); }
-    .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
     .home-link {
       background: rgba(255,255,255,0.06); border: 1px solid var(--border);
       color: #fff; border-radius: 12px; padding: 0.55rem 0.9rem;
-      font-size: 0.85rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.3rem;
+      font-size: 0.85rem; font-weight: 700; text-decoration: none;
     }
 
-    /* Hero */
     .hero-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--amber); text-transform: uppercase; margin-bottom: 0.3rem; }
-    .hero-h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.4rem; letter-spacing: -0.5px; }
-    .hero-p { color: var(--muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 1.6rem; }
+    .hero-h1 { font-size: 2.1rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.5px; }
+    .hero-p { color: var(--muted); font-size: 0.9rem; line-height: 1.45; margin-bottom: 1.4rem; }
 
-    /* Tab Switcher */
-    .tabs-scroll {
-      display: flex; gap: 0.6rem; overflow-x: auto; padding-bottom: 0.8rem;
-      scrollbar-width: none; margin-bottom: 1.8rem;
+    /* Category Filter Pills */
+    .cat-scroll {
+      display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.6rem; margin-bottom: 1.2rem;
+      scrollbar-width: none;
     }
-    .tabs-scroll::-webkit-scrollbar { display: none; }
-    .tab-pill {
+    .cat-scroll::-webkit-scrollbar { display: none; }
+    .cat-pill {
       background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      border-radius: 14px; padding: 0.7rem 1.1rem; color: var(--muted);
-      font-size: 0.84rem; font-weight: 700; white-space: nowrap; cursor: pointer;
-      display: flex; align-items: center; gap: 0.45rem; transition: all 0.2s;
+      border-radius: 999px; padding: 0.45rem 0.9rem; font-size: 0.76rem; font-weight: 700;
+      color: var(--muted); white-space: nowrap; cursor: pointer; transition: 0.2s;
     }
-    .tab-pill.active {
-      background: rgba(245, 158, 11, 0.15); border-color: var(--amber);
-      color: #fff; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+    .cat-pill.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #93c5fd; }
+
+    /* Map Grid Layout */
+    .map-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.2rem; align-items: start; }
+    @media(max-width: 680px) { .map-grid { grid-template-columns: 1fr; } }
+
+    .map-stage {
+      position: relative; background: #0c1220; border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden; padding: 0.5rem;
+      display: flex; justify-content: center; align-items: center;
     }
+    .map-svg { width: 100%; height: auto; max-height: 480px; display: block; }
 
-    .tab-pane { display: none; animation: fadeIn 0.3s ease; }
-    .tab-pane.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-    .module-box {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 22px; padding: 1.8rem 1.5rem; margin-bottom: 2rem;
+    /* Interactive Pins */
+    .map-pin { cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .map-pin:hover { transform: scale(1.35); }
+    .map-pin circle {
+      fill: #1d4ed8; stroke: #ffffff; stroke-width: 2.5; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.6));
     }
-    .module-head { margin-bottom: 1.4rem; }
-    .module-head h3 { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
-    .module-head p { font-size: 0.85rem; color: var(--muted); }
-
-    /* Map Trainer CSS */
-    .map-trainer-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; align-items: center; }
-    @media(max-width: 680px) { .map-trainer-layout { grid-template-columns: 1fr; } }
-    .map-canvas-box {
-      position: relative; background: #070b14; border: 1px solid var(--border);
-      border-radius: 18px; padding: 1rem; display: flex; justify-content: center; align-items: center;
-      min-height: 330px;
+    .map-pin text {
+      font-size: 14px; font-weight: 900; fill: #ffffff; text-anchor: middle; dominant-baseline: central;
+      pointer-events: none;
     }
-    .map-svg { width: 100%; max-width: 280px; height: auto; }
-    .map-pin { cursor: pointer; transition: transform 0.2s; }
-    .map-pin:hover { transform: scale(1.25); }
-    .map-pin circle { stroke: #fff; stroke-width: 1.5; }
-    .map-pin text { font-size: 11px; font-weight: 900; fill: #fff; text-anchor: middle; dominant-baseline: central; }
-    .pin-normal circle { fill: var(--blue); }
-    .pin-correct circle { fill: var(--emerald) !important; filter: drop-shadow(0 0 8px #10b981); }
-    .pin-wrong circle { fill: var(--crimson) !important; filter: drop-shadow(0 0 8px #ef4444); }
+    .map-pin.correct circle { fill: #10b981 !important; filter: drop-shadow(0 0 12px #10b981) !important; }
+    .map-pin.wrong circle { fill: #ef4444 !important; filter: drop-shadow(0 0 12px #ef4444) !important; }
 
-    .map-control-box { display: flex; flex-direction: column; gap: 0.8rem; }
-    .map-quest-badge { font-size: 0.72rem; font-weight: 800; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; }
-    .map-target-title { font-size: 1.15rem; font-weight: 800; color: #fff; line-height: 1.3; }
-    .map-clue-text { font-size: 0.84rem; color: var(--muted); }
-    .map-opt-btn {
+    /* Control Column */
+    .control-col { display: flex; flex-direction: column; gap: 0.75rem; }
+    .q-cat { font-size: 0.72rem; font-weight: 800; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; }
+    .q-title { font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1.35; }
+    .q-clue { font-size: 0.84rem; color: var(--muted); line-height: 1.4; }
+
+    .opt-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.3rem; }
+    .opt-btn {
       width: 100%; padding: 0.75rem 1rem; border-radius: 12px;
       background: rgba(255,255,255,0.04); border: 1px solid var(--border);
       color: #fff; font-size: 0.86rem; font-weight: 600; text-align: left;
-      cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: space-between;
     }
-    .map-opt-btn:hover { background: rgba(255,255,255,0.08); }
-    .map-feedback { padding: 0.8rem; border-radius: 12px; font-size: 0.84rem; display: none; line-height: 1.4; }
+    .opt-btn:hover { background: rgba(255,255,255,0.08); }
+    .opt-btn.correct { background: rgba(16,185,129,0.2) !important; border-color: var(--emerald) !important; color: #6ee7b7; }
+    .opt-btn.wrong { background: rgba(239,68,68,0.2) !important; border-color: var(--crimson) !important; color: #fca5a5; }
 
-    /* Timeline CSS */
-    .ch-toggle-bar { display: flex; gap: 0.6rem; margin-bottom: 1.2rem; }
-    .ch-btn {
-      flex: 1; padding: 0.65rem; border-radius: 12px; border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04); color: var(--muted); font-size: 0.82rem; font-weight: 700; cursor: pointer;
+    .feedback-box { padding: 0.9rem; border-radius: 12px; font-size: 0.84rem; display: none; line-height: 1.45; }
+    .next-btn {
+      width: 100%; padding: 0.8rem; border-radius: 12px; font-size: 0.88rem; font-weight: 700;
+      background: var(--amber); color: #000; border: none; cursor: pointer; display: none; margin-top: 0.3rem;
     }
-    .ch-btn.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #fff; }
-    .timeline-range {
-      width: 100%; height: 8px; border-radius: 5px; background: rgba(255,255,255,0.1);
-      outline: none; -webkit-appearance: none; cursor: pointer; margin: 1.2rem 0 0.8rem;
-    }
-    .timeline-range::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%;
-      background: var(--amber); cursor: pointer; box-shadow: 0 0 14px rgba(245,158,11,0.7);
-    }
-    .timeline-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-top: 1rem; }
-    .year-pill { font-size: 2rem; font-weight: 900; color: var(--amber); }
-    .event-title { font-size: 1.2rem; font-weight: 800; color: #fff; margin: 0.3rem 0 1rem; }
-    .breakdown-row { display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.86rem; line-height: 1.45; }
-    .b-tag { font-weight: 800; border-radius: 6px; padding: 0.15rem 0.4rem; font-size: 0.72rem; }
-    .tag-cause { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-    .tag-action { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
-    .tag-effect { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
-
-    /* Shared Action Buttons */
-    .btn-row { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.4rem; }
-    .action-btn {
-      padding: 0.7rem 1.4rem; border-radius: 12px; font-size: 0.86rem; font-weight: 700;
-      cursor: pointer; border: none; transition: 0.2s;
-    }
-    .btn-gold { background: var(--amber); color: #000; }
-    .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; }
-    footer { text-align: center; color: var(--muted); font-size: 0.82rem; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
+    footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); margin-top: 2.5rem; }
   </style>
 </head>
 <body>
@@ -144,636 +108,359 @@
   <div class="wrapper">
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
-      <div class="nav-actions">
-        <a href="index.html" class="home-link"><span>🏛</span> Home</a>
-      </div>
+      <a href="index.html" class="home-link"><span>🏛</span> Home</a>
     </header>
 
     <main>
-      <div class="hero-tag">BOARD EXAM ACCELERATOR</div>
-      <h1 class="hero-h1">Activity Arena</h1>
-      <p class="hero-p">Interactive 2D Map Work, Dual-Chapter History Timelines, 3D Flashcards, Balanced A/R questions, and the complete Multi-Subject Quiz.</p>
+      <div class="hero-tag">MODULE 1 • MAP TRAINER</div>
+      <h1 class="hero-h1">2D Graphical Map Trainer</h1>
+      <p class="hero-p">CBSE Board Exam syllabus. No repeated questions. Pins and options randomize every round.</p>
 
-      <nav class="tabs-scroll" aria-label="Activity tabs">
-        <button type="button" class="tab-pill active" onclick="switchTab('map')">🗺️ 2D Map Trainer</button>
-        <button type="button" class="tab-pill" onclick="switchTab('timeline')">⏳ History Chronology</button>
-        <button type="button" class="tab-pill" onclick="switchTab('flashcards')">🎴 Concept Flashcards</button>
-        <button type="button" class="tab-pill" onclick="switchTab('ar')">⚖️ Assertion & Reason</button>
-        <button type="button" class="tab-pill" onclick="switchTab('quiz')">⚡ Quiz Arena</button>
-      </nav>
-            <!-- 1. 2D MAP TRAINER PANE -->
-      <section class="tab-pane active" id="pane-map">
-        <div class="module-box">
-          <div class="module-head">
-            <h3>2D Graphical Map Trainer (5 CBSE Board Marks)</h3>
-            <p>Locate major Dams, Congress Sessions, Ports, and Historical Centers directly on the map.</p>
-          </div>
+      <!-- Category Filter -->
+      <div class="cat-scroll">
+        <button type="button" class="cat-pill active" onclick="setCategory('ALL', this)">🎯 All Syllabus</button>
+        <button type="button" class="cat-pill" onclick="setCategory('History', this)">📜 History (Congress & Satyagraha)</button>
+        <button type="button" class="cat-pill" onclick="setCategory('Dams', this)">💧 Dams & Water</button>
+        <button type="button" class="cat-pill" onclick="setCategory('Mines', this)">⛏️ Mines & Energy</button>
+        <button type="button" class="cat-pill" onclick="setCategory('Industry', this)">🏭 Industries & STPs</button>
+        <button type="button" class="cat-pill" onclick="setCategory('Ports', this)">🚢 Ports & Airports</button>
+      </div>
 
-          <div class="map-trainer-layout">
-            <div class="map-canvas-box">
-              <svg class="map-svg" viewBox="0 0 300 350">
-                <path d="M 120,20 L 150,20 L 165,45 L 155,70 L 180,85 L 205,80 L 210,105 L 245,110 L 270,120 L 255,145 L 225,140 L 210,160 L 200,190 L 180,240 L 150,310 L 140,310 L 120,260 L 95,210 L 80,180 L 60,165 L 45,185 L 40,160 L 70,140 L 75,100 L 95,75 Z"
-                      fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-linejoin="round"/>
-                
-                <path d="M 150,70 Q 180,120 215,160" fill="none" stroke="rgba(59,130,246,0.25)" stroke-width="1.5" stroke-dasharray="3,3"/>
-                <path d="M 45,185 Q 120,180 195,195" fill="none" stroke="rgba(59,130,246,0.25)" stroke-width="1.5" stroke-dasharray="3,3"/>
-                
-                <g class="map-pin pin-normal" id="svgPinA" onclick="checkMapChoice('A')">
-                  <circle cx="105" cy="80" r="13"/>
-                  <text x="105" y="80">A</text>
-                </g>
-                <g class="map-pin pin-normal" id="svgPinB" onclick="checkMapChoice('B')">
-                  <circle cx="65" cy="170" r="13"/>
-                  <text x="65" y="170">B</text>
-                </g>
-                <g class="map-pin pin-normal" id="svgPinC" onclick="checkMapChoice('C')">
-                  <circle cx="185" cy="180" r="13"/>
-                  <text x="185" y="180">C</text>
-                </g>
-                <g class="map-pin pin-normal" id="svgPinD" onclick="checkMapChoice('D')">
-                  <circle cx="140" cy="285" r="13"/>
-                  <text x="140" y="285">D</text>
-                </g>
-              </svg>
-            </div>
-
-            <div class="map-control-box">
-              <span class="map-quest-badge" id="mapTag">HISTORY • NATIONAL MOVEMENT</span>
-              <div class="map-target-title" id="mapQuestionTitle">Where did the Jallianwala Bagh massacre take place?</div>
-              <div class="map-clue-text" id="mapClue">Clue: Golden Temple city in Punjab (13 April 1919).</div>
-
-              <div id="mapBtnGroup" style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.4rem;">
-                <button type="button" class="map-opt-btn" onclick="checkMapChoice('A')"><span>📍 Pin A</span> <span id="labelA">Amritsar (Punjab)</span></button>
-                <button type="button" class="map-opt-btn" onclick="checkMapChoice('B')"><span>📍 Pin B</span> <span id="labelB">Dandi (Gujarat)</span></button>
-                <button type="button" class="map-opt-btn" onclick="checkMapChoice('C')"><span>📍 Pin C</span> <span id="labelC">Hirakud (Odisha)</span></button>
-                <button type="button" class="map-opt-btn" onclick="checkMapChoice('D')"><span>📍 Pin D</span> <span id="labelD">Tuticorin (Tamil Nadu)</span></button>
-              </div>
-
-              <div class="map-feedback" id="mapFeedbackBox"></div>
-              <button type="button" class="action-btn btn-gold" style="width:100%; display:none;" id="nextMapBtn" onclick="nextMapRound()">Next Map Challenge →</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. DUAL HISTORY CHRONOLOGY SLIDER PANE -->
-      <section class="tab-pane" id="pane-timeline">
-        <div class="module-box">
-          <div class="module-head">
-            <h3>History Chronology & Timeline Slider</h3>
-            <p>Master cause-and-effect timelines for both compulsory History chapters.</p>
-          </div>
-
-          <div class="ch-toggle-bar">
-            <button type="button" class="ch-btn active" id="ch1Btn" onclick="selectHistoryChapter(1)">Ch 1: Nationalism in Europe</button>
-            <button type="button" class="ch-btn" id="ch2Btn" onclick="selectHistoryChapter(2)">Ch 2: Nationalism in India</button>
-          </div>
-
-          <div style="margin: 1rem 0;">
-            <input type="range" min="0" max="7" value="0" class="timeline-range" id="chTimelineSlider" oninput="renderTimeline(this.value)">
-            <div id="sliderTicks" style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); font-weight:700;"></div>
-          </div>
-
-          <div class="timeline-card">
-            <span class="year-pill" id="tlYear">1789</span>
-            <div class="event-title" id="tlTitle">The French Revolution</div>
+      <div class="map-grid">
+        <!-- SVG Vector Map Canvas -->
+        <div class="map-stage">
+          <svg class="map-svg" viewBox="0 0 800 650" id="mapSvg">
+            <image href="india-map.png" x="0" y="0" width="800" height="650" preserveAspectRatio="xMidYMid meet" />
             
-            <div class="breakdown-row">
-              <div><span class="b-tag tag-cause">CAUSE</span> <span id="tlCause" style="color:#fca5a5;">Autocratic Bourbon monarchy and feudal estate privileges.</span></div>
-              <div><span class="b-tag tag-action">CORE EVENT</span> <span id="tlEvent" style="color:#bfdbfe;">Sovereignty transferred from monarchy to body of French citizens; ideas of la patrie & le citoyen.</span></div>
-              <div><span class="b-tag tag-effect">CBSE TAKEAWAY</span> <span id="tlEffect" style="color:#6ee7b7;">Created first clear expression of nationalism in Europe.</span></div>
-            </div>
-          </div>
+            <g class="map-pin" id="pinA" onclick="checkChoice('A')">
+              <circle cx="285" cy="145" r="16"/>
+              <text x="285" y="145">A</text>
+            </g>
+            <g class="map-pin" id="pinB" onclick="checkChoice('B')">
+              <circle cx="235" cy="360" r="16"/>
+              <text x="235" y="360">B</text>
+            </g>
+            <g class="map-pin" id="pinC" onclick="checkChoice('C')">
+              <circle cx="535" cy="325" r="16"/>
+              <text x="535" y="325">C</text>
+            </g>
+            <g class="map-pin" id="pinD" onclick="checkChoice('D')">
+              <circle cx="365" cy="525" r="16"/>
+              <text x="365" y="525">D</text>
+            </g>
+          </svg>
         </div>
-      </section>
-            <!-- 3. TRUE PORTRAIT 3D FLASHCARDS PANE -->
-      <section class="tab-pane" id="pane-flashcards">
-        <style>
-          .flashcard-deck-box { display: flex; flex-direction: column; align-items: center; }
-          .fc-filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.4rem; justify-content: center; }
-          .fc-filter-btn {
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-            padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.75rem; color: var(--muted); cursor: pointer;
-          }
-          .fc-filter-btn.active { background: rgba(20,184,166,0.18); border-color: var(--teal); color: #5eead4; }
 
-          .card-scene {
-            perspective: 1200px; width: 100%; max-width: 440px; height: 390px; cursor: pointer; margin-bottom: 1rem;
-          }
-          .flashcard {
-            width: 100%; height: 100%; position: relative; transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 24px;
-          }
-          .flashcard.flipped { transform: rotateY(180deg); }
-          .card-face {
-            position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            border-radius: 24px; padding: 2rem 1.8rem; display: flex; flex-direction: column;
-            justify-content: space-between; border: 1px solid var(--border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-          }
-          .card-front {
-            background: radial-gradient(circle at 50% 20%, rgba(30,58,138,0.25), rgba(15,23,42,0.95));
-            border-color: rgba(59,130,246,0.3); text-align: center; justify-content: center; align-items: center;
-          }
-          .card-back {
-            background: #0b1329; transform: rotateY(180deg);
-            border-color: rgba(20,184,166,0.4); text-align: left;
-          }
-          .fc-kw-item { font-size: 0.82rem; color: #ccfbf1; line-height: 1.4; margin-top: 4px; }
-        </style>
+        <!-- Controls -->
+        <div class="control-col">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="q-cat" id="qCatLabel">HISTORY</span>
+            <span style="font-size:0.75rem; color:#fff; font-weight:700;" id="qScoreLabel">Score: 0 / 0</span>
+          </div>
+          <div class="q-title" id="qTitle">Loading Question...</div>
+          <div class="q-clue" id="qClue">Clue: ...</div>
 
-        <div class="module-box">
-          <div class="module-head">
-            <h3>Concept Flashcards Deck</h3>
-            <p>Tap card to flip for formal NCERT definitions, keyword checklists, and common traps.</p>
+          <div class="opt-list">
+            <button type="button" class="opt-btn" id="btnA" onclick="checkChoice('A')"><span>📍 Pin A</span> <span id="labelA">...</span></button>
+            <button type="button" class="opt-btn" id="btnB" onclick="checkChoice('B')"><span>📍 Pin B</span> <span id="labelB">...</span></button>
+            <button type="button" class="opt-btn" id="btnC" onclick="checkChoice('C')"><span>📍 Pin C</span> <span id="labelC">...</span></button>
+            <button type="button" class="opt-btn" id="btnD" onclick="checkChoice('D')"><span>📍 Pin D</span> <span id="labelD">...</span></button>
           </div>
 
-          <div class="flashcard-deck-box">
-            <div class="fc-filter-row">
-              <button type="button" class="fc-filter-btn active" onclick="filterCards('ALL', this)">All Subjects</button>
-              <button type="button" class="fc-filter-btn" onclick="filterCards('History', this)">History</button>
-              <button type="button" class="fc-filter-btn" onclick="filterCards('Geography', this)">Geography</button>
-              <button type="button" class="fc-filter-btn" onclick="filterCards('Civics', this)">Civics</button>
-              <button type="button" class="fc-filter-btn" onclick="filterCards('Economics', this)">Economics</button>
-            </div>
-
-            <div class="card-scene" onclick="flipActiveCard()">
-              <div class="flashcard" id="deckCard">
-                <div class="card-face card-front">
-                  <span style="font-size:0.75rem; font-weight:800; color:var(--amber); letter-spacing:1px; text-transform:uppercase;" id="fcTag">CIVICS • CHAPTER 1</span>
-                  <div style="font-size:2rem; font-weight:900; color:#fff; margin:1.2rem 0;" id="fcTitle">Majoritarianism</div>
-                  <span style="font-size:0.76rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; border:1px dashed rgba(255,255,255,0.2); padding:0.4rem 0.8rem; border-radius:999px;">
-                    Tap Card to Flip ↻
-                  </span>
-                </div>
-
-                <div class="card-face card-back">
-                  <div>
-                    <span style="font-size:0.72rem; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:1px;">EXACT NCERT DEFINITION</span>
-                    <p style="font-size:0.92rem; color:#f8fafc; line-height:1.45; margin-top:0.4rem;" id="fcDef"></p>
-                  </div>
-
-                  <div style="margin: 0.8rem 0; padding:0.8rem; background:rgba(20,184,166,0.08); border-radius:12px; border-left:3px solid var(--teal);">
-                    <strong style="font-size:0.78rem; color:#5eead4; display:block; margin-bottom:3px;">🔑 CBSE KEYWORD CHECKLIST:</strong>
-                    <div id="fcKeywords"></div>
-                  </div>
-
-                  <div style="font-size:0.78rem; color:#fca5a5;">
-                    <strong>⚠️ Common Exam Trap:</strong> <span id="fcTrap"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="btn-row">
-              <button type="button" class="action-btn btn-outline" onclick="prevCard()">← Previous</button>
-              <button type="button" class="action-btn btn-gold" onclick="nextCard()">Next Card →</button>
-            </div>
-          </div>
+          <div class="feedback-box" id="feedbackBox"></div>
+          <button type="button" class="next-btn" id="nextBtn" onclick="nextRound()">Next Map Question →</button>
         </div>
-      </section>
-
-      <!-- 4. BALANCED ASSERTION & REASON PANE -->
-      <section class="tab-pane" id="pane-ar">
-        <style>
-          .ar-opt-box { display: flex; flex-direction: column; gap: 0.55rem; margin: 1.2rem 0; }
-          .ar-choice-btn {
-            width: 100%; padding: 0.85rem 1rem; border-radius: 12px;
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-            color: #fff; font-size: 0.86rem; text-align: left; cursor: pointer; transition: 0.2s;
-          }
-          .ar-choice-btn:hover { background: rgba(255,255,255,0.08); }
-          .ar-choice-btn.correct { background: rgba(16,185,129,0.2) !important; border-color: var(--emerald) !important; color: #6ee7b7; }
-          .ar-choice-btn.wrong { background: rgba(239,68,68,0.2) !important; border-color: var(--crimson) !important; color: #fca5a5; }
-        </style>
-
-        <div class="module-box">
-          <div class="module-head">
-            <h3>Assertion & Reason Simulator (CBSE Section A)</h3>
-            <p>Balanced across Options A, B, C, and D with comprehensive logic explanations.</p>
-          </div>
-
-          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:1.4rem;">
-            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--amber); font-weight:800; margin-bottom:0.8rem;">
-              <span id="arSubjectTag">ECONOMICS</span>
-              <span id="arTargetAnswerBadge">QUESTION 1 OF 4</span>
-            </div>
-
-            <div style="font-size:0.95rem; line-height:1.45; margin-bottom:0.6rem;" id="arAssertText">
-              <strong>Assertion (A):</strong> Crude oil reserves in the world are rapidly depleting.
-            </div>
-            <div style="font-size:0.95rem; line-height:1.45;" id="arReasonText">
-              <strong>Reason (R):</strong> Sustainable development emphasizes that present development should not compromise the needs of future generations.
-            </div>
-
-            <div class="ar-opt-box" id="arButtonsContainer">
-              <button type="button" class="ar-choice-btn" onclick="submitAR(0, this)">(A) Both A and R are true, and R is the correct explanation of A.</button>
-              <button type="button" class="ar-choice-btn" onclick="submitAR(1, this)">(B) Both A and R are true, but R is NOT the correct explanation of A.</button>
-              <button type="button" class="ar-choice-btn" onclick="submitAR(2, this)">(C) A is true, but R is false.</button>
-              <button type="button" class="ar-choice-btn" onclick="submitAR(3, this)">(D) A is false, but R is true.</button>
-            </div>
-
-            <div id="arExplanationBox" style="display:none; padding:1rem; border-radius:12px; background:rgba(59,130,246,0.12); color:#bfdbfe; font-size:0.86rem; line-height:1.45;"></div>
-          </div>
-
-          <div class="btn-row">
-            <button type="button" class="action-btn btn-gold" id="nextARBtn" style="display:none;" onclick="nextARQuestion()">Next A/R Challenge →</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. FULL MULTI-SUBJECT QUIZ ARENA PANE -->
-      <section class="tab-pane" id="pane-quiz">
-        <style>
-          .quiz-sub-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
-          .q-sub-btn {
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-            padding: 0.45rem 0.9rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700; color: var(--muted); cursor: pointer;
-          }
-          .q-sub-btn.active { background: rgba(245,158,11,0.18); border-color: var(--amber); color: #fff; }
-        </style>
-
-        <div class="module-box">
-          <div class="module-head">
-            <h3>Full Board Quiz Arena</h3>
-            <p>Select your subject and test yourself against authentic CBSE 1-mark board questions.</p>
-          </div>
-
-          <div class="quiz-sub-filter">
-            <button type="button" class="q-sub-btn active" onclick="setQuizFilter('ALL', this)">All Subjects</button>
-            <button type="button" class="q-sub-btn" onclick="setQuizFilter('History', this)">📜 History</button>
-            <button type="button" class="q-sub-btn" onclick="setQuizFilter('Geography', this)">🌍 Geography</button>
-            <button type="button" class="q-sub-btn" onclick="setQuizFilter('Civics', this)">🏛️ Civics</button>
-            <button type="button" class="q-sub-btn" onclick="setQuizFilter('Economics', this)">📊 Economics</button>
-          </div>
-
-          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:1.4rem;">
-            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-bottom:0.8rem;">
-              <span id="quizSubjName" style="color:var(--teal); font-weight:800;">HISTORY</span>
-              <span id="quizScoreCount" style="color:#fff; font-weight:700;">Score: 0 / 0</span>
-            </div>
-
-            <div style="font-size:1.05rem; font-weight:700; color:#fff; line-height:1.4; margin-bottom:1.2rem;" id="quizQTitle"></div>
-
-            <div id="quizOptionsList" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
-
-            <div id="quizExplainBox" style="display:none; margin-top:1rem; padding:0.9rem; border-radius:12px; font-size:0.84rem; background:rgba(20,184,166,0.12); color:#ccfbf1; line-height:1.4;"></div>
-          </div>
-
-          <div class="btn-row">
-            <button type="button" class="action-btn btn-gold" id="quizNextBtn" style="display:none;" onclick="loadNextQuiz()">Next Board Question →</button>
-          </div>
-        </div>
-      </section>
+      </div>
     </main>
 
     <footer>
-      <p>© 2026 Social Science Academic Hub • NCERT Aligned Learning</p>
+      <p>© 2026 Social Science Academic Hub • Module 1</p>
     </footer>
   </div>
     <script>
-    /* TAB SWITCHING */
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-pill').forEach(el => el.classList.remove('active'));
-      document.getElementById('pane-' + tabId).classList.add('active');
-      event.currentTarget.classList.add('active');
-    }
+    /* 1. COORDINATE REGISTRY */
+    const COORDS = {
+      calcutta: ["Calcutta (Kolkata), West Bengal", 535, 325],
+      nagpur: ["Nagpur, Maharashtra", 375, 340],
+      madras: ["Madras (Chennai), Tamil Nadu", 365, 525],
+      champaran: ["Champaran, Bihar", 480, 225],
+      kheda: ["Kheda, Gujarat", 235, 325],
+      ahmedabad: ["Ahmedabad, Gujarat", 235, 315],
+      amritsar: ["Amritsar, Punjab", 285, 145],
+      chauri_chaura: ["Chauri Chaura, Uttar Pradesh", 465, 235],
+      dandi: ["Dandi, Gujarat", 235, 360],
+      salal: ["Salal Dam, J&K", 280, 85],
+      bhakra: ["Bhakra Nangal Dam, HP/Punjab", 310, 145],
+      tehri: ["Tehri Dam, Uttarakhand", 345, 165],
+      rana_pratap: ["Rana Pratap Sagar, Rajasthan", 280, 265],
+      sardar_sarovar: ["Sardar Sarovar Dam, Gujarat", 255, 340],
+      hirakud: ["Hirakud Dam, Odisha", 485, 350],
+      nagarjuna: ["Nagarjuna Sagar Dam, AP/Telangana", 375, 465],
+      tungabhadra: ["Tungabhadra Dam, Karnataka", 310, 485],
+      mayurbhanj: ["Mayurbhanj Iron Ore, Odisha", 520, 340],
+      durg: ["Durg Iron Ore, Chhattisgarh", 425, 360],
+      bailadila: ["Bailadila Iron Ore, Chhattisgarh", 425, 420],
+      ballari: ["Ballari Iron Ore, Karnataka", 315, 480],
+      kudremukh: ["Kudremukh Iron Ore, Karnataka", 260, 515],
+      raniganj: ["Raniganj Coal Mine, West Bengal", 535, 310],
+      bokaro: ["Bokaro Coal / Steel, Jharkhand", 515, 300],
+      talcher: ["Talcher Coal Mine, Odisha", 505, 355],
+      neyveli: ["Neyveli Lignite, Tamil Nadu", 355, 565],
+      digboi: ["Digboi Oil Field, Assam", 675, 215],
+      naharkatia: ["Naharkatia Oil Field, Assam", 665, 225],
+      mumbai_high: ["Mumbai High Offshore, Arabian Sea", 205, 395],
+      bassein: ["Bassein Offshore, Arabian Sea", 215, 410],
+      kalol: ["Kalol Oil Field, Gujarat", 230, 305],
+      ankaleshwar: ["Ankaleshwar Oil Field, Gujarat", 235, 345],
+      namrup: ["Namrup Thermal Power, Assam", 660, 225],
+      singrauli: ["Singrauli Thermal Power, MP", 455, 285],
+      ramagundam: ["Ramagundam Thermal Power, Telangana", 375, 425],
+      narora: ["Narora Nuclear Power, UP", 340, 205],
+      rawatbhata: ["Rawatbhata Nuclear Power, Rajasthan", 280, 265],
+      kakrapar: ["Kakrapar Nuclear Power, Gujarat", 235, 350],
+      tarapur: ["Tarapur Nuclear Power, Maharashtra", 235, 390],
+      kaiga: ["Kaiga Nuclear Power, Karnataka", 255, 495],
+      kalpakkam: ["Kalpakkam Nuclear Power, Tamil Nadu", 370, 540],
+      mumbai: ["Mumbai, Maharashtra", 235, 395],
+      indore: ["Indore, Madhya Pradesh", 290, 320],
+      surat: ["Surat, Gujarat", 235, 355],
+      kanpur: ["Kanpur, Uttar Pradesh", 390, 245],
+      coimbatore: ["Coimbatore, Tamil Nadu", 305, 565],
+      durgapur: ["Durgapur Steel Plant, West Bengal", 530, 315],
+      jamshedpur: ["Jamshedpur (TISCO), Jharkhand", 520, 330],
+      rourkela: ["Rourkela Steel Plant, Odisha", 485, 335],
+      bhilai: ["Bhilai Steel Plant, Chhattisgarh", 420, 360],
+      vijayanagar: ["Vijayanagar Steel Plant, Karnataka", 310, 480],
+      salem: ["Salem Steel Plant, Tamil Nadu", 340, 550],
+      noida: ["Noida STP, Uttar Pradesh", 325, 195],
+      gandhinagar: ["Gandhinagar STP, Gujarat", 235, 310],
+      pune: ["Pune STP, Maharashtra", 255, 420],
+      hyderabad: ["Hyderabad STP / Airport, Telangana", 365, 440],
+      bengaluru: ["Bengaluru STP, Karnataka", 325, 525],
+      thiruvananthapuram: ["Thiruvananthapuram STP, Kerala", 305, 625],
+      kandla: ["Kandla (Deendayal) Port, Gujarat", 185, 295],
+      marmagao: ["Marmagao Port, Goa", 245, 485],
+      new_mangalore: ["New Mangalore Port, Karnataka", 260, 530],
+      kochi: ["Kochi Port, Kerala", 295, 600],
+      tuticorin: ["Tuticorin Port, Tamil Nadu", 325, 630],
+      visakhapatnam: ["Visakhapatnam Port, Andhra Pradesh", 480, 435],
+      paradip: ["Paradip Port, Odisha", 535, 375],
+      haldia: ["Haldia Port, West Bengal", 535, 345],
+      delhi: ["IGI Airport, New Delhi", 320, 190]
+    };
 
-    /* 1. 2D GRAPHICAL MAP TRAINER LOGIC */
-    const mapQuestions = [
-      {
-        tag: "HISTORY • NATIONAL MOVEMENT",
-        title: "Where did the Jallianwala Bagh massacre take place?",
-        clue: "Location: Punjab (13 April 1919).",
-        correct: "A",
-        options: { A: "Amritsar (Punjab)", B: "Dandi (Gujarat)", C: "Hirakud (Odisha)", D: "Tuticorin (Tamil Nadu)" },
-        explain: "✓ Correct! Pin A represents Amritsar in Punjab, where General Dyer opened fire on peaceful citizens gathered at Jallianwala Bagh."
-      },
-      {
-        tag: "HISTORY • SALT SATYAGRAHA",
-        title: "Where did Mahatma Gandhi break the Salt Law to launch Civil Disobedience?",
-        clue: "Location: Coastal Gujarat (6 April 1930).",
-        correct: "B",
-        options: { A: "Amritsar (Punjab)", B: "Dandi (Gujarat)", C: "Hirakud (Odisha)", D: "Madras (Tamil Nadu)" },
-        explain: "✓ Correct! Pin B marks Dandi on the Gujarat coast, where the 240-mile Salt March concluded."
-      },
-      {
-        tag: "GEOGRAPHY • MULTIPURPOSE DAM",
-        title: "Locate the major dam built on the Mahanadi River.",
-        clue: "Location: Odisha (One of the longest dams in the world).",
-        correct: "C",
-        options: { A: "Bhakra Nangal (HP)", B: "Sardar Sarovar (Gujarat)", C: "Hirakud Dam (Odisha)", D: "Nagarjuna Sagar (AP)" },
-        explain: "✓ Correct! Pin C identifies Hirakud Dam across the Mahanadi River in Odisha."
-      },
-      {
-        tag: "GEOGRAPHY • MAJOR SEA PORT",
-        title: "Identify this major seaport located in the southern tip of Tamil Nadu.",
-        clue: "Location: Gulf of Mannar, Tamil Nadu.",
-        correct: "D",
-        options: { A: "Kandla (Gujarat)", B: "Marmagao (Goa)", C: "Paradip (Odisha)", D: "Tuticorin (Tamil Nadu)" },
-        explain: "✓ Correct! Pin D marks Tuticorin (V.O. Chidambaranar Port) in Tamil Nadu."
+    /* 2. DEDUPLICATED MAP QUESTION DATABASE */
+    const QUESTIONS = [
+      // History Sessions
+      ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in September 1920?", "Capital of West Bengal, near the Hugli River.", "calcutta", "The September 1920 Special Congress session in Calcutta adopted the Non-Cooperation resolution."],
+      ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in December 1920?", "Eastern Maharashtra (Vidarbha region).", "nagpur", "At Nagpur in December 1920, the Non-Cooperation program was formally ratified."],
+      ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in 1927?", "Northern coastal capital of Tamil Nadu.", "madras", "The 1927 Madras session, presided by Dr. Ansari, resolved to boycott the Simon Commission."],
+      // History Satyagraha
+      ["History", "HISTORY – MOVEMENT CENTRES", "Where did Mahatma Gandhi organize a Satyagraha for Indigo Planters?", "North-western district of Bihar bordering Nepal.", "champaran", "Champaran (1917) was Gandhi's first Satyagraha in India against the tinkathia indigo system."],
+      ["History", "HISTORY – MOVEMENT CENTRES", "Where was the Peasant Satyagraha organized to demand revenue relaxation?", "Central Gujarat, south of Ahmedabad.", "kheda", "In Kheda (1918), peasants refused revenue payment following crop failure and plague."],
+      ["History", "HISTORY – MOVEMENT CENTRES", "Where did Mahatma Gandhi organize a Satyagraha for Cotton Mill Workers?", "Central-western Gujarat on Sabarmati River banks.", "ahmedabad", "Ahmedabad (1918) witnessed Gandhi's hunger strike demanding a 35% wage bonus for mill workers."],
+      ["History", "HISTORY – MOVEMENT CENTRES", "Where did the infamous Jallianwala Bagh massacre take place?", "North-western Punjab near the Wagah border (13 April 1919).", "amritsar", "General Dyer opened fire on peaceful citizens gathered on Baisakhi at Jallianwala Bagh, Amritsar."],
+      ["History", "HISTORY – MOVEMENT CENTRES", "Where did the incident occur that caused Gandhi to call off Non-Cooperation?", "Eastern Uttar Pradesh, near Gorakhpur (Feb 1922).", "chauri_chaura", "At Chauri Chaura, 22 policemen were killed when a police post was set on fire, halting the movement."],
+      ["History", "HISTORY – MOVEMENT CENTRES", "From where did Gandhi break the Salt Law to initiate Civil Disobedience?", "Coastal village in Navsari district, south Gujarat (6 April 1930).", "dandi", "The Salt March ended at Dandi, where Gandhi boiled seawater to break the British salt monopoly."],
+      // Dams
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Salal Dam.", "Chenab River in southern Jammu & Kashmir.", "salal", "Salal Dam is a major hydroelectric station on the Chenab River in J&K."],
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Bhakra Nangal Dam.", "Satluj River on Himachal Pradesh / Punjab border.", "bhakra", "Bhakra Nangal is one of India's highest gravity dams, built on the Satluj River."],
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Tehri Dam.", "Highest dam in India, Bhagirathi River in Uttarakhand.", "tehri", "Tehri Dam is located in Garhwal hills, Uttarakhand on the Bhagirathi River."],
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Rana Pratap Sagar Dam.", "Chambal River in south-eastern Rajasthan.", "rana_pratap", "Rana Pratap Sagar is a major multipurpose dam on the Chambal River in Rajasthan."],
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Sardar Sarovar Dam.", "Narmada River in south-eastern Gujarat.", "sardar_sarovar", "Sardar Sarovar Dam spans the Narmada River and was the focus of Narmada Bachao Andolan."],
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Hirakud Dam.", "Mahanadi River near Sambalpur in western Odisha.", "hirakud", "Hirakud is one of the world's longest earthen dams on the Mahanadi River."],
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Nagarjuna Sagar Dam.", "Krishna River on Telangana / Andhra Pradesh border.", "nagarjuna", "Nagarjuna Sagar Dam on the Krishna River supplies extensive irrigation across AP and Telangana."],
+      ["Dams", "GEOGRAPHY – DAMS", "Locate and label Tungabhadra Dam.", "Tungabhadra River in central-eastern Karnataka.", "tungabhadra", "Tungabhadra Dam is located near Ballari on the Tungabhadra River."],
+      // Mines & Energy
+      ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Mayurbhanj Iron Ore Mine.", "Northernmost district of Odisha.", "mayurbhanj", "Mayurbhanj holds high-grade hematite deposits in the Badampahar range."],
+      ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Durg Iron Ore Mine.", "Central-western Chhattisgarh.", "durg", "Durg supplies essential iron ore to the Bhilai Steel Plant."],
+      ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Bailadila Iron Ore Mine.", "Southern Bastar district of Chhattisgarh.", "bailadila", "Bailadila produces high-grade hematite exported via Visakhapatnam port."],
+      ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Ballari Iron Ore Mine.", "Eastern-central Karnataka border.", "ballari", "Ballari is an essential iron ore mining hub in Karnataka."],
+      ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Kudremukh Iron Ore Mine.", "Western Ghats in Chikkamagaluru, Karnataka.", "kudremukh", "Kudremukh was known for exporting iron ore slurry via Mangalore port."],
+      ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Raniganj Coal Mine.", "Damodar Valley in western West Bengal.", "raniganj", "Raniganj is India's oldest commercial coalfield, started in 1774."],
+      ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Bokaro Coal Mine.", "Damodar Valley in eastern Jharkhand.", "bokaro", "Bokaro supplies coking coal to major metallurgical plants in Jharkhand."],
+      ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Talcher Coal Mine.", "Mahanadi Valley in central Odisha.", "talcher", "Talcher supplies thermal coal to power stations across eastern and southern India."],
+      ["Mines", "GEOGRAPHY – COAL MINES", "Locate and label Neyveli Lignite Coal Mine.", "Cuddalore district in east-central Tamil Nadu.", "neyveli", "Neyveli holds India's largest lignite deposits used for thermal power."],
+      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Digboi Oil Field.", "Oldest operating oil field in India, far north-eastern Assam.", "digboi", "Digboi in Assam is India's oldest operating oil field, drilled in 1889."],
+      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Naharkatia Oil Field.", "Upper Assam, south-west of Digboi.", "naharkatia", "Naharkatia is a key petroleum reserve in the Brahmaputra valley."],
+      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Mumbai High Offshore Oil Field.", "Arabian Sea, ~160 km west of Mumbai coast.", "mumbai_high", "Mumbai High is India's leading offshore oilfield operated by ONGC."],
+      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Bassein Offshore Oil Field.", "Offshore Arabian Sea, south of Mumbai High.", "bassein", "Bassein is a major offshore gas and oil field south of Mumbai High."],
+      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Kalol Oil Field.", "North of Ahmedabad in central Gujarat.", "kalol", "Kalol is an active onshore oil field in the Cambay basin."],
+      ["Mines", "GEOGRAPHY – OIL FIELDS", "Locate and label Ankaleshwar Oil Field.", "South Gujarat near the mouth of Narmada River.", "ankaleshwar", "Ankaleshwar is one of Gujarat's most prolific onshore oilfields."],
+      ["Mines", "GEOGRAPHY – THERMAL PLANTS", "Locate and label Namrup Thermal Power Plant.", "Eastern Assam valley region.", "namrup", "Namrup is a gas-based thermal power station located in Dibrugarh, Assam."],
+      ["Mines", "GEOGRAPHY – THERMAL PLANTS", "Locate and label Singrauli Thermal Power Plant.", "Easternmost tip of Madhya Pradesh near UP border.", "singrauli", "Singrauli Super Thermal Power Plant is operated by NTPC in MP."],
+      ["Mines", "GEOGRAPHY – THERMAL PLANTS", "Locate and label Ramagundam Thermal Power Plant.", "Northern Telangana in the Godavari basin.", "ramagundam", "Ramagundam is a major coal-fired NTPC power station in Telangana."],
+      ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Narora Nuclear Power Plant.", "Bulandshahr district, western Uttar Pradesh.", "narora", "Narora operates heavy water reactors along the Ganga in western UP."],
+      ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Rawatbhata Nuclear Power Plant.", "South-eastern Rajasthan near Kota.", "rawatbhata", "Rawatbhata nuclear facility sits on the Rana Pratap Sagar reservoir."],
+      ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Kakrapar Nuclear Power Plant.", "Southern Gujarat near the Tapi River.", "kakrapar", "Kakrapar is an atomic power facility located in Gujarat."],
+      ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Tarapur Nuclear Power Plant.", "Coastal northern Maharashtra, north of Mumbai.", "tarapur", "Tarapur was India's first commercial atomic power station (1969)."],
+      ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Kaiga Nuclear Power Plant.", "Western Ghats, Uttara Kannada district in Karnataka.", "kaiga", "Kaiga operates four heavy water reactors on the Kali River in Karnataka."],
+      ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Kalpakkam Nuclear Power Plant.", "Coromandel Coast south of Chennai, Tamil Nadu.", "kalpakkam", "Kalpakkam (Madras Atomic Power Station) is in Tamil Nadu."],
+      // Industries & STPs
+      ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Mumbai Cotton Textile Centre.", "Western coastal capital of Maharashtra.", "mumbai", "Mumbai was historically referred to as the Cottonopolis of India."],
+      ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Indore Cotton Textile Centre.", "Malwa plateau in western Madhya Pradesh.", "indore", "Indore is a leading textile manufacturing and trading city in MP."],
+      ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Surat Cotton Textile Centre.", "Coastal southern Gujarat.", "surat", "Surat is an internationally recognized center for textiles."],
+      ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Kanpur Cotton Textile Centre.", "Central Uttar Pradesh on the Ganga River.", "kanpur", "Kanpur is historically known as the Manchester of Northern India."],
+      ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Coimbatore Cotton Textile Centre.", "Western inland Tamil Nadu.", "coimbatore", "Coimbatore is widely called the Manchester of South India."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Durgapur Iron and Steel Plant.", "Damodar Valley in western West Bengal.", "durgapur", "Durgapur Steel Plant in West Bengal was built with British collaboration."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Jamshedpur (TISCO) Steel Plant.", "Singhbhum region in south-eastern Jharkhand.", "jamshedpur", "TISCO at Jamshedpur was founded by Jamsetji Tata in 1907."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Rourkela Iron and Steel Plant.", "Northern Odisha near Jharkhand border.", "rourkela", "Rourkela Steel Plant was built in collaboration with German firms."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Bhilai Iron and Steel Plant.", "Central Chhattisgarh near Raipur.", "bhilai", "Bhilai Steel Plant produces rails and heavy structural steel."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Vijayanagar Iron and Steel Plant.", "Ballari district in central-eastern Karnataka.", "vijayanagar", "Vijayanagar Steel Plant in Toranagallu, Karnataka uses corex technology."],
+      ["Industry", "GEOGRAPHY – STEEL PLANTS", "Locate and label Salem Iron and Steel Plant.", "North-central Tamil Nadu.", "salem", "Salem Steel Plant produces high-grade stainless steel products."],
+      ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Noida Software Technology Park.", "Western Uttar Pradesh bordering New Delhi.", "noida", "Noida is a major IT and software export cluster in northern India."],
+      ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Gandhinagar Software Technology Park.", "Capital city north of Ahmedabad, Gujarat.", "gandhinagar", "Infocity at Gandhinagar is the primary IT/STP hub of Gujarat."],
+      ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Pune Software Technology Park.", "Inland Maharashtra, south-east of Mumbai.", "pune", "Hinjawadi in Pune is one of India's largest IT clusters."],
+      ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Hyderabad Software Technology Park.", "Capital city of Telangana.", "hyderabad", "HITEC City in Hyderabad is a leading software technology center."],
+      ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Bengaluru Software Technology Park.", "Southern plateau capital of Karnataka.", "bengaluru", "Bengaluru is recognized globally as the Silicon Valley of India."],
+      ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Thiruvananthapuram Software Technology Park.", "Southernmost coastal capital of Kerala.", "thiruvananthapuram", "Technopark in Thiruvananthapuram was India's first software park."],
+      // Ports & Airports
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Kandla (Deendayal) Sea Port.", "Tidal port in Gulf of Kuchchh, Gujarat.", "kandla", "Kandla was the first major port developed after independence to relieve Mumbai."],
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Marmagao Sea Port.", "Central coast of Goa at Zuari estuary.", "marmagao", "Marmagao is India's premier iron ore exporting port."],
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label New Mangalore Sea Port.", "Coastal southern Karnataka.", "new_mangalore", "New Mangalore port caters to Kudremukh iron ore exports."],
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Kochi (Cochin) Sea Port.", "Entrance of Vembanad Lake in Kerala.", "kochi", "Kochi is an all-weather natural harbor on Willingdon Island."],
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Tuticorin Sea Port.", "South-eastern coast of Tamil Nadu.", "tuticorin", "Tuticorin serves extensive coastal trade in the Gulf of Mannar."],
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Visakhapatnam Sea Port.", "Deepest landlocked protected port on Andhra coast.", "visakhapatnam", "Visakhapatnam port is protected by the Dolphin's Nose rock formation."],
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Paradip Sea Port.", "Mahanadi delta on the Odisha coast.", "paradip", "Paradip is a major deep-water port exporting iron ore on the east coast."],
+      ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Haldia Sea Port.", "Hugli River junction in West Bengal.", "haldia", "Haldia was built downstream to relieve Kolkata port."],
+      ["Ports", "GEOGRAPHY – AIRPORTS", "Locate Raja Sansi (Sri Guru Ram Dass Jee) Airport.", "Amritsar, north-western Punjab.", "amritsar", "Sri Guru Ram Dass Jee International Airport serves Amritsar, Punjab."],
+      ["Ports", "GEOGRAPHY – AIRPORTS", "Locate Indira Gandhi International Airport.", "National Capital Territory of Delhi.", "delhi", "IGI Airport in New Delhi is the primary aviation hub of northern India."]
+    ];
+
+    /* 3. ZERO-REPEAT DECK & SCRAMBLE CONTROLLER */
+    let unplayedDeck = [];
+    let currentCategory = 'ALL';
+    let currentQ = null;
+    let score = 0;
+    let totalAnswered = 0;
+    let activeMapping = {};
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
       }
-    ];
-    let mapQIndex = 0;
-
-    function renderMapQuestion() {
-      const q = mapQuestions[mapQIndex];
-      document.getElementById('mapTag').innerText = q.tag;
-      document.getElementById('mapQuestionTitle').innerText = q.title;
-      document.getElementById('mapClue').innerText = q.clue;
-      document.getElementById('labelA').innerText = q.options.A;
-      document.getElementById('labelB').innerText = q.options.B;
-      document.getElementById('labelC').innerText = q.options.C;
-      document.getElementById('labelD').innerText = q.options.D;
-      document.getElementById('mapFeedbackBox').style.display = 'none';
-      document.getElementById('nextMapBtn').style.display = 'none';
-
-      ['A','B','C','D'].forEach(pin => {
-        const svgPin = document.getElementById('svgPin' + pin);
-        svgPin.className.baseVal = "map-pin pin-normal";
-      });
-      document.querySelectorAll('.map-opt-btn').forEach(b => {
-        b.className = 'map-opt-btn';
-        b.disabled = false;
-      });
+      return arr;
     }
 
-    function checkMapChoice(choice) {
-      const q = mapQuestions[mapQIndex];
-      const fb = document.getElementById('mapFeedbackBox');
-      const correctPin = document.getElementById('svgPin' + q.correct);
-      const chosenPin = document.getElementById('svgPin' + choice);
-
-      document.querySelectorAll('.map-opt-btn').forEach(b => b.disabled = true);
-
-      if (choice === q.correct) {
-        chosenPin.className.baseVal = "map-pin pin-correct";
-        fb.innerHTML = q.explain;
-        fb.style.background = "rgba(16,185,129,0.15)";
-        fb.style.color = "#6ee7b7";
-      } else {
-        chosenPin.className.baseVal = "map-pin pin-wrong";
-        correctPin.className.baseVal = "map-pin pin-correct";
-        fb.innerHTML = `✗ Incorrect. Pin ${choice} is not right. The correct position is <strong>Pin ${q.correct}</strong>.<br>${q.explain}`;
-        fb.style.background = "rgba(239,68,68,0.15)";
-        fb.style.color = "#fca5a5";
-      }
-      fb.style.display = 'block';
-      document.getElementById('nextMapBtn').style.display = 'block';
+    function initDeck(cat) {
+      currentCategory = cat;
+      const pool = cat === 'ALL' ? QUESTIONS : QUESTIONS.filter(q => q[0] === cat);
+      unplayedDeck = shuffle([...pool]);
     }
 
-    function nextMapRound() {
-      mapQIndex = (mapQIndex + 1) % mapQuestions.length;
-      renderMapQuestion();
-    }
-    renderMapQuestion();
-
-    /* 2. DUAL HISTORY CHRONOLOGY LOGIC */
-    const historyEurope = [
-      { y: "1789", title: "The French Revolution", cause: "Absolute Bourbon rule and feudal inequalities.", ev: "First clear manifestation of nationalism; transfer of sovereignty to citizens.", eff: "Spread revolutionary ideas across Europe via Napoleonic armies." },
-      { y: "1804", title: "The Civil Code (Napoleonic Code)", cause: "Need to modernize administrative machinery and secure property rights.", ev: "Abolished birth privileges, established equality before law, secured right to property.", eff: "Standardized measures and currency, later met with hostility over censorship and conscription." },
-      { y: "1815", title: "Congress of Vienna (Treaty of Vienna)", cause: "Defeat of Napoleon at the Battle of Waterloo by allied monarchies.", ev: "Hosted by Austrian Chancellor Duke Metternich to restore conservative monarchies.", eff: "Bourbon dynasty restored in France; series of buffer states created around France." },
-      { y: "1821", title: "Greek War of Independence Begins", cause: "Greek struggle against the Muslim Ottoman Empire since the 15th century.", ev: "Poets like Lord Byron mobilized public opinion for the cradle of European culture.", eff: "Treaty of Constantinople (1832) formally recognized Greece as an independent nation." },
-      { y: "1830", title: "The July Revolution in France", cause: "Growing liberal resurgence against restored conservative Bourbon monarchy.", ev: "Bourbon kings overthrown; Louis Philippe installed as constitutional monarch.", eff: "Sparked Belgian uprising separating from the Netherlands; Metternich remarked: 'When France sneezes, Europe catches cold'." },
-      { y: "1848", title: "The Frankfurt Parliament (St. Paul's Church)", cause: "Middle-class professionals and traders demanding constitutionalism and national unification.", ev: "831 elected members convened in Frankfurt, drafting a constitution for a German nation.", eff: "King Friedrich Wilhelm IV of Prussia rejected the crown; parliament was disbanded by troops." },
-      { y: "1861", title: "Proclamation of Unified Italy", cause: "Leadership of King Victor Emmanuel II, diplomatic maneuvers of Cavour, and Garibaldi's Red Shirts.", ev: "1859 Austrian defeat and 1860 Expedition of the Thousand in Two Sicilies.", eff: "Victor Emmanuel II crowned King of Italy; papal territory annexed in 1870." },
-      { y: "1871", title: "Unification of Germany", cause: "Prussian militarism and Chief Minister Otto von Bismarck's policy of 'Blood and Iron'.", ev: "Three wars over seven years with Austria, Denmark, and France ending in Prussian victory.", eff: "Kaiser William I proclaimed Emperor of Germany in the Hall of Mirrors at Versailles." }
-    ];
-
-    const historyIndia = [
-      { y: "1915", title: "Mahatma Gandhi Returns to India", cause: "Successful application of Satyagraha against racial discrimination in South Africa.", ev: "Arrived in January 1915 and toured India on Gopal Krishna Gokhale's counsel.", eff: "Led to Champaran (1917), Kheda (1918), and Ahmedabad Cotton Mill (1918) satyagrahas." },
-      { y: "1919", title: "Rowlatt Act & Jallianwala Bagh Massacre", cause: "Imperial Legislative Council enacted the Rowlatt Act allowing 2-year detention without trial.", ev: "General Dyer fired on unarmed gathering at Amritsar on Baisakhi (13 April 1919).", eff: "Rabindranath Tagore surrendered Knighthood; convinced Gandhi to launch Non-Cooperation." },
-      { y: "1920", title: "Non-Cooperation Movement Formally Adopted", cause: "Need to unite Hindus and Muslims over the Khilafat cause and Punjab atrocities.", ev: "Ratified at Nagpur Congress Session in December 1920; boycott of British goods and titles.", eff: "Foreign cloth import halved between 1921–1922; deep national awakening across rural India." },
-      { y: "1922", title: "Chauri Chaura & Sudden Withdrawal", cause: "Clash between police and peaceful peasant procession at Chauri Chaura, Gorakhpur.", ev: "Peasants set the police station on fire, killing 22 policemen.", eff: "Gandhi halted Non-Cooperation, asserting masses were not yet trained in non-violence." },
-      { y: "1928", title: "Simon Commission Nationwide Boycott", cause: "All-British Statutory Commission appointed without a single Indian member.", ev: "Greeted across ports and cities with black flags and the slogan 'Go Back Simon'.", eff: "Lala Lajpat Rai fatally assaulted in police lathi charge at Lahore." },
-      { y: "1929", title: "Lahore Congress & 'Purna Swaraj'", cause: "Vague Dominion Status offer rejected by radical leaders Nehru and Subhas Chandra Bose.", ev: "Presided by Jawaharlal Nehru; passed resolution demanding Complete Independence (Purna Swaraj).", eff: "26 January 1930 observed nationwide as First Independence Day." },
-      { y: "1930", title: "Dandi Salt March & Civil Disobedience", cause: "Viceroy Irwin ignored Gandhi's 11 Demands, including the abolition of the Salt Tax.", ev: "Gandhi marched 240 miles from Sabarmati to Dandi with 78 volunteers to make salt.", eff: "Launched Civil Disobedience Movement; breaking of salt, forest, and revenue laws nationwide." },
-      { y: "1932", title: "Signing of the Poona Pact", cause: "Dr. B.R. Ambedkar clashed with Gandhi over separate electorates for Depressed Classes.", ev: "Gandhi embarked on fast unto death at Yerwada Jail; agreed on reserved seats in general electorate.", eff: "Secured Dalit representation while preserving unified electoral structure." }
-    ];
-
-    let currentChapter = 1;
-
-    function selectHistoryChapter(num) {
-      currentChapter = num;
-      document.getElementById('ch1Btn').classList.toggle('active', num === 1);
-      document.getElementById('ch2Btn').classList.toggle('active', num === 2);
-      
-      const slider = document.getElementById('chTimelineSlider');
-      slider.value = 0;
-      updateSliderTicks();
-      renderTimeline(0);
-    }
-
-    function updateSliderTicks() {
-      const data = currentChapter === 1 ? historyEurope : historyIndia;
-      const ticks = document.getElementById('sliderTicks');
-      ticks.innerHTML = data.map(d => `<span>${d.y}</span>`).join('');
-    }
-
-    function renderTimeline(idx) {
-      const data = currentChapter === 1 ? historyEurope : historyIndia;
-      const item = data[idx];
-      document.getElementById('tlYear').innerText = item.y;
-      document.getElementById('tlTitle').innerText = item.title;
-      document.getElementById('tlCause').innerText = item.cause;
-      document.getElementById('tlEvent').innerText = item.ev;
-      document.getElementById('tlEffect').innerText = item.eff;
-    }
-    updateSliderTicks();
-    renderTimeline(0);
-
-    /* 3. 3D FLASHCARDS LOGIC */
-    const deckData = [
-      { subj: "Civics", tag: "CIVICS • CH 1", title: "Majoritarianism", def: "A belief that the majority community should rule a country in whichever way it wants, by disregarding the wishes and needs of the minority.", kw: ["• Majority dominance", "• Disregard for minorities", "• 1956 Sri Lankan Sinhala Act"], trap: "Confusing it with Power-sharing. Majoritarianism rejects accommodation." },
-      { subj: "Economics", tag: "ECONOMICS • CH 2", title: "Disguised Unemployment", def: "A situation where more individuals work in an occupation than actually required. Withdrawing surplus workers produces zero drop in total production.", kw: ["• Hidden unemployment", "• Marginal productivity is zero", "• Rampant in agricultural smallholdings"], trap: "Confusing with Seasonal Unemployment (which depends on weather/sowing cycles)." },
-      { subj: "Civics", tag: "CIVICS • CH 2", title: "Federalism", def: "A system of government in which sovereign power is legally divided between a central authority and constituent territorial units (states/provinces).", kw: ["• Two or more levels of govt", "• Specified constitutional jurisdiction", "• Supreme Court acts as umpire"], trap: "Believing state governments are subordinate in federalism. They have independent constitutional status." },
-      { subj: "Economics", tag: "ECONOMICS • CH 3", title: "Collateral", def: "An asset that the borrower owns (land, livestock, bank deposits) and pledges to a lender as a security guarantee until the debt is repaid.", kw: ["• Asset owned by borrower", "• Acts as lender guarantee", "• Required primarily in formal sector loans"], trap: "Thinking collateral is required in informal loans. Moneylenders lend without it at exorbitant interest." },
-      { subj: "Geography", tag: "GEOGRAPHY • CH 1", title: "Sustainable Development", def: "Development that meets the economic needs of the present without damaging the environment and without compromising the ability of future generations.", kw: ["• Non-degrading progress", "• Inter-generational equity", "• Rio Earth Summit 1992 & Agenda 21"], trap: "Saying it means stopping industrial growth. It means balanced, renewable utilization." },
-      { subj: "History", tag: "HISTORY • CH 2", title: "Satyagraha", def: "A pure soul-force rooted in truth and non-violence. It emphasizes that if the cause is true, physical force is not necessary to vanquish the oppressor.", kw: ["• Appeal to conscience", "• Total non-violence", "• Weapon of the morally strong"], trap: "Calling it passive resistance. Gandhi insisted Satyagraha is active, intense soul-force." }
-    ];
-
-    let currentDeck = [...deckData];
-    let cardIdx = 0;
-
-    function renderCard() {
-      const c = currentDeck[cardIdx];
-      document.getElementById('deckCard').classList.remove('flipped');
-      setTimeout(() => {
-        document.getElementById('fcTag').innerText = c.tag;
-        document.getElementById('fcTitle').innerText = c.title;
-        document.getElementById('fcDef').innerText = c.def;
-        document.getElementById('fcKeywords').innerHTML = c.kw.map(k => `<div class="fc-kw-item">${k}</div>`).join('');
-        document.getElementById('fcTrap').innerText = c.trap;
-      }, 150);
-    }
-
-    function flipActiveCard() {
-      document.getElementById('deckCard').classList.toggle('flipped');
-    }
-
-    function nextCard() {
-      cardIdx = (cardIdx + 1) % currentDeck.length;
-      renderCard();
-    }
-
-    function prevCard() {
-      cardIdx = (cardIdx - 1 + currentDeck.length) % currentDeck.length;
-      renderCard();
-    }
-
-    function filterCards(subj, btn) {
-      document.querySelectorAll('.fc-filter-btn').forEach(b => b.classList.remove('active'));
+    function setCategory(cat, btn) {
+      document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      currentDeck = subj === 'ALL' ? [...deckData] : deckData.filter(d => d.subj === subj);
-      cardIdx = 0;
-      renderCard();
+      initDeck(cat);
+      loadQuestion();
     }
-    renderCard();
 
-    /* 4. BALANCED ASSERTION & REASON LOGIC */
-    const arQuestionPool = [
-      {
-        subj: "ECONOMICS • CH 1",
-        label: "QUESTION 1 OF 4",
-        a: "Crude oil reserves in the world are rapidly depleting.",
-        r: "Sustainable development emphasizes that present development should not compromise the needs of future generations.",
-        correct: 1, // OPTION B
-        exp: "✓ Option B: Both A and R are individually correct facts. However, Reason (R) states the principle of sustainability; it does not explain why crude oil reserves are physically depleting (which is due to over-extraction of non-renewable fossil deposits). Hence, R is NOT the correct explanation of A."
-      },
-      {
-        subj: "CIVICS • CH 1",
-        label: "QUESTION 2 OF 4",
-        a: "In Sri Lanka, the 1956 Act was passed to establish Sinhala as the sole official language.",
-        r: "The Sri Lankan leaders wanted to respect and accommodate the cultural and linguistic rights of Tamil minorities.",
-        correct: 2, // OPTION C
-        exp: "✓ Option C: Assertion (A) is completely true. But Reason (R) is false because the 1956 Act blatantly disregarded Tamil interests and fostered majoritarian supremacy, sparking civil conflict."
-      },
-      {
-        subj: "HISTORY • CH 2",
-        label: "QUESTION 3 OF 4",
-        a: "The Simon Commission was greeted with the slogan 'Go Back Simon' across India.",
-        r: "The Statutory Commission had all British members and did not include a single Indian member to review India's constitutional future.",
-        correct: 0, // OPTION A
-        exp: "✓ Option A: Both statements are true, and Reason (R) accurately explains why Indians were furious and protested with black flags."
-      },
-      {
-        subj: "CIVICS • CH 2",
-        label: "QUESTION 4 OF 4",
-        a: "In a federal system, state governments are subordinate to the central government.",
-        r: "The Indian Constitution clearly demarks power between the Union and the States through three legislative lists.",
-        correct: 3, // OPTION D
-        exp: "✓ Option D: Assertion (A) is false because in a true federation, state governments draw independent authority from the Constitution and are not mere subordinates. Reason (R) is completely true."
+    function loadQuestion() {
+      // Auto-reshuffle only when all questions in category have been answered
+      if (unplayedDeck.length === 0) {
+        initDeck(currentCategory);
       }
-    ];
-    let arIndex = 0;
 
-    function renderARQuestion() {
-      const q = arQuestionPool[arIndex];
-      document.getElementById('arSubjectTag').innerText = q.subj;
-      document.getElementById('arTargetAnswerBadge').innerText = q.label;
-      document.getElementById('arAssertText').innerHTML = `<strong>Assertion (A):</strong> ${q.a}`;
-      document.getElementById('arReasonText').innerHTML = `<strong>Reason (R):</strong> ${q.r}`;
-      document.getElementById('arExplanationBox').style.display = 'none';
-      document.getElementById('nextARBtn').style.display = 'none';
+      // Pop next question (guarantees zero repetition)
+      currentQ = unplayedDeck.pop();
 
-      document.querySelectorAll('.ar-choice-btn').forEach(b => {
-        b.className = 'ar-choice-btn';
-        b.disabled = false;
+      const correctKey = currentQ[4];
+      const correctLoc = COORDS[correctKey];
+
+      // Pick 3 random, distinct distractors
+      const otherKeys = Object.keys(COORDS).filter(k => k !== correctKey);
+      shuffle(otherKeys);
+      const distractors = otherKeys.slice(0, 3);
+
+      // Scramble option positions across A, B, C, D
+      const roundOptions = [
+        { key: correctKey, name: correctLoc[0], x: correctLoc[1], y: correctLoc[2], isCorrect: true },
+        { key: distractors[0], name: COORDS[distractors[0]][0], x: COORDS[distractors[0]][1], y: COORDS[distractors[0]][2], isCorrect: false },
+        { key: distractors[1], name: COORDS[distractors[1]][0], x: COORDS[distractors[1]][1], y: COORDS[distractors[1]][2], isCorrect: false },
+        { key: distractors[2], name: COORDS[distractors[2]][0], x: COORDS[distractors[2]][1], y: COORDS[distractors[2]][2], isCorrect: false }
+      ];
+      shuffle(roundOptions);
+
+      activeMapping = {
+        A: roundOptions[0],
+        B: roundOptions[1],
+        C: roundOptions[2],
+        D: roundOptions[3]
+      };
+
+      // Update question text and scoreboard
+      document.getElementById('qCatLabel').innerText = `${currentQ[1]} (${unplayedDeck.length} remaining)`;
+      document.getElementById('qScoreLabel').innerText = `Score: ${score} / ${totalAnswered}`;
+      document.getElementById('qTitle').innerText = currentQ[2];
+      document.getElementById('qClue').innerText = "Clue: " + currentQ[3];
+      document.getElementById('feedbackBox').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'none';
+
+      // Reposition SVG pins and update buttons
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        const item = activeMapping[letter];
+        const gPin = document.getElementById('pin' + letter);
+        const circle = gPin.querySelector('circle');
+        const text = gPin.querySelector('text');
+
+        circle.setAttribute('cx', item.x);
+        circle.setAttribute('cy', item.y);
+        text.setAttribute('x', item.x);
+        text.setAttribute('y', item.y);
+
+        gPin.className.baseVal = "map-pin";
+
+        const btn = document.getElementById('btn' + letter);
+        document.getElementById('label' + letter).innerText = item.name;
+        btn.className = "opt-btn";
+        btn.disabled = false;
       });
     }
 
-    function submitAR(choiceIdx, btn) {
-      const q = arQuestionPool[arIndex];
-      const allBtns = document.querySelectorAll('.ar-choice-btn');
-      allBtns.forEach(b => b.disabled = true);
+    function checkChoice(choice) {
+      totalAnswered++;
+      const chosen = activeMapping[choice];
+      const fbBox = document.getElementById('feedbackBox');
 
-      if (choiceIdx === q.correct) {
-        btn.classList.add('correct');
+      let correctLetter = 'A';
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        if (activeMapping[letter].isCorrect) correctLetter = letter;
+        document.getElementById('btn' + letter).disabled = true;
+      });
+
+      const chosenPin = document.getElementById('pin' + choice);
+      const correctPin = document.getElementById('pin' + correctLetter);
+
+      if (chosen.isCorrect) {
+        score++;
+        chosenPin.className.baseVal = "map-pin correct";
+        document.getElementById('btn' + choice).classList.add('correct');
+        fbBox.innerHTML = `<strong>✓ Correct!</strong> You accurately located <strong>${chosen.name}</strong>.<br>${currentQ[5]}`;
+        fbBox.style.background = "rgba(16,185,129,0.18)";
+        fbBox.style.color = "#6ee7b7";
       } else {
-        btn.classList.add('wrong');
-        allBtns[q.correct].classList.add('correct');
+        chosenPin.className.baseVal = "map-pin wrong";
+        correctPin.className.baseVal = "map-pin correct";
+        document.getElementById('btn' + choice).classList.add('wrong');
+        document.getElementById('btn' + correctLetter).classList.add('correct');
+        fbBox.innerHTML = `<strong>✗ Incorrect.</strong> You picked Pin ${choice} (${chosen.name}).<br>The correct position is <strong>Pin ${correctLetter} (${activeMapping[correctLetter].name})</strong>.<br>${currentQ[5]}`;
+        fbBox.style.background = "rgba(239,68,68,0.18)";
+        fbBox.style.color = "#fca5a5";
       }
-      const exp = document.getElementById('arExplanationBox');
-      exp.innerHTML = q.exp;
-      exp.style.display = 'block';
-      document.getElementById('nextARBtn').style.display = 'block';
+
+      document.getElementById('qScoreLabel').innerText = `Score: ${score} / ${totalAnswered}`;
+      fbBox.style.display = 'block';
+      document.getElementById('nextBtn').style.display = 'block';
     }
 
-    function nextARQuestion() {
-      arIndex = (arIndex + 1) % arQuestionPool.length;
-      renderARQuestion();
-    }
-    renderARQuestion();
-
-    /* 5. FULL MULTI-SUBJECT QUIZ LOGIC */
-    const fullQuizPool = [
-      { subj: "History", q: "Who designed the famous 1848 visual print titled 'The Dream of Worldwide Democratic and Social Republics'?", opts: ["Frédéric Sorrieu", "Duke Metternich", "Giuseppe Mazzini", "Ernst Renan"], correct: 0, exp: "Frédéric Sorrieu, a French artist, prepared a series of four prints visualizing his dream of a world made up of democratic republics." },
-      { subj: "History", q: "In which year did Mahatma Gandhi organize the Kheda Satyagraha in Gujarat?", opts: ["1916", "1917", "1918", "1920"], correct: 2, exp: "In 1918, Gandhi organized a Satyagraha to support the peasants of Kheda who were affected by crop failure and a plague epidemic." },
-      { subj: "Geography", q: "Which soil type is locally known as 'Regur Soil'?", opts: ["Alluvial Soil", "Black Soil", "Red & Yellow Soil", "Laterite Soil"], correct: 1, exp: "Black soils are also known as Regur soils and are ideal for growing cotton." },
-      { subj: "Geography", q: "On which river is the Sardar Sarovar Dam constructed?", opts: ["Mahanadi", "Narmada", "Krishna", "Kaveri"], correct: 1, exp: "Sardar Sarovar Dam is built over the Narmada River in Gujarat." },
-      { subj: "Civics", q: "Which language was recognized as the sole official language of Sri Lanka under the 1956 Act?", opts: ["Tamil", "English", "Sinhala", "Hindi"], correct: 2, exp: "In 1956, an Act was passed in Sri Lanka recognizing Sinhala as the only official language, disregarding Tamil." },
-      { subj: "Civics", q: "Which tier of government was added to the Indian federal system through the 73rd and 74th Constitutional Amendments in 1992?", opts: ["Union Government", "State Government", "Local Self-Government", "Governor's Council"], correct: 2, exp: "The 1992 amendments decentralized power to Panchayats (rural) and Municipalities (urban) as the third tier." },
-      { subj: "Economics", q: "What is the primary criterion used by the World Bank in classifying countries in its World Development Reports?", opts: ["Human Development Index", "Per Capita Income", "Literacy Rate", "Life Expectancy"], correct: 1, exp: "The World Bank uses Per Capita Income (average income) to classify countries into high, middle, and low income categories." },
-      { subj: "Economics", q: "Which organization supervises the functioning of formal sources of loans in India?", opts: ["State Bank of India", "Reserve Bank of India (RBI)", "NITI Aayog", "Ministry of Finance"], correct: 1, exp: "The Reserve Bank of India (RBI) supervises the functioning of formal sources of loans like commercial banks." }
-    ];
-
-    let filteredQuiz = [...fullQuizPool];
-    let quizIdx = 0;
-    let quizScore = 0;
-    let quizAttempted = 0;
-
-    function setQuizFilter(subj, btn) {
-      document.querySelectorAll('.q-sub-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filteredQuiz = subj === 'ALL' ? [...fullQuizPool] : fullQuizPool.filter(q => q.subj === subj);
-      quizIdx = 0;
-      loadQuizQuestion();
+    function nextRound() {
+      loadQuestion();
     }
 
-    function loadQuizQuestion() {
-      const q = filteredQuiz[quizIdx];
-      document.getElementById('quizSubjName').innerText = q.subj.toUpperCase();
-      document.getElementById('quizScoreCount').innerText = `Score: ${quizScore} / ${quizAttempted}`;
-      document.getElementById('quizQTitle').innerText = q.q;
-      document.getElementById('quizExplainBox').style.display = 'none';
-      document.getElementById('quizNextBtn').style.display = 'none';
-
-      const list = document.getElementById('quizOptionsList');
-      list.innerHTML = '';
-
-      q.opts.forEach((opt, i) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'ar-choice-btn';
-        b.innerText = opt;
-        b.onclick = () => {
-          quizAttempted++;
-          const allB = list.querySelectorAll('.ar-choice-btn');
-          allB.forEach(x => x.disabled = true);
-
-          if (i === q.correct) {
-            b.classList.add('correct');
-            quizScore++;
-          } else {
-            b.classList.add('wrong');
-            allB[q.correct].classList.add('correct');
-          }
-          document.getElementById('quizScoreCount').innerText = `Score: ${quizScore} / ${quizAttempted}`;
-          const exp = document.getElementById('quizExplainBox');
-          exp.innerHTML = `<strong>Explanation:</strong> ${q.exp}`;
-          exp.style.display = 'block';
-          document.getElementById('quizNextBtn').style.display = 'block';
-        };
-        list.appendChild(b);
-      });
-    }
-
-    function loadNextQuiz() {
-      quizIdx = (quizIdx + 1) % filteredQuiz.length;
-      loadQuizQuestion();
-    }
-    loadQuizQuestion();
+    // Initialize Map on Load
+    initDeck('ALL');
+    loadQuestion();
   </script>
 </body>
 </html>
