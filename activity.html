@@ -12,7 +12,7 @@
       --amber: #f59e0b;
       --blue: #3b82f6;
       --teal: #14b8a6;
-      --emerald: #10b981;
+      --purple: #a855f7;
       --text: #f8fafc;
       --muted: #94a3b8;
     }
@@ -69,6 +69,7 @@
     .card-cta { font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
     .cta-amber { color: var(--amber); }
     .cta-teal { color: var(--teal); }
+    .cta-purple { color: var(--purple); }
 
     footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); }
   </style>
@@ -88,15 +89,17 @@
       </div>
 
       <div class="hub-grid">
+        <!-- NCERT Keyword (Flashcards) -->
         <a href="flashcards.html" class="hub-card">
           <div>
             <div class="card-icon">⚡</div>
-            <h2 class="card-h2">1-Mark Flashcards</h2>
-            <p class="card-desc">Interactive deck featuring 175+ core vocabulary terms, definitions, and exam buzzwords.</p>
+            <h2 class="card-h2">NCERT Keyword</h2>
+            <p class="card-desc">Interactive deck featuring core vocabulary terms, definitions, and exam buzzwords.</p>
           </div>
           <div class="card-cta cta-amber">Start Flashcards →</div>
         </a>
 
+        <!-- Assertion & Reason -->
         <a href="ar.html" class="hub-card">
           <div>
             <div class="card-icon">🎯</div>
@@ -104,6 +107,16 @@
             <p class="card-desc">200 calibrated board questions with balanced keys, random shuffling, and instant explanations.</p>
           </div>
           <div class="card-cta cta-teal">Start A&R Drill →</div>
+        </a>
+
+        <!-- Timeline Drills -->
+        <a href="timeline.html" class="hub-card">
+          <div>
+            <div class="card-icon">⏳</div>
+            <h2 class="card-h2">Timeline Drills</h2>
+            <p class="card-desc">Master historical dates, dynasties, and chronological events essential for board exams.</p>
+          </div>
+          <div class="card-cta cta-purple">Start Timeline →</div>
         </a>
       </div>
     </main>
