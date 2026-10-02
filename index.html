@@ -26,7 +26,6 @@
     }
     .wrapper { max-width: 820px; margin: 0 auto; position: relative; }
 
-    /* Top Navigation Bar with Menu Button */
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.8rem 1.2rem; background: rgba(16, 24, 40, 0.85);
@@ -36,7 +35,6 @@
     .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
     .brand span { color: var(--amber); }
     
-    /* Menu Button Styles */
     .menu-btn {
       background: rgba(255,255,255,0.06); border: 1px solid var(--border);
       color: #fff; border-radius: 10px; padding: 0.5rem 0.9rem;
@@ -45,7 +43,6 @@
     }
     .menu-btn:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
 
-    /* Dropdown Menu Overlay */
     .dropdown-menu {
       display: none; position: absolute; top: 70px; right: 0; width: 260px;
       background: #111827; border: 1px solid var(--border); border-radius: 16px;
@@ -58,12 +55,10 @@
     }
     .dropdown-item:hover { background: rgba(59,130,246,0.2); color: #fff; }
 
-    /* Hero Section */
     .hero { text-align: center; margin-bottom: 2.2rem; }
     .hero-h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
     .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; max-width: 580px; margin: 0 auto; }
 
-    /* Grid Layouts */
     .section-title {
       font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--amber); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
@@ -72,7 +67,6 @@
     .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
     @media(max-width: 640px) { .notes-grid { grid-template-columns: 1fr; } }
 
-    /* Hub Cards */
     .hub-card {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 20px; padding: 1.5rem; text-decoration: none; color: inherit;
@@ -100,9 +94,7 @@
     .cta-amber { color: var(--amber); }
     .cta-teal { color: var(--teal); }
     .cta-emerald { color: var(--emerald); }
-    .cta-blue { color: var(--blue); }
 
-    /* Info / Query Boxes & Forms */
     .info-box {
       background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
       border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem;
@@ -128,7 +120,6 @@
     }
     .submit-btn:hover { opacity: 0.9; }
 
-    /* Paper Item Lists */
     .paper-item {
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(255,255,255,0.03); border: 1px solid var(--border);
@@ -138,7 +129,6 @@
     .paper-link { color: var(--blue); text-decoration: none; font-size: 0.82rem; font-weight: 800; }
     .paper-link:hover { text-decoration: underline; }
 
-    /* Reply Cards */
     .reply-card {
       background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25);
       border-radius: 14px; padding: 1.1rem; margin-top: 0.8rem;
@@ -153,14 +143,12 @@
 <body>
 
   <div class="wrapper">
-    <!-- Top Bar with Menu Button -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <div style="position: relative;">
         <button type="button" class="menu-btn" onclick="toggleMenu()">
           <span>Menu</span> ☰
         </button>
-        <!-- Dropdown Menu -->
         <div class="dropdown-menu" id="dropdownMenu">
           <a href="index.html" class="dropdown-item">🏠 Home</a>
           <a href="class9.html" class="dropdown-item">📖 Class 9 Notes</a>
@@ -179,7 +167,7 @@
         <p class="hero-p">Empowering secondary school education with structured curriculum notes, timelines, flashcards, and simulation drills.</p>
       </div>
 
-      <!-- 1. CLASSES (Class 9 First, Class 10 Second) -->
+      <!-- Classes (Class 9 First) -->
       <div class="section-title">🎓 Curriculum Study Materials (Classes 9 & 10)</div>
       <div class="notes-grid">
         <a href="class9.html" class="hub-card">
@@ -201,13 +189,13 @@
         </a>
       </div>
 
-      <!-- 2. WHY THIS PORTAL EXISTS -->
+      <!-- Why This Portal Exists -->
       <div class="info-box">
         <h3>💡 Why This Portal Exists</h3>
         <p>Built to bridge the gap between traditional textbook learning and interactive digital revision. This portal provides students and educators with fast-loading, zero-distraction academic resources designed specifically around CBSE board standards and conceptual mastery.</p>
       </div>
 
-      <!-- 3. SAMPLE QUESTION PAPERS -->
+      <!-- Sample Question Papers -->
       <div class="info-box" id="sample-papers">
         <h3>📄 CBSE Sample Question Papers</h3>
         <p>Download official board pattern sample papers and practice sets with marking schemes.</p>
@@ -226,7 +214,7 @@
         </div>
       </div>
 
-      <!-- 4. ASK A DOUBT OR QUERY FORM -->
+      <!-- Ask a Doubt Form -->
       <div class="info-box" id="ask-doubt">
         <h3>❓ Ask a Doubt or Query</h3>
         <p>Fill out the form below with your student details and query. Save your PIN to check your replies later!</p>
@@ -247,7 +235,6 @@
             <div class="form-group">
               <label class="form-label">Class</label>
               <select id="studentClass" class="form-select" required>
-                <option value="">Select Class</option>
                 <option value="Class 9">Class 9</option>
                 <option value="Class 10">Class 10</option>
               </select>
@@ -255,11 +242,9 @@
             <div class="form-group">
               <label class="form-label">Section</label>
               <select id="studentSection" class="form-select" required>
-                <option value="">Select Section</option>
                 <option value="Section A">Section A</option>
                 <option value="Section B">Section B</option>
                 <option value="Section C">Section C</option>
-                <option value="Section D">Section D</option>
               </select>
             </div>
           </div>
@@ -268,7 +253,6 @@
             <div class="form-group">
               <label class="form-label">Subject</label>
               <select id="studentSubject" class="form-select" required>
-                <option value="">Select Subject</option>
                 <option value="History">History</option>
                 <option value="Geography">Geography</option>
                 <option value="Civics">Civics</option>
@@ -287,14 +271,14 @@
             <textarea id="studentQuery" class="form-textarea" rows="3" placeholder="Type your doubt clearly here..." required></textarea>
           </div>
 
-          <button type="submit" class="submit-btn">Submit Doubt</button>
+          <button type="submit" class="submit-btn" id="submitBtn">Submit Doubt</button>
         </form>
       </div>
 
-      <!-- 5. CHECK MY DOUBTS & REPLIES SECTION -->
+      <!-- Check My Doubts & Replies -->
       <div class="info-box" id="doubts-replies">
         <h3>💬 Check My Doubts & Replies</h3>
-        <p>Enter your Name and PIN below to view your submitted questions and teacher responses.</p>
+        <p>Enter your Name and PIN below to view your submitted questions and teacher responses from your Google Sheet.</p>
         
         <div class="form-row" style="margin-bottom: 1rem;">
           <input type="text" id="checkName" class="form-input" placeholder="Enter your Name">
@@ -305,7 +289,7 @@
         <div id="doubtsResultContainer" style="margin-top: 1rem;"></div>
       </div>
 
-      <!-- 6. INTERACTIVE REVISION & DRILLS (Activity & Practice Arena) -->
+      <!-- Interactive Revision & Drills -->
       <div class="section-title">⚡ Interactive Revision & Drills</div>
       <div class="grid">
         <a href="activity.html" class="hub-card">
@@ -330,12 +314,13 @@
   </div>
 
   <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWGX06oQDY_BRAWaO8AsPiZxbuqFSNo1x8nncChh-Z9yDy7Jaf_KwH6zajKHpj9WTeNA/exec';
+
     function toggleMenu() {
       const menu = document.getElementById('dropdownMenu');
       menu.classList.toggle('show');
     }
 
-    // Close menu when clicking outside
     window.addEventListener('click', function(e) {
       const menu = document.getElementById('dropdownMenu');
       const btn = document.querySelector('.menu-btn');
@@ -344,32 +329,44 @@
       }
     });
 
-    // Handle Doubt Submission & Storage
     function submitDoubt(e) {
       e.preventDefault();
-      const doubt = {
+      const btn = document.getElementById('submitBtn');
+      btn.innerText = "Submitting...";
+      btn.disabled = true;
+
+      const payload = {
         name: document.getElementById('studentName').value.trim(),
         pin: document.getElementById('studentPin').value.trim(),
         classVal: document.getElementById('studentClass').value,
         section: document.getElementById('studentSection').value,
         subject: document.getElementById('studentSubject').value,
         chapter: document.getElementById('studentChapter').value.trim(),
-        query: document.getElementById('studentQuery').value.trim(),
-        date: new Date().toLocaleDateString(),
-        reply: "Your doubt has been received successfully! Our teacher will review and reply here soon."
+        query: document.getElementById('studentQuery').value.trim()
       };
 
-      let storedDoubts = JSON.parse(localStorage.getItem('studentDoubts') || '[]');
-      storedDoubts.push(doubt);
-      localStorage.setItem('studentDoubts', JSON.stringify(storedDoubts));
-
-      alert('Doubt submitted successfully! You can check your replies below under "Check My Doubts & Replies".');
-      document.getElementById('doubtForm').reset();
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        alert('Doubt submitted successfully and sent to your Google Sheet!');
+        document.getElementById('doubtForm').reset();
+        btn.innerText = "Submit Doubt";
+        btn.disabled = false;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting doubt. Please try again.');
+        btn.innerText = "Submit Doubt";
+        btn.disabled = false;
+      });
     }
 
-    // Check Doubts & Replies
     function checkDoubts() {
-      const name = document.getElementById('checkName').value.trim().toLowerCase();
+      const name = document.getElementById('checkName').value.trim();
       const pin = document.getElementById('checkPin').value.trim();
       const container = document.getElementById('doubtsResultContainer');
 
@@ -378,32 +375,39 @@
         return;
       }
 
-      let storedDoubts = JSON.parse(localStorage.getItem('studentDoubts') || '[]');
-      const userDoubts = storedDoubts.filter(d => d.name.toLowerCase() === name && d.pin === pin);
+      container.innerHTML = `<p style="color:var(--muted); font-size:0.88rem; margin-top:1rem;">Searching your doubts in Google Sheets...</p>`;
 
-      if (userDoubts.length === 0) {
-        container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.88rem;">No doubts found for ${name} with this PIN.</p>`;
-        return;
-      }
+      fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data || data.length === 0) {
+          container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.88rem;">No doubts found for "${name}" with this PIN.</p>`;
+          return;
+        }
 
-      let html = '';
-      userDoubts.forEach((d, idx) => {
-        html += `
-          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:1.1rem; margin-top:0.8rem;">
-            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--teal); font-weight:800; margin-bottom:0.4rem;">
-              <span>${d.classVal} • ${d.section} • ${d.subject}</span>
-              <span>${d.date}</span>
+        let html = '';
+        data.forEach((d) => {
+          html += `
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:1.1rem; margin-top:0.8rem;">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--teal); font-weight:800; margin-bottom:0.4rem;">
+                <span>${d.classVal} • ${d.section} • ${d.subject}</span>
+                <span>${d.date}</span>
+              </div>
+              <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:0.3rem;">Topic: ${d.chapter}</div>
+              <div style="font-size:0.85rem; color:var(--muted); line-height:1.4; margin-bottom:0.8rem;"><strong>Query:</strong> ${d.query}</div>
+              <div class="reply-card">
+                <div style="font-size:0.75rem; font-weight:800; color:var(--emerald); text-transform:uppercase; margin-bottom:0.2rem;">Teacher Response</div>
+                <div style="font-size:0.86rem; color:#e2e8f0; line-height:1.4;">${d.reply}</div>
+              </div>
             </div>
-            <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:0.3rem;">Topic: ${d.chapter}</div>
-            <div style="font-size:0.85rem; color:var(--muted); line-height:1.4; margin-bottom:0.8rem;"><strong>Query:</strong> ${d.query}</div>
-            <div class="reply-card">
-              <div style="font-size:0.75rem; font-weight:800; color:var(--emerald); text-transform:uppercase; margin-bottom:0.2rem;">Teacher Response</div>
-              <div style="font-size:0.86rem; color:#e2e8f0; line-height:1.4;">${d.reply}</div>
-            </div>
-          </div>
-        `;
+          `;
+        });
+        container.innerHTML = html;
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.88rem;">Error loading data from Google Sheets. Check script deployment permissions.</p>`;
       });
-      container.innerHTML = html;
     }
   </script>
 </body>
