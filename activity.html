@@ -1,1 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity & Practice Arena | Social Science Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: linear-gradient(135deg, rgba(16, 24, 40, 0.9) 0%, rgba(20, 32, 54, 0.65) 100%);
+      --border: rgba(255, 255, 255, 0.08);
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --teal: #14b8a6;
+      --emerald: #10b981;
+      --purple: #8b5cf6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 1.2rem;
+      min-height: 100vh;
+    }
+    .wrapper { max-width: 720px; margin: 0 auto; }
+    
+    /* Top Bar */
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.8rem; }
+    .brand { font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .brand span { color: var(--amber); }
+    .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+    .home-link {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      color: #fff; border-radius: 12px; padding: 0.55rem 0.9rem;
+      font-size: 0.85rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.3rem;
+    }
+
+    /* Hero */
+    .hero-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--amber); text-transform: uppercase; margin-bottom: 0.4rem; }
+    .hero-h1 { font-size: 2.3rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+    .hero-p { color: var(--muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 1.8rem; }
+
+    /* Activity Tab Bar */
+    .tabs-scroll {
+      display: flex; gap: 0.6rem; overflow-x: auto; padding-bottom: 0.8rem;
+      scrollbar-width: none; -ms-overflow-style: none; margin-bottom: 1.8rem;
+    }
+    .tabs-scroll::-webkit-scrollbar { display: none; }
+    .tab-pill {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 14px; padding: 0.7rem 1.1rem; color: var(--muted);
+      font-size: 0.84rem; font-weight: 700; white-space: nowrap; cursor: pointer;
+      display: flex; align-items: center; gap: 0.45rem; transition: all 0.2s;
+    }
+    .tab-pill.active {
+      background: rgba(245, 158, 11, 0.15); border-color: var(--amber);
+      color: #fff; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+    }
+
+    /* Tab Panes */
+    .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+    .tab-pane.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Module Box */
+    .module-box {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 22px; padding: 1.8rem 1.5rem; margin-bottom: 2rem;
+    }
+    .module-head { margin-bottom: 1.4rem; }
+    .module-head h3 { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .module-head p { font-size: 0.85rem; color: var(--muted); }
+
+    /* 1. Map Trainer Styles */
+    .map-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.5rem; text-align: center;
+    }
+    .map-badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 800; padding: 0.3rem 0.7rem;
+      border-radius: 999px; background: rgba(59,130,246,0.15); color: var(--blue); margin-bottom: 0.8rem;
+    }
+    .map-clue { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .map-subclue { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .map-answer-box {
+      background: rgba(20, 184, 166, 0.12); border: 1px solid var(--teal);
+      border-radius: 12px; padding: 1rem; color: #5eead4; font-size: 0.95rem;
+      font-weight: 700; display: none; margin-bottom: 1.2rem;
+    }
+    .btn-row { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+    .action-btn {
+      padding: 0.7rem 1.2rem; border-radius: 12px; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; border: none; transition: 0.2s;
+    }
+    .btn-gold { background: var(--amber); color: #000; }
+    .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; }
+
+    /* 2. Chronology Slider Styles */
+    .slider-container { margin: 1.5rem 0 2rem; }
+    .timeline-range {
+      width: 100%; height: 8px; border-radius: 5px; background: rgba(255,255,255,0.1);
+      outline: none; -webkit-appearance: none; cursor: pointer;
+    }
+    .timeline-range::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--amber); cursor: pointer; box-shadow: 0 0 12px rgba(245,158,11,0.6);
+    }
+    .timeline-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.5rem; margin-top: 1.2rem;
+    }
+    .year-pill {
+      font-size: 1.8rem; font-weight: 900; color: var(--amber); letter-spacing: -0.5px;
+      display: inline-block; margin-bottom: 0.4rem;
+    }
+    .event-title { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 1rem; }
+    .breakdown-row { display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.86rem; line-height: 1.45; }
+    .b-tag { font-weight: 800; border-radius: 6px; padding: 0.15rem 0.4rem; font-size: 0.72rem; }
+    .tag-cause { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .tag-action { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+    .tag-effect { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+
+    /* 3. Flashcards 3D Flip Styles */
+    .card-scene { perspective: 1000px; width: 100%; min-height: 210px; margin-bottom: 1.2rem; cursor: pointer; }
+    .flashcard {
+      width: 100%; height: 100%; position: relative; transform-style: preserve-3d;
+      transition: transform 0.5s; border-radius: 20px;
+    }
+    .flashcard.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+      border-radius: 20px; padding: 1.8rem; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center; border: 1px solid var(--border);
+    }
+    .card-front { background: rgba(255,255,255,0.04); }
+    .card-back { background: rgba(20, 32, 54, 0.95); transform: rotateY(180deg); border-color: rgba(59,130,246,0.4); }
+    .card-hint { font-size: 0.74rem; color: var(--muted); margin-top: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* 4. Assertion & Reason Styles */
+    .ar-box {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.4rem; margin-bottom: 1.2rem;
+    }
+    .ar-statement { font-size: 0.92rem; margin-bottom: 0.7rem; line-height: 1.45; }
+    .ar-opt {
+      width: 100%; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.5rem;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: #fff; font-size: 0.84rem; text-align: left; cursor: pointer; transition: 0.2s;
+    }
+    .ar-opt:hover { background: rgba(255,255,255,0.08); }
+    .ar-opt.correct { background: rgba(16, 185, 129, 0.2) !important; border-color: #10b981 !important; color: #6ee7b7; }
+    .ar-opt.wrong { background: rgba(239, 68, 68, 0.2) !important; border-color: #ef4444 !important; color: #fca5a5; }
+    .ar-explain {
+      display: none; padding: 0.9rem; border-radius: 10px; font-size: 0.84rem;
+      background: rgba(59,130,246,0.12); color: #bfdbfe; margin-top: 0.8rem; line-height: 1.4;
+    }
+
+    footer { text-align: center; color: var(--muted); font-size: 0.82rem; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Navbar -->
+    <header class="top-bar">
+      <a href="index.html" class="brand">Social Science<span>.</span></a>
+      <div class="nav-actions">
+        <a href="index.html" class="home-link"><span>🏛</span> Home</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="hero-tag">BOARD EXAM ACCELERATOR</div>
+      <h1 class="hero-h1">Activity Arena</h1>
+      <p class="hero-p">Engaging, interactive modules designed to master CBSE 5-mark map pointing, historical timelines, keyword definitions, and tricky A/R questions.</p>
+
+      <!-- Scrollable Tab Switcher Bar -->
+      <nav class="tabs-scroll" aria-label="Activity tabs">
+        <button type="button" class="tab-pill active" onclick="switchTab('map')">🗺️ Map Trainer</button>
+        <button type="button" class="tab-pill" onclick="switchTab('timeline')">⏳ History Chronology</button>
+        <button type="button" class="tab-pill" onclick="switchTab('flashcards')">🎴 Concept Flashcards</button>
+        <button type="button" class="tab-pill" onclick="switchTab('ar')">⚖️ Assertion & Reason</button>
+        <button type="button" class="tab-pill" onclick="switchTab('quiz')">⚡ Quick Quiz</button>
+      </nav>
+
+      <!-- 1. MAP TRAINER PANE -->
+      <section class="tab-pane active" id="pane-map">
+        <div class="module-box">
+          <div class="module-head">
+            <h3>CBSE Map Work Trainer (5 Marks)</h3>
+            <p>Guaranteed board questions from History & Geography. Test your spatial recall.</p>
+          </div>
+
+          <div class="map-card">
+            <span class="map-badge" id="mapCategory">HISTORY • IMPORTANT SESSION</span>
+            <div class="map-clue" id="mapPrompt">Where was the 1920 Special Session of the Congress held?</div>
+            <div class="map-subclue" id="mapHintText">Clue: Located in Eastern India along the Hooghly river.</div>
+
+            <div class="map-answer-box" id="mapAnswerBox"></div>
+
+            <div class="btn-row">
+              <button type="button" class="action-btn btn-outline" onclick="toggleMapAnswer()">Show Location on Map</button>
+              <button type="button" class="action-btn btn-gold" onclick="nextMapQuestion()">Next Location →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. HISTORY TIMELINE CHRONOLOGY PANE -->
+      <section class="tab-pane" id="pane-timeline">
+        <div class="module-box">
+          <div class="module-head">
+            <h3>Chronology & Timeline Slider</h3>
+            <p>Drag the slider to understand the cause-and-effect sequence of the Indian National Movement.</p>
+          </div>
+
+          <div class="slider-container">
+            <input type="range" min="0" max="7" value="0" class="timeline-range" id="timelineSlider" oninput="updateTimeline(this.value)">
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-top:0.5rem;">
+              <span>1915</span>
+              <span>1919</span>
+              <span>1920</span>
+              <span>1922</span>
+              <span>1928</span>
+              <span>1930</span>
+              <span>1931</span>
+              <span>1932</span>
+            </div>
+          </div>
+
+          <div class="timeline-card">
+            <span class="year-pill" id="tlYear">1915</span>
+            <div class="event-title" id="tlTitle">Mahatma Gandhi Returns to India</div>
+            
+            <div class="breakdown-row">
+              <div><span class="b-tag tag-cause">CAUSE</span> <span id="tlCause" style="color:#fca5a5;">Successful experimentation with Satyagraha in South Africa against racial laws.</span></div>
+              <div><span class="b-tag tag-action">EVENT</span> <span id="tlEvent" style="color:#bfdbfe;">Arrived in January 1915, spent a year touring India under Gopal Krishna Gokhale's advice.</span></div>
+              <div><span class="b-tag tag-effect">BOARD IMPACT</span> <span id="tlEffect" style="color:#6ee7b7;">Led directly to early local Satyagrahas: Champaran (1917), Kheda (1918), Ahmedabad (1918).</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+            <!-- 3. FLASHCARDS PANE -->
+      <section class="tab-pane" id="pane-flashcards">
+        <div class="module-box">
+          <div class="module-head">
+            <h3>Tap-to-Flip Keyword Flashcards</h3>
+            <p>Tap anywhere on the card to reveal the exact 2-line NCERT definition.</p>
+          </div>
+
+          <div class="card-scene" onclick="flipCard()">
+            <div class="flashcard" id="flashcardBox">
+              <div class="card-face card-front">
+                <span style="font-size:0.75rem; color:var(--amber); font-weight:800;" id="fcCategory">CIVICS • CHAPTER 1</span>
+                <h2 style="font-size:1.6rem; color:#fff; margin:0.8rem 0;" id="fcWord">Majoritarianism</h2>
+                <span class="card-hint">Tap Card to Flip ↻</span>
+              </div>
+              <div class="card-face card-back">
+                <span style="font-size:0.75rem; color:var(--teal); font-weight:800;">NCERT BLUEPRINT DEFINITION</span>
+                <p style="font-size:0.95rem; color:#f1f5f9; line-height:1.5; margin-top:0.8rem;" id="fcDef">
+                  A belief that the majority community should be able to rule a country in whichever way it wants, by disregarding the wishes and needs of the minority. (e.g. Sri Lanka's 1956 Act).
+                </p>
+                <span class="card-hint">Tap to Flip Back ↺</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="action-btn btn-gold" onclick="nextCard()">Next Keyword →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. ASSERTION & REASON PANE -->
+      <section class="tab-pane" id="pane-ar">
+        <div class="module-box">
+          <div class="module-head">
+            <h3>Assertion & Reason Simulator</h3>
+            <p>Practice CBSE Section A's most challenging questions with instant logic validation.</p>
+          </div>
+
+          <div class="ar-box">
+            <div class="ar-statement" id="arAssertion">
+              <strong>Assertion (A):</strong> Different people have different developmental goals.
+            </div>
+            <div class="ar-statement" id="arReason">
+              <strong>Reason (R):</strong> People have different life situations and varying aspirations for progress.
+            </div>
+
+            <div style="margin-top:1.2rem;">
+              <button type="button" class="ar-opt" onclick="checkAR(0, this)">(A) Both A and R are true, and R is the correct explanation of A.</button>
+              <button type="button" class="ar-opt" onclick="checkAR(1, this)">(B) Both A and R are true, but R is NOT the correct explanation of A.</button>
+              <button type="button" class="ar-opt" onclick="checkAR(2, this)">(C) A is true, but R is false.</button>
+              <button type="button" class="ar-opt" onclick="checkAR(3, this)">(D) A is false, but R is true.</button>
+            </div>
+
+            <div class="ar-explain" id="arExplanation">
+              <strong>✓ Explanation:</strong> A landless laborer seeks more days of work and better wages, while a prosperous farmer seeks higher support prices. Because their underlying realities differ, their developmental priorities are distinct. Hence, R correctly explains A.
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="action-btn btn-gold" onclick="nextARQuestion()">Next A/R Question →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. QUICK QUIZ ARENA PANE -->
+      <section class="tab-pane" id="pane-quiz">
+        <div class="module-box">
+          <div class="module-head">
+            <h3>Speed Board Quiz Arena</h3>
+            <p>Rapid-fire 1-mark objective questions for active recall.</p>
+          </div>
+
+          <div class="ar-box">
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-bottom:0.6rem;">
+              <span id="quizSubj">ECONOMICS</span>
+              <span id="quizScore">Score: 0</span>
+            </div>
+            <div class="ar-statement" id="quizQuestion" style="font-size:1.05rem; font-weight:700; color:#fff;">
+              Which sector continues to be the largest employer in India even today?
+            </div>
+
+            <div id="quizOptionsContainer" style="margin-top:1rem;">
+              <!-- Options populated dynamically -->
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="action-btn btn-gold" onclick="nextQuizQuestion()">Next Question →</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Social Science Academic Hub • NCERT Aligned Learning</p>
+    </footer>
+  </div>
+
+  <script>
+    /* TAB SWITCHING */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-pill').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById('pane-' + tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    /* 1. MAP TRAINER DATA & LOGIC */
+    const mapData = [
+      { cat: "HISTORY • CONGRESS SESSION", q: "Where was the September 1920 Special Session of the Congress held?", hint: "Eastern India, West Bengal on the Hooghly river.", ans: "📍 Calcutta (now Kolkata), West Bengal" },
+      { cat: "HISTORY • NATIONAL MOVEMENT", q: "The place where the Jallianwala Bagh massacre took place.", hint: "Golden Temple city in Punjab.", ans: "📍 Amritsar, Punjab (13 April 1919)" },
+      { cat: "HISTORY • SATYAGRAHA", q: "Where did Mahatma Gandhi break the Salt Law, launching Civil Disobedience?", hint: "Coastal village in Gujarat.", ans: "📍 Dandi, Gujarat (6 April 1930)" },
+      { cat: "GEOGRAPHY • MULTIPURPOSE DAM", q: "Major dam built on the Narmada River in Gujarat.", hint: "Target of the Narmada Bachao Andolan.", ans: "📍 Sardar Sarovar Dam, Gujarat" },
+      { cat: "GEOGRAPHY • MAJOR SEAPORT", q: "Tidal port built soon after Independence to ease volume on Mumbai port.", hint: "Located in the Gulf of Kutch, Gujarat.", ans: "📍 Kandla (Deendayal Port), Gujarat" }
+    ];
+    let mapIdx = 0;
+
+    function toggleMapAnswer() {
+      const box = document.getElementById('mapAnswerBox');
+      box.innerText = mapData[mapIdx].ans;
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function nextMapQuestion() {
+      mapIdx = (mapIdx + 1) % mapData.length;
+      document.getElementById('mapCategory').innerText = mapData[mapIdx].cat;
+      document.getElementById('mapPrompt').innerText = mapData[mapIdx].q;
+      document.getElementById('mapHintText').innerText = "Clue: " + mapData[mapIdx].hint;
+      document.getElementById('mapAnswerBox').style.display = 'none';
+    }
+
+    /* 2. CHRONOLOGY SLIDER LOGIC */
+    const timelineData = [
+      { y: "1915", title: "Mahatma Gandhi Returns to India", cause: "Success of Satyagraha against racist regime in South Africa.", ev: "Arrived in January 1915 and traveled the country to understand local realities.", eff: "Led to Champaran (1917), Kheda (1918), and Ahmedabad (1918) Satyagrahas." },
+      { y: "1919", title: "Rowlatt Act & Jallianwala Bagh Massacre", cause: "British Imperial Legislative Council passed Rowlatt Act despite united Indian opposition.", ev: "On 13 April 1919, General Dyer opened fire on peaceful gathering at Amritsar.", eff: "Rabindranath Tagore renounced Knighthood; convinced Gandhi for mass Non-Cooperation." },
+      { y: "1920", title: "Non-Cooperation Movement Launched", cause: "Khilafat issue, Rowlatt Act, and Punjab atrocities demanded a unified mass response.", ev: "Adopted at Nagpur Session (Dec 1920); boycott of foreign cloth, courts, and government schools.", eff: "Foreign cloth import halved between 1921–1922; widespread national consciousness." },
+      { y: "1922", title: "Chauri Chaura Incident & Withdrawal", cause: "Police fired on a peaceful demonstration at Chauri Chaura in Gorakhpur, UP.", ev: "Angry peasants burned down the police station, killing 22 policemen.", eff: "Mahatma Gandhi immediately halted Non-Cooperation, stating satyagrahis needed training." },
+      { y: "1928", title: "Arrival of Simon Commission", cause: "British Tory government set up statutory commission without a single Indian member.", ev: "Greeted nationwide with black flags and the slogan 'Go Back Simon'.", eff: "Lala Lajpat Rai assaulted in Lahore; British offered vague 'Dominion Status'." },
+      { y: "1930", title: "Dandi Salt March & Civil Disobedience", cause: "Lord Irwin ignored Gandhi's 11 Demands, including the abolition of the Salt Tax.", ev: "Gandhi walked 240 miles from Sabarmati to Dandi with 78 volunteers to make salt.", eff: "Launched Civil Disobedience Movement; people broke salt and forest laws nationwide." },
+      { y: "1931", title: "Gandhi-Irwin Pact & 2nd Round Table", cause: "British repression arrested 100,000; government sought negotiation.", ev: "Gandhi suspended Civil Disobedience and agreed to attend 2nd Round Table in London.", eff: "Negotiations in London broke down; movement resumed in 1932 with declining momentum." },
+      { y: "1932", title: "The Poona Pact Signed", cause: "Dr. B.R. Ambedkar clashed with Gandhi over separate electorates for Dalits.", ev: "Gandhi went on fast unto death; pact reserved seats for Depressed Classes in general electorate.", eff: "Cemented Dalit representation while preserving joint national electorate." }
+    ];
+
+    function updateTimeline(val) {
+      const d = timelineData[val];
+      document.getElementById('tlYear').innerText = d.y;
+      document.getElementById('tlTitle').innerText = d.title;
+      document.getElementById('tlCause').innerText = d.cause;
+      document.getElementById('tlEvent').innerText = d.ev;
+      document.getElementById('tlEffect').innerText = d.eff;
+    }
+
+    /* 3. FLASHCARDS DATA & LOGIC */
+    const flashcardsData = [
+      { cat: "CIVICS • CHAPTER 1", word: "Majoritarianism", def: "A belief that the majority community should rule a country in whichever way it wants, by disregarding the wishes and needs of the minority (e.g. Sri Lanka's 1956 Act)." },
+      { cat: "ECONOMICS • CHAPTER 2", word: "Disguised Unemployment", def: "A situation where more people are engaged in a job than needed. Even if some are removed, total production does not fall (common in Indian agriculture)." },
+      { cat: "CIVICS • CHAPTER 2", word: "Federalism", def: "A system of governance in which state authority is divided between a central government and constituent political units (two or more levels of power)." },
+      { cat: "ECONOMICS • CHAPTER 3", word: "Collateral", def: "An asset that the borrower owns (land, vehicle, deposit) and pledges to a lender as a security guarantee until the debt is repaid." },
+      { cat: "GEOGRAPHY • CHAPTER 1", word: "Sustainable Development", def: "Development that fulfills current human needs without compromising the ability of future generations to fulfill their own needs." }
+    ];
+    let fcIdx = 0;
+
+    function flipCard() {
+      document.getElementById('flashcardBox').classList.toggle('flipped');
+    }
+
+    function nextCard() {
+      document.getElementById('flashcardBox').classList.remove('flipped');
+      setTimeout(() => {
+        fcIdx = (fcIdx + 1) % flashcardsData.length;
+        document.getElementById('fcCategory').innerText = flashcardsData[fcIdx].cat;
+        document.getElementById('fcWord').innerText = flashcardsData[fcIdx].word;
+        document.getElementById('fcDef').innerText = flashcardsData[fcIdx].def;
+      }, 200);
+    }
+
+    /* 4. ASSERTION & REASON LOGIC */
+    const arQuestions = [
+      {
+        a: "Different people have different developmental goals.",
+        r: "People have different life situations and varying aspirations for progress.",
+        correct: 0,
+        exp: "✓ Explanation: A landless laborer seeks higher daily wages, while a prosperous farmer seeks export support. Because their starting conditions differ, their goals are distinct. R correctly explains A."
+      },
+      {
+        a: "In Belgium, the leaders amended their constitution four times between 1970 and 1993.",
+        r: "The amendments aimed to ensure equal ministerial representation between Dutch and French-speaking communities to prevent civic strife.",
+        correct: 0,
+        exp: "✓ Explanation: Belgian leaders recognized linguistic diversity and adopted accommodation, avoiding the violent partition seen in Sri Lanka. Both are true, and R correctly explains A."
+      },
+      {
+        a: "Crude oil reserves in the world are depleting rapidly.",
+        r: "Oil is a non-renewable resource that takes millions of years to form and cannot be quickly replenished.",
+        correct: 0,
+        exp: "✓ Explanation: Extraction rates far exceed natural replenishment, making it a finite resource. R correctly explains A."
+      }
+    ];
+    let arIdx = 0;
+
+    function checkAR(selectedIdx, btn) {
+      const q = arQuestions[arIdx];
+      const allBtns = document.querySelectorAll('.ar-opt');
+      allBtns.forEach(b => b.disabled = true);
+
+      if (selectedIdx === q.correct) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('wrong');
+        allBtns[q.correct].classList.add('correct');
+      }
+      const exp = document.getElementById('arExplanation');
+      exp.innerText = q.exp;
+      exp.style.display = 'block';
+    }
+
+    function nextARQuestion() {
+      arIdx = (arIdx + 1) % arQuestions.length;
+      const q = arQuestions[arIdx];
+      document.getElementById('arAssertion').innerHTML = "<strong>Assertion (A):</strong> " + q.a;
+      document.getElementById('arReason').innerHTML = "<strong>Reason (R):</strong> " + q.r;
+      document.getElementById('arExplanation').style.display = 'none';
+
+      const allBtns = document.querySelectorAll('.ar-opt');
+      allBtns.forEach(b => {
+        b.disabled = false;
+        b.className = 'ar-opt';
+      });
+    }
+
+    /* 5. QUIZ LOGIC */
+    const quizData = [
+      { subj: "ECONOMICS", q: "Which sector continues to be the largest employer in India even today?", opts: ["Primary Sector", "Secondary Sector", "Tertiary Sector", "IT Sector"], correct: 0 },
+      { subj: "HISTORY", q: "Who authored the famous 1909 book 'Hind Swaraj'?", opts: ["Jawaharlal Nehru", "Mahatma Gandhi", "Subhas Chandra Bose", "Bal Gangadhar Tilak"], correct: 1 },
+      { subj: "CIVICS", q: "Which subject is included in the Union List of the Indian Constitution?", opts: ["Police", "Agriculture", "Defense", "Trade"], correct: 2 },
+      { subj: "GEOGRAPHY", q: "Black soil is ideally suited for the cultivation of which major cash crop?", opts: ["Cotton", "Jute", "Tea", "Rubber"], correct: 0 }
+    ];
+    let qIdx = 0;
+    let score = 0;
+
+    function loadQuiz() {
+      const item = quizData[qIdx];
+      document.getElementById('quizSubj').innerText = item.subj;
+      document.getElementById('quizQuestion').innerText = item.q;
+      const c = document.getElementById('quizOptionsContainer');
+      c.innerHTML = '';
+
+      item.opts.forEach((opt, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'ar-opt';
+        b.innerText = opt;
+        b.onclick = () => {
+          const btns = c.querySelectorAll('.ar-opt');
+          btns.forEach(x => x.disabled = true);
+          if (i === item.correct) {
+            b.classList.add('correct');
+            score++;
+            document.getElementById('quizScore').innerText = "Score: " + score;
+          } else {
+            b.classList.add('wrong');
+            btns[item.correct].classList.add('correct');
+          }
+        };
+        c.appendChild(b);
+      });
+    }
+
+    function nextQuizQuestion() {
+      qIdx = (qIdx + 1) % quizData.length;
+      loadQuiz();
+    }
+
+    // Initialize Quiz on load
+    loadQuiz();
+  </script>
+</body>
+</html>
 
