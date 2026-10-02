@@ -1,1 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History Timelines | Social Science Hub</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: linear-gradient(135deg, rgba(16, 24, 40, 0.94) 0%, rgba(20, 32, 54, 0.8) 100%);
+      --border: rgba(255, 255, 255, 0.08);
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --teal: #14b8a6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 1.2rem;
+      min-height: 100vh;
+    }
+    .wrapper { max-width: 780px; margin: 0 auto; }
+    
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.4rem; }
+    .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .brand span { color: var(--amber); }
+    .back-btn {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      color: #fff; border-radius: 12px; padding: 0.55rem 0.9rem;
+      font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: 0.2s;
+    }
+    .back-btn:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
+
+    .module-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 24px; padding: 1.8rem 1.4rem; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .hero-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.3rem; color: var(--amber); }
+    .hero-h1 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.3rem; letter-spacing: -0.5px; }
+    .hero-p { color: var(--muted); font-size: 0.88rem; line-height: 1.45; margin-bottom: 1.4rem; }
+
+    .ch-toggle-bar { display: flex; gap: 0.6rem; margin-bottom: 1.4rem; }
+    .ch-btn {
+      flex: 1; padding: 0.75rem 0.6rem; border-radius: 14px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04); color: var(--muted); font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: 0.2s; text-align: center;
+    }
+    .ch-btn.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #fff; }
+    .timeline-range {
+      width: 100%; height: 8px; border-radius: 5px; background: rgba(255,255,255,0.1);
+      outline: none; -webkit-appearance: none; cursor: pointer; margin: 1.2rem 0 0.8rem;
+    }
+    .timeline-range::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%;
+      background: var(--amber); cursor: pointer; box-shadow: 0 0 14px rgba(245,158,11,0.7);
+      border: 3px solid #fff;
+    }
+    .slider-ticks { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); font-weight: 700; margin-bottom: 1rem; }
+    .timeline-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 20px; padding: 1.4rem; }
+    .year-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; margin-bottom: 1rem; }
+    .year-pill { font-size: 2.2rem; font-weight: 900; color: var(--amber); }
+    .event-title { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 1rem; }
+    .breakdown-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .breakdown-item { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.86rem; line-height: 1.5; padding: 0.75rem 0.9rem; border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); }
+    .b-tag { font-size: 0.68rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .nav-btn-row { display: flex; gap: 0.8rem; margin-top: 1.4rem; }
+    .nav-btn { flex: 1; padding: 0.85rem; border-radius: 14px; font-size: 0.88rem; font-weight: 700; cursor: pointer; border: 1px solid var(--border); }
+    .btn-prev { background: rgba(255,255,255,0.05); color: #fff; }
+    .btn-next { background: var(--amber); color: #000; border-color: var(--amber); }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="top-bar">
+      <a href="index.html" class="brand">Social Science<span>.</span></a>
+      <a href="activity.html" class="back-btn">← Back to Arena</a>
+    </header>
+
+    <main>
+      <div class="module-card">
+        <div class="hero-tag">MODULE 1 • CHRONOLOGY</div>
+        <h1 class="hero-h1">History Timelines</h1>
+        <p class="hero-p">Scrub through cause-and-effect milestones for the two compulsory CBSE History chapters.</p>
+
+        <div class="ch-toggle-bar">
+          <button type="button" class="ch-btn active" id="btnCh1" onclick="switchChapter(1)">Ch 1: Europe</button>
+          <button type="button" class="ch-btn" id="btnCh2" onclick="switchChapter(2)">Ch 2: India</button>
+        </div>
+
+        <div class="slider-container">
+          <input type="range" min="0" max="8" value="0" class="timeline-range" id="timeSlider" oninput="showStep(parseInt(this.value))">
+          <div class="slider-ticks" id="ticksContainer"></div>
+        </div>
+
+        <div class="timeline-card">
+          <div class="year-header">
+            <span class="year-pill" id="displayYear">1789</span>
+            <span style="font-size:0.78rem; font-weight:800; color:var(--teal);" id="displayStep">MILESTONE 1 / 9</span>
+          </div>
+          <div class="event-title" id="displayTitle">The French Revolution</div>
+
+          <div class="breakdown-list">
+            <div class="breakdown-item">
+              <span class="b-tag" style="color:#f87171;">⚡ Cause / Background</span>
+              <span id="displayCause" style="color:#fca5a5;">Autocratic Bourbon monarchy and feudal estate privileges.</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="b-tag" style="color:#93c5fd;">📌 Core Event & Action</span>
+              <span id="displayAction" style="color:#bfdbfe;">Sovereignty transferred to French citizens; ideas of la patrie and le citoyen created a collective identity.</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="b-tag" style="color:#6ee7b7;">🎯 CBSE Exam Takeaway</span>
+              <span id="displayTakeaway" style="color:#6ee7b7;">Marks the first clear expression of nationalism in Europe.</span>
+            </div>
+          </div>
+
+          <div class="nav-btn-row">
+            <button type="button" class="nav-btn btn-prev" onclick="stepChange(-1)">← Previous</button>
+            <button type="button" class="nav-btn btn-next" onclick="stepChange(1)">Next Milestone →</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const TIMELINE_DATA = {
+      1: [
+        { year: "1789", title: "The French Revolution", cause: "Absolute Bourbon monarchy and oppressive feudal estate privileges.", action: "Sovereignty transferred to French citizens; revolutionary measures introduced ideas of la patrie and le citoyen.", takeaway: "Marks the first clear expression of nationalism in Europe." },
+        { year: "1804", title: "The Napoleonic Code", cause: "Need to replace complex feudal structures with uniform administrative machinery.", action: "Abolished birth privileges, established equality before law, and secured the right to property across conquered territories.", takeaway: "Demonstrated administrative simplification alongside political authoritarianism." },
+        { year: "1815", title: "Defeat of Napoleon & Treaty of Vienna", cause: "Napoleon's defeat at Waterloo by allied conservative powers (Britain, Russia, Prussia, Austria).", action: "Hosted by Austrian Chancellor Duke Metternich to restore conservative order and establish buffer states around France.", takeaway: "Set up the conservative restoration suppressing nationalist expressions until 1830." },
+        { year: "1821", title: "Greek War of Independence", cause: "Centuries of Ottoman rule sparked national liberation movement supported by Western European sympathizers.", action: "Nationalists mobilized public opinion; English poet Lord Byron fought and raised funds. Formally recognized in 1832 Treaty of Constantinople.", takeaway: "Showcased the power of Romanticism and cultural pride against imperial rule." },
+        { year: "1830", title: "The July Revolution in France", cause: "Liberal resurgence against restored Bourbon monarch Charles X.", action: "Bourbon kings were overthrown; Louis Philippe was installed as constitutional monarch, sparking an uprising that freed Belgium.", takeaway: "Prompted Metternich's famous quote: 'When France sneezes, the rest of Europe catches cold.'" },
+        { year: "1834", title: "Formation of the Zollverein", cause: "39 German confederation states with distinct currencies and tariff barriers hindered economic growth.", action: "Prussia formed a customs union abolishing internal tariff barriers and reducing currencies from over thirty to two.", takeaway: "Economic nationalism strengthened and paved the way for German unification." },
+        { year: "1848", title: "Frankfurt Parliament (St. Paul's)", cause: "Widespread middle-class liberal revolutions demanding constitutionalism and German unification.", action: "831 elected representatives drafted a constitution for a German nation headed by a constitutional monarchy at Frankfurt.", takeaway: "Friedrich Wilhelm IV rejected the crown, and the parliament was dissolved by aristocrats." },
+        { year: "1861", title: "Proclamation of Unified Italy", cause: "Centuries of political fragmentation driven forward by Cavour's diplomacy and Garibaldi's volunteers.", action: "Following the defeat of Austria and Garibaldi's Expedition of the Thousand, Victor Emmanuel II was proclaimed King of Italy.", takeaway: "Achieved unification through a blend of royal realpolitik, elite diplomacy, and popular volunteer armies." },
+        { year: "1871", title: "Unification of Germany", cause: "Leadership shifted to Prussian militarism and Otto von Bismarck's policy of 'Blood and Iron'.", action: "Prussia fought three victorious wars over seven years against Denmark, Austria, and France. Kaiser William I was proclaimed Emperor at Versailles.", takeaway: "Demonstrated the triumph of Prussian military and state power over constitutional nationalism." }
+      ],
+      2: [
+        { year: "Jan 1915", title: "Mahatma Gandhi Returns to India", cause: "Successful application of Satyagraha against racial discrimination in South Africa.", action: "Arrived in January 1915; organized local satyagrahas in Champaran (1917), Kheda (1918), and Ahmedabad (1918).", takeaway: "Introduced Satyagraha—pure non-violent soul-force—to the Indian anti-colonial struggle." },
+        { year: "1919", title: "Rowlatt Act & Jallianwala Bagh", cause: "Imperial Legislative Council hurriedly authorized detention without trial for up to two years.", action: "Gandhi launched a nationwide hartal on 6 April. On 13 April (Baisakhi), General Dyer opened fire at Jallianwala Bagh, Amritsar.", takeaway: "Rabindranath Tagore renounced his Knighthood; convinced Gandhi to launch Non-Cooperation." },
+        { year: "Dec 1920", title: "Nagpur Session Adopts Non-Cooperation", cause: "Need to unite Hindus and Muslims by joining the Khilafat grievance with the demand for Swaraj.", action: "At the Nagpur session, the Non-Cooperation program was formally ratified, launching boycotts of foreign goods and schools.", takeaway: "Transformed the freedom struggle from an urban debate into a mass nationwide movement." },
+        { year: "Feb 1922", title: "Chauri Chaura Incident & Withdrawal", cause: "Clash between police and a peaceful peasant procession at Chauri Chaura near Gorakhpur, UP.", action: "An enraged crowd burned down the police station, killing 22 policemen. Gandhi immediately called off the movement.", takeaway: "Highlighted Gandhi's strict rule that Satyagrahis must be thoroughly trained in non-violence." },
+        { year: "1928", title: "Boycott of the Simon Commission", cause: "British Statutory Commission had no Indian members to review India's constitutional setup.", action: "Greeted across Indian ports with 'Go Back Simon'. Lala Lajpat Rai was fatally assaulted in a police lathi charge at Lahore.", takeaway: "United diverse political groups against British paternalism, paving the way for radical demands." },
+        { year: "Dec 1929", title: "Lahore Congress & 'Purna Swaraj'", cause: "Young leaders like Jawaharlal Nehru and Subhas Chandra Bose rejected vague 'dominion status' offers.", action: "Presided by Nehru, the session declared Complete Independence (Purna Swaraj) and celebrated 26 January 1930 as Independence Day.", takeaway: "Officially set complete national independence as the sole goal of the freedom struggle." },
+        { year: "Apr 1930", title: "Dandi Salt March & Civil Disobedience", cause: "Viceroy Irwin ignored Gandhi's letter with 11 Demands, including the abolition of the Salt Tax.", action: "Gandhi marched 240 miles from Sabarmati to Dandi with 78 volunteers, manufacturing salt on 6 April to launch Civil Disobedience.", takeaway: "Advanced from non-cooperation to actively breaking colonial laws, mobilizing millions." },
+        { year: "Mar 1931", title: "The Gandhi-Irwin Pact", cause: "Mass arrests of over 100,000 satyagrahis prompted negotiations between Irwin and Gandhi.", action: "Gandhi agreed to suspend Civil Disobedience and attend the Second Round Table Conference in exchange for the release of prisoners.", takeaway: "Gandhi returned disappointed; relaunched the movement in 1932 before it waned in 1934." },
+        { year: "Sep 1932", title: "The Poona Pact", cause: "Dr. B.R. Ambedkar demanded separate electorates for Depressed Classes; Gandhi opposed with a fast unto death.", action: "Ambedkar and Gandhi reached an agreement reserving seats for Depressed Classes in legislatures, voted by general electorates.", takeaway: "Preserved political unity while guaranteeing constitutional representation for Dalits." }
+      ]
+    };
+
+    let currentCh = 1;
+    let currentTIdx = 0;
+
+    function switchChapter(num) {
+      currentCh = num;
+      currentTIdx = 0;
+      document.getElementById('btnCh1').classList.toggle('active', num === 1);
+      document.getElementById('btnCh2').classList.toggle('active', num === 2);
+      const slider = document.getElementById('timeSlider');
+      slider.max = TIMELINE_DATA[currentCh].length - 1;
+      slider.value = 0;
+      renderTicks();
+      showStep(0);
+    }
+
+    function renderTicks() {
+      const data = TIMELINE_DATA[currentCh];
+      document.getElementById('ticksContainer').innerHTML = data.map(item => `<span>${item.year}</span>`).join('');
+    }
+
+    function showStep(idx) {
+      currentTIdx = idx;
+      const data = TIMELINE_DATA[currentCh];
+      const item = data[idx];
+      document.getElementById('timeSlider').value = idx;
+      document.getElementById('displayYear').innerText = item.year;
+      document.getElementById('displayStep').innerText = `MILESTONE ${idx + 1} / ${data.length}`;
+      document.getElementById('displayTitle').innerText = item.title;
+      document.getElementById('displayCause').innerText = item.cause;
+      document.getElementById('displayAction').innerText = item.action;
+      document.getElementById('displayTakeaway').innerText = item.takeaway;
+    }
+
+    function stepChange(delta) {
+      const data = TIMELINE_DATA[currentCh];
+      let newIdx = currentTIdx + delta;
+      if (newIdx >= 0 && newIdx < data.length) showStep(newIdx);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'ArrowRight') stepChange(1);
+      else if (e.code === 'ArrowLeft') stepChange(-1);
+    });
+
+    // Initialize
+    renderTicks();
+    showStep(0);
+  </script>
+</body>
+</html>
 
