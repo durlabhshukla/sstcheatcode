@@ -15,7 +15,7 @@
       --text: #f8fafc;
       --muted: #94a3b8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
     body {
       background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
       color: var(--text);
@@ -34,12 +34,15 @@
     .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
     .brand span { color: var(--green); }
     
+    /* Crisp active-press micro-animation for Home button */
     .home-btn {
       background: rgba(255,255,255,0.06); border: 1px solid var(--border);
       color: #fff; border-radius: 10px; padding: 0.5rem 0.9rem;
-      font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: 0.2s;
+      font-size: 0.85rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, transform 0.1s ease;
     }
     .home-btn:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
+    .home-btn:active { transform: scale(0.94); }
 
     .hero { text-align: center; margin-bottom: 2.2rem; }
     .hero-h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
@@ -48,28 +51,30 @@
     .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
     @media(max-width: 640px) { .notes-grid { grid-template-columns: 1fr; } }
 
+    /* Crisp active-press micro-animation for Cards */
     .hub-card {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 20px; padding: 1.6rem; text-decoration: none; color: inherit;
       display: flex; flex-direction: column; justify-content: space-between;
       position: relative; overflow: hidden;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, box-shadow 0.3s;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s;
     }
     .hub-card:hover {
       transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.25);
       box-shadow: 0 15px 30px rgba(0,0,0,0.5);
     }
+    .hub-card:active {
+      transform: scale(0.97) translateY(0);
+    }
     
     .card-content { position: relative; z-index: 2; }
 
-    /* Animated background vector watermark */
     .card-watermark {
       position: absolute; right: -12px; bottom: -12px; width: 130px; height: 130px;
       opacity: 0.06; pointer-events: none; z-index: 1; fill: currentColor;
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     }
 
-    /* Hover animation triggers watermark zoom and subtle rotation */
     .hub-card:hover .card-watermark {
       transform: scale(1.15) rotate(6deg);
       opacity: 0.12;
