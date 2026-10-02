@@ -26,6 +26,7 @@
     }
     .wrapper { max-width: 820px; margin: 0 auto; position: relative; }
 
+    /* Top Navigation Bar with Menu Button */
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.8rem 1.2rem; background: rgba(16, 24, 40, 0.85);
@@ -44,21 +45,23 @@
     .menu-btn:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
 
     .dropdown-menu {
-      display: none; position: absolute; top: 70px; right: 0; width: 260px;
+      display: none; position: absolute; top: 70px; right: 0; width: 270px;
       background: #111827; border: 1px solid var(--border); border-radius: 16px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.6); padding: 0.6rem; z-index: 1000;
     }
     .dropdown-menu.show { display: block; }
     .dropdown-item {
       display: block; padding: 0.75rem 1rem; color: #cbd5e1; text-decoration: none;
-      font-size: 0.88rem; font-weight: 700; border-radius: 10px; transition: 0.2s;
+      font-size: 0.88rem; font-weight: 700; border-radius: 10px; transition: 0.2s; cursor: pointer;
     }
     .dropdown-item:hover { background: rgba(59,130,246,0.2); color: #fff; }
 
+    /* Hero Section */
     .hero { text-align: center; margin-bottom: 2.2rem; }
     .hero-h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
     .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; max-width: 580px; margin: 0 auto; }
 
+    /* Grid Layouts */
     .section-title {
       font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--amber); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
@@ -120,6 +123,28 @@
     }
     .submit-btn:hover { opacity: 0.9; }
 
+    /* Success Message Banner */
+    .success-banner {
+      display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--emerald);
+      color: #6ee7b7; padding: 1rem; border-radius: 12px; font-size: 0.9rem; font-weight: 700;
+      margin-bottom: 1rem; line-height: 1.5;
+    }
+
+    /* Modal Popups for Menu Items */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; padding: 1rem;
+    }
+    .modal-content {
+      background: #111827; border: 1px solid var(--border); border-radius: 20px;
+      width: 100%; max-width: 500px; padding: 1.8rem; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    }
+    .close-modal {
+      position: absolute; top: 1rem; right: 1.2rem; background: none; border: none;
+      color: var(--muted); font-size: 1.2rem; font-weight: bold; cursor: pointer;
+    }
+    .close-modal:hover { color: #fff; }
+
     .paper-item {
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(255,255,255,0.03); border: 1px solid var(--border);
@@ -143,6 +168,7 @@
 <body>
 
   <div class="wrapper">
+    <!-- Top Bar with Menu Button -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <div style="position: relative;">
@@ -154,9 +180,9 @@
           <a href="class9.html" class="dropdown-item">📖 Class 9 Notes</a>
           <a href="class10.html" class="dropdown-item">🎓 Class 10 Notes</a>
           <a href="activity.html" class="dropdown-item">🎯 Activities & Practice Arena</a>
-          <a href="#sample-papers" class="dropdown-item">📄 Sample Question Papers</a>
-          <a href="#ask-doubt" class="dropdown-item">❓ Ask a Doubt</a>
-          <a href="#doubts-replies" class="dropdown-item">💬 Check My Doubts & Replies</a>
+          <a class="dropdown-item" onclick="openModal('sampleModal'); toggleMenu();">📄 Sample Question Papers</a>
+          <a href="#ask-doubt" class="dropdown-item" onclick="toggleMenu()">❓ Ask a Doubt</a>
+          <a class="dropdown-item" onclick="openModal('doubtsModal'); toggleMenu();">💬 Check My Doubts & Replies</a>
         </div>
       </div>
     </header>
@@ -167,7 +193,7 @@
         <p class="hero-p">Empowering secondary school education with structured curriculum notes, timelines, flashcards, and simulation drills.</p>
       </div>
 
-      <!-- Classes (Class 9 First) -->
+      <!-- 1. CLASSES (Class 9 First, Class 10 Second) -->
       <div class="section-title">🎓 Curriculum Study Materials (Classes 9 & 10)</div>
       <div class="notes-grid">
         <a href="class9.html" class="hub-card">
@@ -189,36 +215,21 @@
         </a>
       </div>
 
-      <!-- Why This Portal Exists -->
+      <!-- 2. WHY THIS PORTAL EXISTS -->
       <div class="info-box">
         <h3>💡 Why This Portal Exists</h3>
         <p>Built to bridge the gap between traditional textbook learning and interactive digital revision. This portal provides students and educators with fast-loading, zero-distraction academic resources designed specifically around CBSE board standards and conceptual mastery.</p>
       </div>
 
-      <!-- Sample Question Papers -->
-      <div class="info-box" id="sample-papers">
-        <h3>📄 CBSE Sample Question Papers</h3>
-        <p>Download official board pattern sample papers and practice sets with marking schemes.</p>
-        
-        <div class="paper-item">
-          <span class="paper-title">Class 10 Social Science Practice Paper 2026 (Set 1)</span>
-          <a href="class10.html" class="paper-link">View Notes & Qs →</a>
-        </div>
-        <div class="paper-item">
-          <span class="paper-title">Class 10 Social Science Board Blueprint & Map Guide</span>
-          <a href="activity.html" class="paper-link">Practice Arena →</a>
-        </div>
-        <div class="paper-item">
-          <span class="paper-title">Class 9 Social Science Term Assessment Set</span>
-          <a href="class9.html" class="paper-link">View Notes →</a>
-        </div>
-      </div>
-
-      <!-- Ask a Doubt Form -->
+      <!-- 3. ASK A DOUBT OR QUERY FORM -->
       <div class="info-box" id="ask-doubt">
         <h3>❓ Ask a Doubt or Query</h3>
-        <p>Fill out the form below with your student details and query. Save your PIN to check your replies later!</p>
+        <p>Fill out the form below with your student details and query.</p>
         
+        <div class="success-banner" id="successBanner">
+          Your doubt submitted successfully. Please remember your PIN and you can check it in Menu -> Check My Doubts & Replies.
+        </div>
+
         <form id="doubtForm" onsubmit="submitDoubt(event)">
           <div class="form-row">
             <div class="form-group">
@@ -275,21 +286,7 @@
         </form>
       </div>
 
-      <!-- Check My Doubts & Replies -->
-      <div class="info-box" id="doubts-replies">
-        <h3>💬 Check My Doubts & Replies</h3>
-        <p>Enter your Name and PIN below to view your submitted questions and teacher responses from your Google Sheet.</p>
-        
-        <div class="form-row" style="margin-bottom: 1rem;">
-          <input type="text" id="checkName" class="form-input" placeholder="Enter your Name">
-          <input type="password" id="checkPin" class="form-input" placeholder="Enter your PIN" maxlength="4">
-        </div>
-        <button type="button" class="submit-btn" onclick="checkDoubts()">View My Doubts</button>
-
-        <div id="doubtsResultContainer" style="margin-top: 1rem;"></div>
-      </div>
-
-      <!-- Interactive Revision & Drills -->
+      <!-- 4. INTERACTIVE REVISION & DRILLS (Activity & Practice Arena) -->
       <div class="section-title">⚡ Interactive Revision & Drills</div>
       <div class="grid">
         <a href="activity.html" class="hub-card">
@@ -313,6 +310,47 @@
     </footer>
   </div>
 
+  <!-- Modal: Sample Question Papers -->
+  <div class="modal-overlay" id="sampleModal">
+    <div class="modal-content">
+      <button type="button" class="close-modal" onclick="closeModal('sampleModal')">×</button>
+      <h3 style="color:#fff; margin-bottom:0.5rem; font-weight:800;">📄 Sample Question Papers</h3>
+      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.2rem;">Download official board pattern sample papers and practice sets.</p>
+      
+      <div class="paper-item">
+        <span class="paper-title">Class 10 Practice Paper 2026 (Set 1)</span>
+        <a href="class10.html" class="paper-link">View Notes →</a>
+      </div>
+      <div class="paper-item">
+        <span class="paper-title">Class 10 Map Guide & Blueprint</span>
+        <a href="activity.html" class="paper-link">Practice →</a>
+      </div>
+      <div class="paper-item">
+        <span class="paper-title">Class 9 Term Assessment Set</span>
+        <a href="class9.html" class="paper-link">View Notes →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Check My Doubts & Replies -->
+  <div class="modal-overlay" id="doubtsModal">
+    <div class="modal-content">
+      <button type="button" class="close-modal" onclick="closeModal('doubtsModal')">×</button>
+      <h3 style="color:#fff; margin-bottom:0.5rem; font-weight:800;">💬 Check My Doubts & Replies</h3>
+      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1rem;">Enter your Name and PIN below to view your submitted questions.</p>
+      
+      <div class="form-group">
+        <input type="text" id="checkName" class="form-input" placeholder="Enter your Name">
+      </div>
+      <div class="form-group">
+        <input type="password" id="checkPin" class="form-input" placeholder="Enter your PIN" maxlength="4">
+      </div>
+      <button type="button" class="submit-btn" style="width:100%; margin-top:0.5rem;" onclick="checkDoubts()">View My Doubts</button>
+
+      <div id="doubtsResultContainer" style="margin-top: 1rem; max-height:280px; overflow-y:auto;"></div>
+    </div>
+  </div>
+
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWGX06oQDY_BRAWaO8AsPiZxbuqFSNo1x8nncChh-Z9yDy7Jaf_KwH6zajKHpj9WTeNA/exec';
 
@@ -329,9 +367,18 @@
       }
     });
 
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
     function submitDoubt(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
+      const banner = document.getElementById('successBanner');
       btn.innerText = "Submitting...";
       btn.disabled = true;
 
@@ -352,10 +399,11 @@
         body: JSON.stringify(payload)
       })
       .then(() => {
-        alert('Doubt submitted successfully and sent to your Google Sheet!');
+        banner.style.display = 'block';
         document.getElementById('doubtForm').reset();
         btn.innerText = "Submit Doubt";
         btn.disabled = false;
+        setTimeout(() => { banner.style.display = 'none'; }, 8000);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -375,29 +423,29 @@
         return;
       }
 
-      container.innerHTML = `<p style="color:var(--muted); font-size:0.88rem; margin-top:1rem;">Searching your doubts in Google Sheets...</p>`;
+      container.innerHTML = `<p style="color:var(--muted); font-size:0.85rem; margin-top:1rem;">Searching your doubts in Google Sheets...</p>`;
 
       fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}`)
       .then(response => response.json())
       .then(data => {
         if (!data || data.length === 0) {
-          container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.88rem;">No doubts found for "${name}" with this PIN.</p>`;
+          container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.85rem;">No doubts found for "${name}" with this PIN.</p>`;
           return;
         }
 
         let html = '';
         data.forEach((d) => {
           html += `
-            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:1.1rem; margin-top:0.8rem;">
-              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--teal); font-weight:800; margin-bottom:0.4rem;">
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:1rem; margin-top:0.7rem;">
+              <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--teal); font-weight:800; margin-bottom:0.3rem;">
                 <span>${d.classVal} • ${d.section} • ${d.subject}</span>
                 <span>${d.date}</span>
               </div>
-              <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:0.3rem;">Topic: ${d.chapter}</div>
-              <div style="font-size:0.85rem; color:var(--muted); line-height:1.4; margin-bottom:0.8rem;"><strong>Query:</strong> ${d.query}</div>
+              <div style="font-size:0.88rem; font-weight:700; color:#fff; margin-bottom:0.2rem;">Topic: ${d.chapter}</div>
+              <div style="font-size:0.82rem; color:var(--muted); line-height:1.4; margin-bottom:0.7rem;"><strong>Query:</strong> ${d.query}</div>
               <div class="reply-card">
-                <div style="font-size:0.75rem; font-weight:800; color:var(--emerald); text-transform:uppercase; margin-bottom:0.2rem;">Teacher Response</div>
-                <div style="font-size:0.86rem; color:#e2e8f0; line-height:1.4;">${d.reply}</div>
+                <div style="font-size:0.7rem; font-weight:800; color:var(--emerald); text-transform:uppercase; margin-bottom:0.2rem;">Teacher Response</div>
+                <div style="font-size:0.82rem; color:#e2e8f0; line-height:1.4;">${d.reply}</div>
               </div>
             </div>
           `;
@@ -406,7 +454,7 @@
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.88rem;">Error loading data from Google Sheets. Check script deployment permissions.</p>`;
+        container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.85rem;">Error loading data from Google Sheets.</p>`;
       });
     }
   </script>
