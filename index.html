@@ -16,7 +16,7 @@
       --text: #f8fafc;
       --muted: #94a3b8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
     body {
       background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
       color: var(--text);
@@ -102,13 +102,47 @@
     .cta-emerald { color: var(--emerald); }
     .cta-blue { color: var(--blue); }
 
-    /* Info / Query Boxes */
+    /* Info / Query Boxes & Forms */
     .info-box {
       background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
       border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem;
     }
     .info-box h3 { font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; }
-    .info-box p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+    .info-box p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 1rem; }
+
+    .form-group { margin-bottom: 0.9rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    @media(max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-label { display: block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; letter-spacing: 0.5px; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 0.75rem 1rem; border-radius: 10px; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); color: #fff; font-size: 0.88rem; outline: none; transition: 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--amber); background: rgba(255,255,255,0.07); }
+    .form-select option { background: #111827; color: #fff; }
+
+    .submit-btn {
+      background: var(--amber); color: #000; border: none; padding: 0.75rem 1.4rem;
+      border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.88rem; transition: 0.2s;
+    }
+    .submit-btn:hover { opacity: 0.9; }
+
+    /* Paper Item Lists */
+    .paper-item {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      padding: 0.9rem 1.1rem; border-radius: 12px; margin-bottom: 0.6rem;
+    }
+    .paper-title { font-size: 0.9rem; font-weight: 700; color: #fff; }
+    .paper-link { color: var(--blue); text-decoration: none; font-size: 0.82rem; font-weight: 800; }
+    .paper-link:hover { text-decoration: underline; }
+
+    /* Reply Cards */
+    .reply-card {
+      background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 14px; padding: 1.1rem; margin-top: 0.8rem;
+    }
 
     footer {
       text-align: center; color: var(--muted); font-size: 0.8rem;
@@ -117,19 +151,21 @@
   </style>
 </head>
 <body>
-    <div class="wrapper">
-    <!-- Top Bar with Top-Right Menu Button -->
+
+  <div class="wrapper">
+    <!-- Top Bar with Menu Button -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <div style="position: relative;">
         <button type="button" class="menu-btn" onclick="toggleMenu()">
           <span>Menu</span> ☰
         </button>
-        <!-- Dropdown Menu Options -->
+        <!-- Dropdown Menu -->
         <div class="dropdown-menu" id="dropdownMenu">
           <a href="index.html" class="dropdown-item">🏠 Home</a>
-          <a href="class10.html" class="dropdown-item">🎓 Classes (9 & 10)</a>
-          <a href="activity.html" class="dropdown-item">🎯 Activities & Practice</a>
+          <a href="class9.html" class="dropdown-item">📖 Class 9 Notes</a>
+          <a href="class10.html" class="dropdown-item">🎓 Class 10 Notes</a>
+          <a href="activity.html" class="dropdown-item">🎯 Activities & Practice Arena</a>
           <a href="#sample-papers" class="dropdown-item">📄 Sample Question Papers</a>
           <a href="#ask-doubt" class="dropdown-item">❓ Ask a Doubt</a>
           <a href="#doubts-replies" class="dropdown-item">💬 Check My Doubts & Replies</a>
@@ -143,18 +179,9 @@
         <p class="hero-p">Empowering secondary school education with structured curriculum notes, timelines, flashcards, and simulation drills.</p>
       </div>
 
-      <!-- 1. CLASSES (Placed Above) -->
+      <!-- 1. CLASSES (Class 9 First, Class 10 Second) -->
       <div class="section-title">🎓 Curriculum Study Materials (Classes 9 & 10)</div>
       <div class="notes-grid">
-        <a href="class10.html" class="hub-card">
-          <div>
-            <div class="card-icon">🎓</div>
-            <h2 class="card-h2">Class 10 Social Science</h2>
-            <p class="card-desc">Chapter notes, key concepts, flowcharts, and previous years' question blueprints.</p>
-          </div>
-          <div class="card-cta cta-teal">Access Class 10 →</div>
-        </a>
-
         <a href="class9.html" class="hub-card">
           <div>
             <div class="card-icon">📖</div>
@@ -162,6 +189,15 @@
             <p class="card-desc">Foundational curriculum study notes across History, Geography, Civics, and Economics.</p>
           </div>
           <div class="card-cta cta-emerald">Access Class 9 →</div>
+        </a>
+
+        <a href="class10.html" class="hub-card">
+          <div>
+            <div class="card-icon">🎓</div>
+            <h2 class="card-h2">Class 10 Social Science</h2>
+            <p class="card-desc">Chapter notes, key concepts, flowcharts, and previous years' question blueprints.</p>
+          </div>
+          <div class="card-cta cta-teal">Access Class 10 →</div>
         </a>
       </div>
 
@@ -171,19 +207,105 @@
         <p>Built to bridge the gap between traditional textbook learning and interactive digital revision. This portal provides students and educators with fast-loading, zero-distraction academic resources designed specifically around CBSE board standards and conceptual mastery.</p>
       </div>
 
-      <!-- 3. ASK A DOUBT OR QUERY -->
-      <div class="info-box" id="ask-doubt">
-        <h3>❓ Ask a Doubt or Query</h3>
-        <p>Stuck on a tricky concept, map location, or historical timeline? Submit your academic questions here and check back for teacher replies in your dashboard.</p>
-        <div style="margin-top: 1rem;">
-          <input type="text" placeholder="Enter your doubt or query..." style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: #fff; font-size: 0.88rem; outline: none; margin-bottom: 0.6rem;">
-          <button type="button" style="background: var(--amber); color: #000; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.85rem;" onclick="alert('Doubt submitted successfully! Check the replies section soon.')">Submit Doubt</button>
+      <!-- 3. SAMPLE QUESTION PAPERS -->
+      <div class="info-box" id="sample-papers">
+        <h3>📄 CBSE Sample Question Papers</h3>
+        <p>Download official board pattern sample papers and practice sets with marking schemes.</p>
+        
+        <div class="paper-item">
+          <span class="paper-title">Class 10 Social Science Practice Paper 2026 (Set 1)</span>
+          <a href="class10.html" class="paper-link">View Notes & Qs →</a>
+        </div>
+        <div class="paper-item">
+          <span class="paper-title">Class 10 Social Science Board Blueprint & Map Guide</span>
+          <a href="activity.html" class="paper-link">Practice Arena →</a>
+        </div>
+        <div class="paper-item">
+          <span class="paper-title">Class 9 Social Science Term Assessment Set</span>
+          <a href="class9.html" class="paper-link">View Notes →</a>
         </div>
       </div>
 
-      <div id="doubts-replies"></div>
+      <!-- 4. ASK A DOUBT OR QUERY FORM -->
+      <div class="info-box" id="ask-doubt">
+        <h3>❓ Ask a Doubt or Query</h3>
+        <p>Fill out the form below with your student details and query. Save your PIN to check your replies later!</p>
+        
+        <form id="doubtForm" onsubmit="submitDoubt(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Student Name</label>
+              <input type="text" id="studentName" class="form-input" placeholder="e.g. Rahul Sharma" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Security PIN (4 Digits)</label>
+              <input type="password" id="studentPin" class="form-input" placeholder="e.g. 1234" maxlength="4" required>
+            </div>
+          </div>
 
-      <!-- 4. INTERACTIVE REVISION & DRILLS (Activity & Practice Arena) -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Class</label>
+              <select id="studentClass" class="form-select" required>
+                <option value="">Select Class</option>
+                <option value="Class 9">Class 9</option>
+                <option value="Class 10">Class 10</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Section</label>
+              <select id="studentSection" class="form-select" required>
+                <option value="">Select Section</option>
+                <option value="Section A">Section A</option>
+                <option value="Section B">Section B</option>
+                <option value="Section C">Section C</option>
+                <option value="Section D">Section D</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select id="studentSubject" class="form-select" required>
+                <option value="">Select Subject</option>
+                <option value="History">History</option>
+                <option value="Geography">Geography</option>
+                <option value="Civics">Civics</option>
+                <option value="Economics">Economics</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Chapter / Topic Name</label>
+              <input type="text" id="studentChapter" class="form-input" placeholder="e.g. Nationalism in India" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Query / Doubt</label>
+            <textarea id="studentQuery" class="form-textarea" rows="3" placeholder="Type your doubt clearly here..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Submit Doubt</button>
+        </form>
+      </div>
+
+      <!-- 5. CHECK MY DOUBTS & REPLIES SECTION -->
+      <div class="info-box" id="doubts-replies">
+        <h3>💬 Check My Doubts & Replies</h3>
+        <p>Enter your Name and PIN below to view your submitted questions and teacher responses.</p>
+        
+        <div class="form-row" style="margin-bottom: 1rem;">
+          <input type="text" id="checkName" class="form-input" placeholder="Enter your Name">
+          <input type="password" id="checkPin" class="form-input" placeholder="Enter your PIN" maxlength="4">
+        </div>
+        <button type="button" class="submit-btn" onclick="checkDoubts()">View My Doubts</button>
+
+        <div id="doubtsResultContainer" style="margin-top: 1rem;"></div>
+      </div>
+
+      <!-- 6. INTERACTIVE REVISION & DRILLS (Activity & Practice Arena) -->
       <div class="section-title">⚡ Interactive Revision & Drills</div>
       <div class="grid">
         <a href="activity.html" class="hub-card">
@@ -221,6 +343,68 @@
         menu.classList.remove('show');
       }
     });
+
+    // Handle Doubt Submission & Storage
+    function submitDoubt(e) {
+      e.preventDefault();
+      const doubt = {
+        name: document.getElementById('studentName').value.trim(),
+        pin: document.getElementById('studentPin').value.trim(),
+        classVal: document.getElementById('studentClass').value,
+        section: document.getElementById('studentSection').value,
+        subject: document.getElementById('studentSubject').value,
+        chapter: document.getElementById('studentChapter').value.trim(),
+        query: document.getElementById('studentQuery').value.trim(),
+        date: new Date().toLocaleDateString(),
+        reply: "Your doubt has been received successfully! Our teacher will review and reply here soon."
+      };
+
+      let storedDoubts = JSON.parse(localStorage.getItem('studentDoubts') || '[]');
+      storedDoubts.push(doubt);
+      localStorage.setItem('studentDoubts', JSON.stringify(storedDoubts));
+
+      alert('Doubt submitted successfully! You can check your replies below under "Check My Doubts & Replies".');
+      document.getElementById('doubtForm').reset();
+    }
+
+    // Check Doubts & Replies
+    function checkDoubts() {
+      const name = document.getElementById('checkName').value.trim().toLowerCase();
+      const pin = document.getElementById('checkPin').value.trim();
+      const container = document.getElementById('doubtsResultContainer');
+
+      if (!name || !pin) {
+        alert('Please enter both your Name and PIN.');
+        return;
+      }
+
+      let storedDoubts = JSON.parse(localStorage.getItem('studentDoubts') || '[]');
+      const userDoubts = storedDoubts.filter(d => d.name.toLowerCase() === name && d.pin === pin);
+
+      if (userDoubts.length === 0) {
+        container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.88rem;">No doubts found for ${name} with this PIN.</p>`;
+        return;
+      }
+
+      let html = '';
+      userDoubts.forEach((d, idx) => {
+        html += `
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:1.1rem; margin-top:0.8rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--teal); font-weight:800; margin-bottom:0.4rem;">
+              <span>${d.classVal} • ${d.section} • ${d.subject}</span>
+              <span>${d.date}</span>
+            </div>
+            <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:0.3rem;">Topic: ${d.chapter}</div>
+            <div style="font-size:0.85rem; color:var(--muted); line-height:1.4; margin-bottom:0.8rem;"><strong>Query:</strong> ${d.query}</div>
+            <div class="reply-card">
+              <div style="font-size:0.75rem; font-weight:800; color:var(--emerald); text-transform:uppercase; margin-bottom:0.2rem;">Teacher Response</div>
+              <div style="font-size:0.86rem; color:#e2e8f0; line-height:1.4;">${d.reply}</div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
   </script>
 </body>
 </html>
