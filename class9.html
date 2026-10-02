@@ -27,7 +27,6 @@
     }
     .wrapper { max-width: 720px; margin: 0 auto; }
     
-    /* Top Bar */
     .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.8rem; }
     .brand { font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; }
     .brand span { color: var(--amber); }
@@ -45,7 +44,6 @@
     }
     .nav-toggle div { width: 18px; height: 2px; background: #fff; border-radius: 2px; }
 
-    /* Modals */
     .modal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.82);
       backdrop-filter: blur(16px); z-index: 9999;
@@ -68,12 +66,10 @@
     }
     .menu-link:hover { background: rgba(59,130,246,0.15); border-color: var(--blue); }
 
-    /* Hero */
     .hero-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--amber); text-transform: uppercase; margin-bottom: 0.4rem; }
     .hero-h1 { font-size: 2.3rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
     .hero-p { color: var(--muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 2rem; }
 
-    /* Subject Section */
     .subject-section { margin-bottom: 2.2rem; }
     .subject-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
     
@@ -91,11 +87,6 @@
       font-size: 0.82rem; font-weight: 700; white-space: nowrap;
     }
     .view-btn:hover { background: var(--blue); color: #fff; }
-    .soon-badge {
-      font-size: 0.72rem; font-weight: 800; padding: 0.4rem 0.7rem; border-radius: 999px;
-      background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border);
-      white-space: nowrap;
-    }
 
     footer { text-align: center; color: var(--muted); font-size: 0.82rem; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
   </style>
@@ -103,7 +94,6 @@
 <body>
 
   <div class="wrapper">
-    <!-- Navbar -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <div class="nav-actions">
@@ -116,7 +106,6 @@
       </div>
     </header>
 
-    <!-- Main Content -->
     <main>
       <div class="hero-tag">NEW NCERT • CLASS 9</div>
       <h1 class="hero-h1">Class 9 Academic Archive</h1>
@@ -181,7 +170,7 @@
         <a href="index.html" class="menu-link"><span>🏛 Home</span><span style="color:var(--amber);">→</span></a>
         <a href="class9.html" class="menu-link" style="border-color:var(--amber);"><span>📚 Class 9 (Current)</span><span style="color:var(--amber);">✓</span></a>
         <a href="class10.html" class="menu-link"><span>📚 Class 10</span><span style="color:var(--amber);">→</span></a>
-        <a href="quiz.html" class="menu-link"><span>⚡ Quiz Arena</span><span style="color:var(--amber);">→</span></a>
+        <a href="activity.html" class="menu-link"><span>🎯 Activity & Practice Arena</span><span style="color:var(--amber);">→</span></a>
         <div class="menu-link" onclick="openPapers()"><span>📄 Sample Question Papers</span><span style="color:var(--amber);">→</span></div>
         <a href="index.html#doubt-desk" class="menu-link"><span>📬 Check My Doubts & Replies</span><span style="color:var(--teal);">→</span></a>
         <a href="index.html#doubt-desk" class="menu-link"><span>💬 Ask a New Doubt</span><span style="color:var(--amber);">→</span></a>
