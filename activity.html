@@ -74,33 +74,25 @@
     .module-head h3 { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
     .module-head p { font-size: 0.85rem; color: var(--muted); }
 
-    /* 1. 2D Graphical Map Trainer */
-    .map-trainer-layout {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; align-items: center;
-    }
+    /* Map Trainer CSS */
+    .map-trainer-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; align-items: center; }
     @media(max-width: 680px) { .map-trainer-layout { grid-template-columns: 1fr; } }
-    
     .map-canvas-box {
       position: relative; background: #070b14; border: 1px solid var(--border);
       border-radius: 18px; padding: 1rem; display: flex; justify-content: center; align-items: center;
       min-height: 330px;
     }
     .map-svg { width: 100%; max-width: 280px; height: auto; }
-    .map-pin {
-      cursor: pointer; transition: transform 0.2s, fill 0.2s;
-    }
+    .map-pin { cursor: pointer; transition: transform 0.2s; }
     .map-pin:hover { transform: scale(1.25); }
     .map-pin circle { stroke: #fff; stroke-width: 1.5; }
     .map-pin text { font-size: 11px; font-weight: 900; fill: #fff; text-anchor: middle; dominant-baseline: central; }
-    
     .pin-normal circle { fill: var(--blue); }
     .pin-correct circle { fill: var(--emerald) !important; filter: drop-shadow(0 0 8px #10b981); }
     .pin-wrong circle { fill: var(--crimson) !important; filter: drop-shadow(0 0 8px #ef4444); }
 
     .map-control-box { display: flex; flex-direction: column; gap: 0.8rem; }
-    .map-quest-badge {
-      font-size: 0.72rem; font-weight: 800; color: var(--amber); letter-spacing: 1px; text-transform: uppercase;
-    }
+    .map-quest-badge { font-size: 0.72rem; font-weight: 800; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; }
     .map-target-title { font-size: 1.15rem; font-weight: 800; color: #fff; line-height: 1.3; }
     .map-clue-text { font-size: 0.84rem; color: var(--muted); }
     .map-opt-btn {
@@ -110,20 +102,15 @@
       cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between;
     }
     .map-opt-btn:hover { background: rgba(255,255,255,0.08); }
-    .map-opt-btn.correct { background: rgba(16,185,129,0.2) !important; border-color: var(--emerald) !important; color: #6ee7b7; }
-    .map-opt-btn.wrong { background: rgba(239,68,68,0.2) !important; border-color: var(--crimson) !important; color: #fca5a5; }
-    .map-feedback {
-      padding: 0.8rem; border-radius: 12px; font-size: 0.84rem; display: none; line-height: 1.4;
-    }
+    .map-feedback { padding: 0.8rem; border-radius: 12px; font-size: 0.84rem; display: none; line-height: 1.4; }
 
-    /* 2. History Chronology Slider */
+    /* Timeline CSS */
     .ch-toggle-bar { display: flex; gap: 0.6rem; margin-bottom: 1.2rem; }
     .ch-btn {
       flex: 1; padding: 0.65rem; border-radius: 12px; border: 1px solid var(--border);
       background: rgba(255,255,255,0.04); color: var(--muted); font-size: 0.82rem; font-weight: 700; cursor: pointer;
     }
     .ch-btn.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #fff; }
-
     .timeline-range {
       width: 100%; height: 8px; border-radius: 5px; background: rgba(255,255,255,0.1);
       outline: none; -webkit-appearance: none; cursor: pointer; margin: 1.2rem 0 0.8rem;
@@ -132,10 +119,7 @@
       -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%;
       background: var(--amber); cursor: pointer; box-shadow: 0 0 14px rgba(245,158,11,0.7);
     }
-    .timeline-card {
-      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-      border-radius: 18px; padding: 1.5rem; margin-top: 1rem;
-    }
+    .timeline-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-top: 1rem; }
     .year-pill { font-size: 2rem; font-weight: 900; color: var(--amber); }
     .event-title { font-size: 1.2rem; font-weight: 800; color: #fff; margin: 0.3rem 0 1rem; }
     .breakdown-row { display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.86rem; line-height: 1.45; }
@@ -152,7 +136,6 @@
     }
     .btn-gold { background: var(--amber); color: #000; }
     .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; }
-
     footer { text-align: center; color: var(--muted); font-size: 0.82rem; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
   </style>
 </head>
@@ -169,18 +152,16 @@
     <main>
       <div class="hero-tag">BOARD EXAM ACCELERATOR</div>
       <h1 class="hero-h1">Activity Arena</h1>
-      <p class="hero-p">Engaging 2D Map Training, Multi-Chapter Timelines, 3D Flashcards, Balanced A/R questions, and the complete Multi-Subject Quiz.</p>
+      <p class="hero-p">Interactive 2D Map Work, Dual-Chapter History Timelines, 3D Flashcards, Balanced A/R questions, and the complete Multi-Subject Quiz.</p>
 
-      <!-- Tab Switcher -->
-      <nav class="tabs-scroll" aria-label="Activity navigation tabs">
+      <nav class="tabs-scroll" aria-label="Activity tabs">
         <button type="button" class="tab-pill active" onclick="switchTab('map')">🗺️ 2D Map Trainer</button>
         <button type="button" class="tab-pill" onclick="switchTab('timeline')">⏳ History Chronology</button>
         <button type="button" class="tab-pill" onclick="switchTab('flashcards')">🎴 Concept Flashcards</button>
         <button type="button" class="tab-pill" onclick="switchTab('ar')">⚖️ Assertion & Reason</button>
         <button type="button" class="tab-pill" onclick="switchTab('quiz')">⚡ Quiz Arena</button>
       </nav>
-
-      <!-- 1. 2D MAP TRAINER PANE -->
+            <!-- 1. 2D MAP TRAINER PANE -->
       <section class="tab-pane active" id="pane-map">
         <div class="module-box">
           <div class="module-head">
@@ -189,18 +170,14 @@
           </div>
 
           <div class="map-trainer-layout">
-            <!-- 2D India Vector Map Canvas -->
             <div class="map-canvas-box">
               <svg class="map-svg" viewBox="0 0 300 350">
-                <!-- India Silhouette Outline -->
                 <path d="M 120,20 L 150,20 L 165,45 L 155,70 L 180,85 L 205,80 L 210,105 L 245,110 L 270,120 L 255,145 L 225,140 L 210,160 L 200,190 L 180,240 L 150,310 L 140,310 L 120,260 L 95,210 L 80,180 L 60,165 L 45,185 L 40,160 L 70,140 L 75,100 L 95,75 Z"
                       fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-linejoin="round"/>
                 
-                <!-- Internal Geographic Waterways / Reference Guides -->
                 <path d="M 150,70 Q 180,120 215,160" fill="none" stroke="rgba(59,130,246,0.25)" stroke-width="1.5" stroke-dasharray="3,3"/>
                 <path d="M 45,185 Q 120,180 195,195" fill="none" stroke="rgba(59,130,246,0.25)" stroke-width="1.5" stroke-dasharray="3,3"/>
                 
-                <!-- 4 Interactive Coordinate Pins -->
                 <g class="map-pin pin-normal" id="svgPinA" onclick="checkMapChoice('A')">
                   <circle cx="105" cy="80" r="13"/>
                   <text x="105" y="80">A</text>
@@ -220,7 +197,6 @@
               </svg>
             </div>
 
-            <!-- Question & Choices -->
             <div class="map-control-box">
               <span class="map-quest-badge" id="mapTag">HISTORY • NATIONAL MOVEMENT</span>
               <div class="map-target-title" id="mapQuestionTitle">Where did the Jallianwala Bagh massacre take place?</div>
@@ -248,7 +224,6 @@
             <p>Master cause-and-effect timelines for both compulsory History chapters.</p>
           </div>
 
-          <!-- Chapter Selector Toggle -->
           <div class="ch-toggle-bar">
             <button type="button" class="ch-btn active" id="ch1Btn" onclick="selectHistoryChapter(1)">Ch 1: Nationalism in Europe</button>
             <button type="button" class="ch-btn" id="ch2Btn" onclick="selectHistoryChapter(2)">Ch 2: Nationalism in India</button>
@@ -314,7 +289,6 @@
           </div>
 
           <div class="flashcard-deck-box">
-            <!-- Subject Filter -->
             <div class="fc-filter-row">
               <button type="button" class="fc-filter-btn active" onclick="filterCards('ALL', this)">All Subjects</button>
               <button type="button" class="fc-filter-btn" onclick="filterCards('History', this)">History</button>
@@ -323,10 +297,8 @@
               <button type="button" class="fc-filter-btn" onclick="filterCards('Economics', this)">Economics</button>
             </div>
 
-            <!-- Portrait 3D Card -->
             <div class="card-scene" onclick="flipActiveCard()">
               <div class="flashcard" id="deckCard">
-                <!-- Front Side -->
                 <div class="card-face card-front">
                   <span style="font-size:0.75rem; font-weight:800; color:var(--amber); letter-spacing:1px; text-transform:uppercase;" id="fcTag">CIVICS • CHAPTER 1</span>
                   <div style="font-size:2rem; font-weight:900; color:#fff; margin:1.2rem 0;" id="fcTitle">Majoritarianism</div>
@@ -335,7 +307,6 @@
                   </span>
                 </div>
 
-                <!-- Back Side -->
                 <div class="card-face card-back">
                   <div>
                     <span style="font-size:0.72rem; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:1px;">EXACT NCERT DEFINITION</span>
@@ -428,7 +399,6 @@
             <p>Select your subject and test yourself against authentic CBSE 1-mark board questions.</p>
           </div>
 
-          <!-- Subject Selectors -->
           <div class="quiz-sub-filter">
             <button type="button" class="q-sub-btn active" onclick="setQuizFilter('ALL', this)">All Subjects</button>
             <button type="button" class="q-sub-btn" onclick="setQuizFilter('History', this)">📜 History</button>
@@ -461,8 +431,7 @@
       <p>© 2026 Social Science Academic Hub • NCERT Aligned Learning</p>
     </footer>
   </div>
-
-  <script>
+    <script>
     /* TAB SWITCHING */
     function switchTab(tabId) {
       document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
