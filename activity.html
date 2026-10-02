@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>History Chronology & Timeline Slider | Social Science Hub</title>
+  <title>NCERT 1-Mark Concept Flashcards | Social Science</title>
   <link rel="stylesheet" href="style.css">
   <style>
     :root {
@@ -26,7 +26,7 @@
       padding: 1.2rem;
       min-height: 100vh;
     }
-    .wrapper { max-width: 760px; margin: 0 auto; }
+    .wrapper { max-width: 720px; margin: 0 auto; }
     
     .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0 1.4rem; }
     .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; }
@@ -39,83 +39,94 @@
 
     .hero-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; color: var(--amber); text-transform: uppercase; margin-bottom: 0.3rem; }
     .hero-h1 { font-size: 2.1rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.5px; }
-    .hero-p { color: var(--muted); font-size: 0.9rem; line-height: 1.45; margin-bottom: 1.6rem; }
+    .hero-p { color: var(--muted); font-size: 0.9rem; line-height: 1.45; margin-bottom: 1.4rem; }
 
-    /* Module Box */
-    .module-box {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 24px; padding: 1.8rem 1.4rem; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    /* Subject Switcher Bar */
+    .filter-scroll {
+      display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.6rem; margin-bottom: 1.2rem;
+      scrollbar-width: none;
+    }
+    .filter-scroll::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 999px; padding: 0.45rem 1rem; font-size: 0.78rem; font-weight: 700;
+      color: var(--muted); white-space: nowrap; cursor: pointer; transition: 0.2s;
+    }
+    .filter-btn.active {
+      background: rgba(59,130,246,0.18); border-color: var(--blue); color: #93c5fd;
+      box-shadow: 0 0 12px rgba(59,130,246,0.3);
+    }
+        /* Progress Track */
+    .progress-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+    .counter-txt { font-size: 0.8rem; font-weight: 800; color: var(--teal); }
+    .track-bar {
+      width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 6px;
+      margin-bottom: 1.2rem; overflow: hidden;
+    }
+    .track-fill { height: 100%; width: 0%; background: var(--teal); transition: width 0.3s; }
+
+    /* 3D Flip Card Stage */
+    .flashcard-scene {
+      perspective: 1000px; width: 100%; height: 320px; cursor: pointer; margin-bottom: 1.2rem;
+    }
+    .flashcard {
+      width: 100%; height: 100%; position: relative;
+      transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+      border-radius: 24px;
+    }
+    .flashcard.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+      border-radius: 24px; padding: 2rem 1.6rem; display: flex; flex-direction: column;
+      justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+      border: 1px solid var(--border);
+    }
+    .card-front {
+      background: var(--card-bg); text-align: center; justify-content: center; align-items: center;
+    }
+    .card-back {
+      background: linear-gradient(135deg, rgba(20, 32, 54, 0.98) 0%, rgba(13, 20, 36, 0.96) 100%);
+      transform: rotateY(180deg); text-align: left;
     }
 
-    /* Chapter Switcher Tabs */
-    .ch-toggle-bar { display: flex; gap: 0.6rem; margin-bottom: 1.4rem; }
-    .ch-btn {
-      flex: 1; padding: 0.75rem 0.6rem; border-radius: 14px; border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04); color: var(--muted); font-size: 0.85rem; font-weight: 700;
-      cursor: pointer; transition: all 0.2s; text-align: center;
+    .card-ch-badge {
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 0.8rem;
     }
-    .ch-btn.active {
-      background: rgba(59,130,246,0.18); border-color: var(--blue); color: #fff;
-      box-shadow: 0 4px 16px rgba(59,130,246,0.25);
+    .card-keyword {
+      font-size: 1.85rem; font-weight: 900; color: #fff; line-height: 1.25; letter-spacing: -0.5px;
+    }
+    .card-hint { font-size: 0.78rem; color: var(--muted); margin-top: 1rem; font-weight: 600; }
+
+    .def-label {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; color: var(--teal);
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .def-text { font-size: 1.05rem; line-height: 1.55; color: #f1f5f9; font-weight: 500; }
+    .def-buzz {
+      margin-top: 1rem; padding: 0.65rem 0.9rem; border-radius: 10px;
+      background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25);
+      color: #6ee7b7; font-size: 0.82rem; font-weight: 700;
     }
 
-    /* Timeline Range Control */
-    .slider-container { margin: 1.4rem 0 1rem; }
-    .timeline-range {
-      width: 100%; height: 8px; border-radius: 5px; background: rgba(255,255,255,0.1);
-      outline: none; -webkit-appearance: none; cursor: pointer;
-    }
-    .timeline-range::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%;
-      background: var(--amber); cursor: pointer; box-shadow: 0 0 14px rgba(245,158,11,0.7);
-      border: 3px solid #fff;
-    }
-    .slider-ticks {
-      display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted);
-      font-weight: 700; margin-top: 0.6rem; overflow-x: auto; scrollbar-width: none;
-    }
-
-    /* Event Display Card */
-    .timeline-card {
-      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-      border-radius: 20px; padding: 1.6rem 1.4rem; margin-top: 1.2rem;
-    }
-    .year-header {
-      display: flex; justify-content: space-between; align-items: baseline;
-      border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; margin-bottom: 1rem;
-    }
-    .year-pill { font-size: 2.2rem; font-weight: 900; color: var(--amber); letter-spacing: -0.5px; }
-    .step-counter { font-size: 0.78rem; font-weight: 800; color: var(--teal); }
-    .event-title { font-size: 1.25rem; font-weight: 800; color: #fff; line-height: 1.35; margin-bottom: 1.2rem; }
-
-    /* Breakdown Rows */
-    .breakdown-list { display: flex; flex-direction: column; gap: 0.9rem; }
-    .breakdown-item {
-      display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.88rem; line-height: 1.5;
-      padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-    .b-tag { font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
-    .tag-cause { color: #f87171; }
-    .tag-action { color: #93c5fd; }
-    .tag-takeaway { color: #6ee7b7; }
-
-    /* Navigation Buttons */
-    .nav-btn-row { display: flex; gap: 0.8rem; margin-top: 1.4rem; }
-    .nav-btn {
-      flex: 1; padding: 0.85rem; border-radius: 14px; font-size: 0.88rem; font-weight: 700;
-      cursor: pointer; border: 1px solid var(--border); transition: 0.2s;
+    /* Action Buttons */
+    .controls-grid { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 0.7rem; margin-bottom: 0.8rem; }
+    .btn-action {
+      padding: 0.9rem 0.6rem; border-radius: 14px; font-size: 0.88rem; font-weight: 800;
+      border: 1px solid var(--border); cursor: pointer; transition: 0.2s; text-align: center;
     }
     .btn-prev { background: rgba(255,255,255,0.05); color: #fff; }
-    .btn-prev:hover { background: rgba(255,255,255,0.09); }
-    .btn-next { background: var(--amber); color: #000; border-color: var(--amber); }
-    .btn-next:hover { opacity: 0.92; }
-
+    .btn-flip { background: var(--amber); color: #000; border-color: var(--amber); }
+    .btn-next { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .btn-shuffle {
+      width: 100%; padding: 0.75rem; border-radius: 12px; font-size: 0.82rem; font-weight: 700;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+    }
     footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); margin-top: 2.5rem; }
   </style>
 </head>
 <body>
-
   <div class="wrapper">
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
@@ -123,243 +134,389 @@
     </header>
 
     <main>
-      <div class="hero-tag">MODULE 2 • CHRONOLOGY & TIMELINES</div>
-      <h1 class="hero-h1">History Timeline Slider</h1>
-      <p class="hero-p">Scrub through cause-and-effect milestones for the two compulsory CBSE History chapters.</p>
+      <div class="hero-tag">MODULE 3 • 1-MARK REVISION DECK</div>
+      <h1 class="hero-h1">NCERT Concept Flashcards</h1>
+      <p class="hero-p">Tap any card to flip and reveal the official 1-sentence definition and scoring buzzwords.</p>
 
-      <div class="module-box">
-        <!-- Chapter Switcher -->
-        <div class="ch-toggle-bar">
-          <button type="button" class="ch-btn active" id="btnCh1" onclick="switchChapter(1)">Ch 1: Europe</button>
-          <button type="button" class="ch-btn" id="btnCh2" onclick="switchChapter(2)">Ch 2: India</button>
-        </div>
+      <!-- Subject Switcher -->
+      <div class="filter-scroll">
+        <button type="button" class="filter-btn active" onclick="setSubject('ALL', this)">🎯 All Subjects</button>
+        <button type="button" class="filter-btn" onclick="setSubject('History', this)">📜 History</button>
+        <button type="button" class="filter-btn" onclick="setSubject('Geography', this)">🌍 Geography</button>
+        <button type="button" class="filter-btn" onclick="setSubject('Civics', this)">⚖️ Political Science</button>
+        <button type="button" class="filter-btn" onclick="setSubject('Economics', this)">📈 Economics</button>
+      </div>
 
-        <!-- Slider Track -->
-        <div class="slider-container">
-          <input type="range" min="0" max="8" value="0" class="timeline-range" id="timeSlider" oninput="showStep(parseInt(this.value))">
-          <div class="slider-ticks" id="ticksContainer"></div>
-        </div>
+      <!-- Progress Track -->
+      <div class="progress-wrap">
+        <span class="counter-txt" id="cardCounter">Card 1 / 40</span>
+        <span style="font-size:0.75rem; color:var(--muted); font-weight:700;" id="activeSubjectBadge">ALL SUBJECTS</span>
+      </div>
+      <div class="track-bar">
+        <div class="track-fill" id="progressFill"></div>
+      </div>
 
-        <!-- Event Details Card -->
-        <div class="timeline-card">
-          <div class="year-header">
-            <span class="year-pill" id="displayYear">1789</span>
-            <span class="step-counter" id="displayStep">MILESTONE 1 / 9</span>
+      <!-- Flashcard Stage -->
+      <div class="flashcard-scene" onclick="toggleFlip()">
+        <div class="flashcard" id="cardElement">
+          <!-- FRONT -->
+          <div class="card-face card-front">
+            <div class="card-ch-badge" id="cardChapter">HISTORY • CH 1</div>
+            <div class="card-keyword" id="cardKeyword">Plebiscite</div>
+            <div class="card-hint">Tap card or press space to flip 🔄</div>
           </div>
-          <div class="event-title" id="displayTitle">The French Revolution</div>
-
-          <div class="breakdown-list">
-            <div class="breakdown-item">
-              <span class="b-tag tag-cause">⚡ Cause / Background</span>
-              <span id="displayCause" style="color:#fca5a5;">Autocratic Bourbon monarchy and feudal estate privileges.</span>
+          <!-- BACK -->
+          <div class="card-face card-back">
+            <div>
+              <div class="def-label">NCERT Definition (1 Mark)</div>
+              <div class="def-text" id="cardDefinition">A direct vote by which all the people of a region are asked to accept or reject a proposal.</div>
             </div>
-            <div class="breakdown-item">
-              <span class="b-tag tag-action">📌 Core Event & Action</span>
-              <span id="displayAction" style="color:#bfdbfe;">Sovereignty transferred from monarchy to French citizens; ideas of la patrie and le citoyen created a collective identity.</span>
-            </div>
-            <div class="breakdown-item">
-              <span class="b-tag tag-takeaway">🎯 CBSE Exam Takeaway</span>
-              <span id="displayTakeaway" style="color:#6ee7b7;">Marks the first clear expression of nationalism in Europe.</span>
-            </div>
-          </div>
-
-          <!-- Stepper Buttons -->
-          <div class="nav-btn-row">
-            <button type="button" class="nav-btn btn-prev" onclick="stepChange(-1)">← Previous</button>
-            <button type="button" class="nav-btn btn-next" onclick="stepChange(1)">Next Milestone →</button>
+            <div class="def-buzz" id="cardBuzzword">Key Buzzword: <strong>Direct vote of all citizens</strong></div>
           </div>
         </div>
       </div>
+
+      <!-- Buttons -->
+      <div class="controls-grid">
+        <button type="button" class="btn-action btn-prev" onclick="prevCard()">← Prev</button>
+        <button type="button" class="btn-action btn-flip" onclick="toggleFlip()">Flip Card 🔄</button>
+        <button type="button" class="btn-action btn-next" onclick="nextCard()">Next →</button>
+      </div>
+      <button type="button" class="btn-shuffle" onclick="shuffleCurrentDeck()">🎲 Shuffle Current Deck</button>
     </main>
 
     <footer>
-      <p>© 2026 Social Science Academic Hub • Module 2</p>
+      <p>© 2026 Social Science Academic Hub • Module 3</p>
     </footer>
   </div>
     <script>
-    /* 1. MASTER TIMELINE DATASET */
-    const TIMELINE_DATA = {
-      1: [
-        {
-          year: "1789",
-          title: "The French Revolution",
-          cause: "Absolute Bourbon monarchy and oppressive feudal estate privileges.",
-          action: "Sovereignty transferred from the monarchy to a body of French citizens; revolutionary measures introduced ideas of la patrie (the fatherland) and le citoyen (the citizen).",
-          takeaway: "Stands as the first clear manifestation of modern nationalism in Europe."
-        },
-        {
-          year: "1804",
-          title: "The Civil Code (Napoleonic Code)",
-          cause: "Need to replace complex feudal structures with a uniform administrative machinery across conquered territories.",
-          action: "Abolished all privileges based on birth, established equality before law, and secured the right to property across the French Empire and satellite territories.",
-          takeaway: "Demonstrated that administrative simplification could exist alongside political authoritarianism."
-        },
-        {
-          year: "1815",
-          title: "Defeat of Napoleon & Treaty of Vienna",
-          cause: "Napoleon's military defeat at the Battle of Waterloo by allied conservative powers (Britain, Russia, Prussia, Austria).",
-          action: "Hosted by Austrian Chancellor Duke Metternich to restore conservative order; Bourbon dynasty was restored in France and a ring of buffer states was created.",
-          takeaway: "Set up the conservative restoration that suppressed nationalist expressions until 1830."
-        },
-        {
-          year: "1821",
-          title: "Greek War of Independence Begins",
-          cause: "Centuries of Ottoman Muslim rule sparked a national liberation movement among Greeks supported by Western European sympathizers.",
-          action: "Nationalists mobilized public opinion; English poet Lord Byron raised funds and fought in the war. Recognized as independent by the 1832 Treaty of Constantinople.",
-          takeaway: "Demonstrated the power of Romanticism and Christian European cultural pride against imperial rule."
-        },
-        {
-          year: "1830",
-          title: "The July Revolution in France",
-          cause: "Growing liberal resurgence against the restored Bourbon monarch Charles X.",
-          action: "Bourbon kings were overthrown by liberal revolutionaries; Louis Philippe was installed as constitutional monarch, sparking an uprising that freed Belgium from the Netherlands.",
-          takeaway: "Prompted Metternich's famous remark: 'When France sneezes, the rest of Europe catches cold.'"
-        },
-        {
-          year: "1834",
-          title: "Formation of the Zollverein",
-          cause: "39 German confederation states with distinct currencies, weights, and tariff barriers severely hindered economic exchange.",
-          action: "A customs union was established on Prussian initiative, abolishing internal tariff barriers and reducing currencies from over thirty to two.",
-          takeaway: "Economic nationalism strengthened and paved the way for broader national unification."
-        },
-        {
-          year: "1848",
-          title: "The Frankfurt Parliament (St. Paul's Church)",
-          cause: "Widespread middle-class liberal revolutions demanding constitutionalism and German unification.",
-          action: "831 elected representatives convened at St. Paul's Church, Frankfurt, drafting a constitution for a German nation headed by a monarchy subject to a parliament.",
-          takeaway: "King Friedrich Wilhelm IV of Prussia rejected the crown; parliament was disbanded by aristocracy and military forces."
-        },
-        {
-          year: "1861",
-          title: "Proclamation of Unified Italy",
-          cause: "Centuries of political fragmentation across seven states, driven forward by Cavour's diplomacy and Garibaldi's armed volunteers.",
-          action: "Following the 1859 defeat of Austria and Garibaldi's 1860 Expedition of the Thousand in the Kingdom of the Two Sicilies, Victor Emmanuel II was proclaimed King of Italy.",
-          takeaway: "Achieved unification through a blend of royal realpolitik, elite diplomacy, and popular guerrilla warfare."
-        },
-        {
-          year: "1871",
-          title: "Unification of Germany",
-          cause: "Failure of the 1848 liberal initiative shifted leadership to Prussian militarism and Otto von Bismarck's policy of 'Blood and Iron'.",
-          action: "Prussia fought three victorious wars over seven years against Denmark, Austria, and France. Kaiser William I was proclaimed German Emperor at the Palace of Versailles.",
-          takeaway: "Demonstrated the triumph of Prussian military and state power over constitutional nationalism."
-        }
-      ],
-      2: [
-        {
-          year: "Jan 1915",
-          title: "Mahatma Gandhi Returns to India",
-          cause: "Successful experimental application of Satyagraha against racial discrimination in South Africa.",
-          action: "Arrived in India in January 1915; toured the country on Gopal Krishna Gokhale's advice before launching local satyagrahas in Champaran (1917), Kheda (1918), and Ahmedabad (1918).",
-          takeaway: "Introduced the concept of Satyagraha—pure non-violent soul-force—to the Indian anti-colonial struggle."
-        },
-        {
-          year: "1919",
-          title: "Rowlatt Act & Jallianwala Bagh Massacre",
-          cause: "Imperial Legislative Council hurriedly passed the Rowlatt Act authorizing detention of political prisoners without trial for two years.",
-          action: "Gandhi initiated a nationwide hartal on 6 April. On 13 April (Baisakhi), General Dyer blocked exits and opened fire on a peaceful gathering at Jallianwala Bagh, Amritsar.",
-          takeaway: "Rabindranath Tagore renounced his Knighthood; convinced Gandhi to launch a full-scale non-cooperation movement."
-        },
-        {
-          year: "Dec 1920",
-          title: "Nagpur Congress Adopts Non-Cooperation",
-          cause: "Need to unite Hindus and Muslims by joining the Khilafat grievance with the demand for Swaraj and justice for Punjab atrocities.",
-          action: "At the Nagpur session in December 1920, the Non-Cooperation program was formally ratified after intense debate, launching boycotts of foreign goods, schools, and courts.",
-          takeaway: "Transformed the freedom struggle from an urban elite debate into a mass nationwide movement."
-        },
-        {
-          year: "Feb 1922",
-          title: "Chauri Chaura & Sudden Withdrawal",
-          cause: "Clash between police and a peaceful peasant procession at Chauri Chaura near Gorakhpur, Uttar Pradesh.",
-          action: "An enraged crowd set fire to the police station, killing 22 policemen. Mahatma Gandhi immediately called off the Non-Cooperation Movement.",
-          takeaway: "Highlighted Gandhi's strict rule that Satyagrahis must be thoroughly trained in non-violence before mass action."
-        },
-        {
-          year: "1928",
-          title: "Boycott of the Simon Commission",
-          cause: "The British Statutory Commission appointed to review India's constitutional future did not include a single Indian member.",
-          action: "Greeted across Indian ports and cities with black flags and the slogan 'Go Back Simon'. Lala Lajpat Rai was fatally assaulted in a police lathi charge at Lahore.",
-          takeaway: "United diverse political groups against British paternalism, setting the stage for radical demands."
-        },
-        {
-          year: "Dec 1929",
-          title: "Lahore Congress & 'Purna Swaraj'",
-          cause: "Rejection of Viceroy Irwin's vague offer of 'dominion status' by younger radical leaders like Jawaharlal Nehru and Subhas Chandra Bose.",
-          action: "Under Nehru's presidency, the Lahore Congress passed the historic resolution declaring 'Purna Swaraj' (Complete Independence) as the goal, celebrating 26 January 1930 as Independence Day.",
-          takeaway: "Officially abandoned dominion status; set complete national independence as the sole objective."
-        },
-        {
-          year: "Apr 1930",
-          title: "Dandi Salt March & Civil Disobedience",
-          cause: "Viceroy Irwin ignored Gandhi's letter outlining 11 Demands, chief among them the abolition of the regressive Salt Tax.",
-          action: "Gandhi marched 240 miles from Sabarmati Ashram to Dandi with 78 volunteers, manufacturing salt on 6 April 1930 to inaugurate the Civil Disobedience Movement.",
-          takeaway: "Advanced from non-cooperation to actively defying colonial laws, mobilizing women and rural masses on a historic scale."
-        },
-        {
-          year: "Mar 1931",
-          title: "The Gandhi-Irwin Pact",
-          cause: "Mass arrests of over 100,000 satyagrahis and government repression led to negotiations between Irwin and Gandhi.",
-          action: "Gandhi consented to suspend the Civil Disobedience Movement and participate in the Second Round Table Conference in London in exchange for the release of political prisoners.",
-          takeaway: "Gandhi returned empty-handed from London; re-launched the movement in 1932, though it gradually lost momentum by 1934."
-        },
-        {
-          year: "Sep 1932",
-          title: "Signing of the Poona Pact",
-          cause: "Dr. B.R. Ambedkar demanded separate electorates for the Depressed Classes, which Gandhi opposed with a fast unto death in Yerwada Jail.",
-          action: "Ambedkar and Gandhi reached an agreement reserving seats for Depressed Classes within provincial and central legislative councils, voted upon by the general electorate.",
-          takeaway: "Protected social unity within the national movement while securing constitutional representation for Dalits."
-        }
-      ]
-    };
+    /* 1. MASTER FLASHCARD REGISTRY: HISTORY */
+    const ALL_CARDS = [
+      {
+        subject: "History",
+        chapter: "Rise of Nationalism in Europe",
+        term: "Plebiscite",
+        def: "A direct vote by which all the people of a region are asked to accept or reject a proposal.",
+        buzz: "Direct vote of all people"
+      },
+      {
+        subject: "History",
+        chapter: "Rise of Nationalism in Europe",
+        term: "Zollverein",
+        def: "A customs union formed in 1834 at the initiative of Prussia that abolished tariff barriers and reduced currencies from over thirty to two.",
+        buzz: "Prussian customs union (1834)"
+      },
+      {
+        subject: "History",
+        chapter: "Rise of Nationalism in Europe",
+        term: "Elle",
+        def: "The measure of cloth used in the German states whose length varied from region to region depending on the local measurement standard.",
+        buzz: "Textile unit of measurement"
+      },
+      {
+        subject: "History",
+        chapter: "Rise of Nationalism in Europe",
+        term: "Romanticism",
+        def: "A cultural movement that sought to develop a particular form of nationalist sentiment through emotion, intuition, and mystical feelings.",
+        buzz: "Nationalist cultural movement"
+      },
+      {
+        subject: "History",
+        chapter: "Rise of Nationalism in Europe",
+        term: "Allegory",
+        def: "When an abstract idea (like greed, freedom, or liberty) is expressed through a person or a symbolic thing, such as Marianne or Germania.",
+        buzz: "Personified abstract idea"
+      },
+      {
+        subject: "History",
+        chapter: "Nationalism in India",
+        term: "Satyagraha",
+        def: "A method of mass agitation based on the pure power of truth and non-violence without seeking vengeance or employing physical force.",
+        buzz: "Pure non-violent soul-force"
+      },
+      {
+        subject: "History",
+        chapter: "Nationalism in India",
+        term: "Rowlatt Act (1919)",
+        def: "An act passed hurriedly by the Imperial Legislative Council authorizing the government to repress political activities and detain political prisoners without trial for up to two years.",
+        buzz: "Two-year detention without trial"
+      },
+      {
+        subject: "History",
+        chapter: "Nationalism in India",
+        term: "Begar",
+        def: "Labor that villagers and peasants were forced to contribute without any payment to landlords or colonial authorities.",
+        buzz: "Forced unpaid labor"
+      },
+      {
+        subject: "History",
+        chapter: "Nationalism in India",
+        term: "Inland Emigration Act",
+        def: "An 1859 colonial act under which plantation workers in Assam were not permitted to leave tea gardens without official permission, which was rarely given.",
+        buzz: "Tea estate confinement (1859)"
+      },
+      {
+        subject: "History",
+        chapter: "Print Culture",
+        term: "Calligraphy",
+        def: "The traditional art of beautiful and stylized handwriting practiced before the advent of the mechanical movable printing press.",
+        buzz: "Art of stylized handwriting"
+      },
+      {
+        subject: "History",
+        chapter: "Print Culture",
+        term: "Vernacular Press Act",
+        def: "An 1878 act modeled on Irish press laws providing the colonial British government with extensive rights to censor reports and editorials in local-language newspapers.",
+        buzz: "Censorship of local newspapers (1878)"
+      },
+            /* 2. MASTER FLASHCARD REGISTRY: GEOGRAPHY */
+      {
+        subject: "Geography",
+        chapter: "Resources and Development",
+        term: "Sustainable Development",
+        def: "Development that meets the needs of the present without compromising the ability of future generations to meet their own needs, without damaging the environment.",
+        buzz: "Development without ecological damage"
+      },
+      {
+        subject: "Geography",
+        chapter: "Resources and Development",
+        term: "Agenda 21",
+        def: "A declaration signed by world leaders in 1992 at the UN Conference on Environment and Development (UNCED) in Rio de Janeiro to achieve global sustainable development.",
+        buzz: "Rio 1992 Global action plan"
+      },
+      {
+        subject: "Geography",
+        chapter: "Resources and Development",
+        term: "Badland",
+        def: "Land that is made unfit for cultivation due to intense running-water erosion creating deep gullies, commonly seen in the Chambal basin.",
+        buzz: "Gully-eroded uncultivable land"
+      },
+      {
+        subject: "Geography",
+        chapter: "Resources and Development",
+        term: "Shelter Belts",
+        def: "Rows of planted trees grown to break the force of the wind, actively stabilizing sand dunes and arresting soil erosion in arid coastal and desert zones.",
+        buzz: "Tree rows breaking wind speed"
+      },
+      {
+        subject: "Geography",
+        chapter: "Forest and Wildlife Resources",
+        term: "Reserved Forests",
+        def: "Forest tracts regarded as the most valuable as far as the conservation of forest and wildlife resources are concerned, covering more than half of India's total forest area.",
+        buzz: "Highest conservation value (>50%)"
+      },
+      {
+        subject: "Geography",
+        chapter: "Water Resources",
+        term: "Inundation Canal",
+        def: "A canal that diverts floodwaters directly from overflowing rivers during the rainy season without requiring a barrage or reservoir.",
+        buzz: "Floodwater diversion canal"
+      },
+      {
+        subject: "Geography",
+        chapter: "Agriculture",
+        term: "Jhumming",
+        def: "The local name used in north-eastern Indian states for primitive slash-and-burn shifting cultivation.",
+        buzz: "North-east slash-and-burn farming"
+      },
+      {
+        subject: "Geography",
+        chapter: "Agriculture",
+        term: "Plantation Agriculture",
+        def: "A type of commercial farming where a single crop is grown over a vast area of land using capital-intensive inputs and migrant labor.",
+        buzz: "Single crop on vast commercial estate"
+      },
+      {
+        subject: "Geography",
+        chapter: "Minerals and Energy",
+        term: "Placer Deposits",
+        def: "Mineral deposits found in the sands of valley floors and the base of hills that have been weathered down by water and are not corroded by water (such as gold, silver, and tin).",
+        buzz: "Alluvial valley mineral deposits"
+      },
+      {
+        subject: "Geography",
+        chapter: "Manufacturing Industries",
+        term: "Agglomeration Economies",
+        def: "The economic benefits and cost savings achieved when industries cluster together near urban centers to make use of shared infrastructure, banking, and labor.",
+        buzz: "Urban industrial clustering benefits"
+      },
+            /* 3. MASTER FLASHCARD REGISTRY: POLITICAL SCIENCE */
+      {
+        subject: "Civics",
+        chapter: "Power Sharing",
+        term: "Majoritarianism",
+        def: "A belief that the majority community should be able to rule a country in whichever way it pleases, disregarding the wishes and needs of minorities.",
+        buzz: "Dominance of majority over minority"
+      },
+      {
+        subject: "Civics",
+        chapter: "Power Sharing",
+        term: "Prudential Reason",
+        def: "A reason for power sharing based on careful calculation of gains and losses, emphasizing that it reduces the possibility of conflict between social groups.",
+        buzz: "Calculation avoiding social conflict"
+      },
+      {
+        subject: "Civics",
+        chapter: "Federalism",
+        term: "Residuary Subjects",
+        def: "Matters that do not fall within the Union, State, or Concurrent lists (such as computer software) which came up after the Constitution was made, legislated solely by the Union Government.",
+        buzz: "Post-constitutional Union powers"
+      },
+      {
+        subject: "Civics",
+        chapter: "Gender, Religion & Caste",
+        term: "Feminist",
+        def: "A woman or a man who believes in equal rights and opportunities for women and men across social, political, and economic spheres.",
+        buzz: "Believer in equal gender rights"
+      },
+      {
+        subject: "Civics",
+        chapter: "Political Parties",
+        term: "Defection",
+        def: "Changing party allegiance from the party on whose ticket a representative was elected to legislative office to a different party.",
+        buzz: "Switching elected party allegiance"
+      },
+      {
+        subject: "Civics",
+        chapter: "Outcomes of Democracy",
+        term: "Transparency",
+        def: "The right and means of a citizen to examine and verify the process and rules by which government decisions were taken.",
+        buzz: "Citizen right to examine decisions"
+      },
 
-    /* 2. STATE & CONTROLLER */
-    let currentCh = 1;
-    let currentIdx = 0;
-
-    function switchChapter(num) {
-      currentCh = num;
-      currentIdx = 0;
-      document.getElementById('btnCh1').classList.toggle('active', num === 1);
-      document.getElementById('btnCh2').classList.toggle('active', num === 2);
-
-      const slider = document.getElementById('timeSlider');
-      slider.max = TIMELINE_DATA[currentCh].length - 1;
-      slider.value = 0;
-
-      renderTicks();
-      showStep(0);
-    }
-
-    function renderTicks() {
-      const data = TIMELINE_DATA[currentCh];
-      const ticks = document.getElementById('ticksContainer');
-      ticks.innerHTML = data.map(item => `<span>${item.year}</span>`).join('');
-    }
-
-    function showStep(idx) {
-      currentIdx = idx;
-      const data = TIMELINE_DATA[currentCh];
-      const item = data[idx];
-
-      document.getElementById('timeSlider').value = idx;
-      document.getElementById('displayYear').innerText = item.year;
-      document.getElementById('displayStep').innerText = `MILESTONE ${idx + 1} / ${data.length}`;
-      document.getElementById('displayTitle').innerText = item.title;
-      document.getElementById('displayCause').innerText = item.cause;
-      document.getElementById('displayAction').innerText = item.action;
-      document.getElementById('displayTakeaway').innerText = item.takeaway;
-    }
-
-    function stepChange(delta) {
-      const data = TIMELINE_DATA[currentCh];
-      let newIdx = currentIdx + delta;
-      if (newIdx >= 0 && newIdx < data.length) {
-        showStep(newIdx);
+      /* 4. MASTER FLASHCARD REGISTRY: ECONOMICS */
+      {
+        subject: "Economics",
+        chapter: "Development",
+        term: "Infant Mortality Rate (IMR)",
+        def: "The number of children that die before completing one year of age as a proportion of 1,000 live children born in that particular year.",
+        buzz: "Deaths under age 1 per 1,000 live births"
+      },
+      {
+        subject: "Economics",
+        chapter: "Development",
+        term: "Net Attendance Ratio",
+        def: "The total number of children in the age group 14 and 15 years attending school as a percentage of the total number of children in the same age cohort.",
+        buzz: "Age 14-15 school attendance share"
+      },
+      {
+        subject: "Economics",
+        chapter: "Sectors of the Indian Economy",
+        term: "Gross Domestic Product (GDP)",
+        def: "The total monetary value of all final goods and services produced within a country during a particular accounting year.",
+        buzz: "Monetary value of final output"
+      },
+      {
+        subject: "Economics",
+        chapter: "Sectors of the Indian Economy",
+        term: "Disguised Unemployment",
+        def: "A situation where more people are working on a task than necessary, so even if some are pulled out, production does not decline.",
+        buzz: "Zero marginal labor productivity"
+      },
+      {
+        subject: "Economics",
+        chapter: "Money and Credit",
+        term: "Collateral",
+        def: "An asset that the borrower owns (such as land, building, vehicle, or bank deposit) and pledges to the lender as a guarantee until the loan is repaid.",
+        buzz: "Asset pledged as loan guarantee"
+      },
+      {
+        subject: "Economics",
+        chapter: "Money and Credit",
+        term: "Terms of Credit",
+        def: "The comprehensive agreement covering the interest rate, collateral requirement, documentation checklist, and repayment schedule.",
+        buzz: "Interest, collateral & repayment terms"
+      },
+      {
+        subject: "Economics",
+        chapter: "Globalisation",
+        term: "Special Economic Zones (SEZs)",
+        def: "Designated industrial zones with world-class infrastructure and tax exemptions for 5 years built to attract foreign direct investment.",
+        buzz: "Tax-free zones attracting FDI"
       }
+    ];
+          /* 5. DECK CONTROLLER & INTERACTION LOGIC */
+    let activeDeck = [...ALL_CARDS];
+    let currentIndex = 0;
+    let isFlipped = false;
+
+    function setSubject(subj, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (subj === 'ALL') {
+        activeDeck = [...ALL_CARDS];
+        document.getElementById('activeSubjectBadge').innerText = "ALL SUBJECTS";
+      } else {
+        activeDeck = ALL_CARDS.filter(c => c.subject === subj);
+        document.getElementById('activeSubjectBadge').innerText = subj.toUpperCase();
+      }
+
+      currentIndex = 0;
+      resetFlip();
+      renderCard();
     }
 
-    // Initialize on Load
-    renderTicks();
-    showStep(0);
+    function renderCard() {
+      if (activeDeck.length === 0) return;
+      const card = activeDeck[currentIndex];
+      
+      document.getElementById('cardChapter').innerText = `${card.subject.toUpperCase()} • ${card.chapter}`;
+      document.getElementById('cardKeyword').innerText = card.term;
+      document.getElementById('cardDefinition').innerText = card.def;
+      document.getElementById('cardBuzzword').innerHTML = `Key Buzzword: <strong>${card.buzz}</strong>`;
+
+      document.getElementById('cardCounter').innerText = `Card ${currentIndex + 1} / ${activeDeck.length}`;
+      const pct = ((currentIndex + 1) / activeDeck.length) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    function toggleFlip() {
+      const el = document.getElementById('cardElement');
+      isFlipped = !isFlipped;
+      el.classList.toggle('flipped', isFlipped);
+    }
+
+    function resetFlip() {
+      isFlipped = false;
+      document.getElementById('cardElement').classList.remove('flipped');
+    }
+
+    function nextCard() {
+      resetFlip();
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % activeDeck.length;
+        renderCard();
+      }, 150);
+    }
+
+    function prevCard() {
+      resetFlip();
+      setTimeout(() => {
+        currentIndex = (currentIndex - 1 + activeDeck.length) % activeDeck.length;
+        renderCard();
+      }, 150);
+    }
+
+    function shuffleCurrentDeck() {
+      for (let i = activeDeck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [activeDeck[i], activeDeck[j]] = [activeDeck[j], activeDeck[i]];
+      }
+      currentIndex = 0;
+      resetFlip();
+      renderCard();
+    }
+
+    // Keyboard Shortcuts (Arrow keys & Spacebar)
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') { e.preventDefault(); toggleFlip(); }
+      else if (e.code === 'ArrowRight') { nextCard(); }
+      else if (e.code === 'ArrowLeft') { prevCard(); }
+    });
+
+    // Initialize Deck
+    renderCard();
   </script>
 </body>
 </html>
