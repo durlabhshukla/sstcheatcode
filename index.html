@@ -16,7 +16,16 @@
       --text: #f8fafc;
       --muted: #94a3b8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+    
+    /* Universal Spring Bounce Micro-Interaction for Every Element */
+    button, a, .hub-card, .dropdown-item, .menu-btn, .submit-btn {
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+    button:active, a:active, .hub-card:active, .dropdown-item:active, .menu-btn:active, .submit-btn:active {
+      transform: scale(0.95) translateY(1px) !important;
+    }
+
     body {
       background: var(--bg) radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 50%);
       color: var(--text);
@@ -26,7 +35,6 @@
     }
     .wrapper { max-width: 820px; margin: 0 auto; position: relative; }
 
-    /* Top Navigation Bar with Menu Button */
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.8rem 1.2rem; background: rgba(16, 24, 40, 0.85);
@@ -40,135 +48,71 @@
       background: rgba(255,255,255,0.06); border: 1px solid var(--border);
       color: #fff; border-radius: 10px; padding: 0.5rem 0.9rem;
       font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;
-      transition: 0.2s;
     }
     .menu-btn:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
 
     .dropdown-menu {
-      display: none; position: absolute; top: 70px; right: 0; width: 270px;
+      display: none; position: absolute; top: 70px; right: 0; width: 280px;
       background: #111827; border: 1px solid var(--border); border-radius: 16px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.6); padding: 0.6rem; z-index: 1000;
     }
     .dropdown-menu.show { display: block; }
     .dropdown-item {
       display: block; padding: 0.75rem 1rem; color: #cbd5e1; text-decoration: none;
-      font-size: 0.88rem; font-weight: 700; border-radius: 10px; transition: 0.2s; cursor: pointer;
+      font-size: 0.88rem; font-weight: 700; border-radius: 10px; cursor: pointer; margin-bottom: 2px;
     }
     .dropdown-item:hover { background: rgba(59,130,246,0.2); color: #fff; }
 
-    /* Hero Section */
     .hero { text-align: center; margin-bottom: 2.2rem; }
+    .hero-tag { font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem; }
     .hero-h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
     .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; max-width: 580px; margin: 0 auto; }
 
-    /* Grid Layouts */
-    .section-title {
-      font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--amber); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
-    }
-    .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
-    @media(max-width: 640px) { .notes-grid { grid-template-columns: 1fr; } }
+    .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    @media(max-width: 640px) { .hub-grid { grid-template-columns: 1fr; } }
 
     .hub-card {
       background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 20px; padding: 1.5rem; text-decoration: none; color: inherit;
+      border-radius: 20px; padding: 1.6rem; text-decoration: none; color: inherit;
       display: flex; flex-direction: column; justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .hub-card:hover {
-      transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transform: translateY(-4px); border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     }
-    .card-icon { font-size: 2.1rem; margin-bottom: 0.7rem; }
+    .card-icon { font-size: 2.2rem; margin-bottom: 0.7rem; }
     .card-h2 { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem; }
     .card-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.2rem; }
-    
-    .feature-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
-    .feature-pill {
-      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.25rem 0.6rem; font-size: 0.74rem; font-weight: 700; color: #cbd5e1;
-    }
 
-    .card-cta {
-      font-size: 0.8rem; font-weight: 800; display: flex; align-items: center;
-      gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;
-    }
+    .card-cta { font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
     .cta-amber { color: var(--amber); }
     .cta-teal { color: var(--teal); }
     .cta-emerald { color: var(--emerald); }
+    .cta-blue { color: var(--blue); }
 
-    .info-box {
-      background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
-      border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem;
+    .doubt-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 1.8rem; margin-bottom: 2rem;
     }
-    .info-box h3 { font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; }
-    .info-box p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 1rem; }
-
-    .form-group { margin-bottom: 0.9rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-    @media(max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
-
-    .form-label { display: block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; letter-spacing: 0.5px; }
-    .form-input, .form-select, .form-textarea {
-      width: 100%; padding: 0.75rem 1rem; border-radius: 10px; background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border); color: #fff; font-size: 0.88rem; outline: none; transition: 0.2s;
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--muted); margin-bottom: 0.4rem; text-transform: uppercase; }
+    .form-input, .form-textarea {
+      width: 100%; padding: 0.85rem 1rem; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none;
     }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--amber); background: rgba(255,255,255,0.07); }
-    .form-select option { background: #111827; color: #fff; }
-
+    .form-input:focus, .form-textarea:focus { border-color: var(--blue); background: rgba(59,130,246,0.05); }
     .submit-btn {
-      background: var(--amber); color: #000; border: none; padding: 0.75rem 1.4rem;
-      border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.88rem; transition: 0.2s;
+      background: var(--amber); color: #000; border: none; width: 100%;
+      padding: 0.95rem; border-radius: 12px; font-weight: 800; font-size: 0.92rem; cursor: pointer;
     }
     .submit-btn:hover { opacity: 0.9; }
 
-    /* Success Message Banner */
-    .success-banner {
-      display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--emerald);
-      color: #6ee7b7; padding: 1rem; border-radius: 12px; font-size: 0.9rem; font-weight: 700;
-      margin-bottom: 1rem; line-height: 1.5;
-    }
-
-    /* Modal Popups for Menu Items */
-    .modal-overlay {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; padding: 1rem;
-    }
-    .modal-content {
-      background: #111827; border: 1px solid var(--border); border-radius: 20px;
-      width: 100%; max-width: 500px; padding: 1.8rem; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-    }
-    .close-modal {
-      position: absolute; top: 1rem; right: 1.2rem; background: none; border: none;
-      color: var(--muted); font-size: 1.2rem; font-weight: bold; cursor: pointer;
-    }
-    .close-modal:hover { color: #fff; }
-
-    .paper-item {
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-      padding: 0.9rem 1.1rem; border-radius: 12px; margin-bottom: 0.6rem;
-    }
-    .paper-title { font-size: 0.9rem; font-weight: 700; color: #fff; }
-    .paper-link { color: var(--blue); text-decoration: none; font-size: 0.82rem; font-weight: 800; }
-    .paper-link:hover { text-decoration: underline; }
-
-    .reply-card {
-      background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 14px; padding: 1.1rem; margin-top: 0.8rem;
-    }
-
-    footer {
-      text-align: center; color: var(--muted); font-size: 0.8rem;
-      padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); margin-top: 2rem;
-    }
+    footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); }
   </style>
 </head>
 <body>
 
   <div class="wrapper">
-    <!-- Top Bar with Menu Button -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <div style="position: relative;">
@@ -180,185 +124,99 @@
           <a href="class9.html" class="dropdown-item">📖 Class 9 Notes</a>
           <a href="class10.html" class="dropdown-item">🎓 Class 10 Notes</a>
           <a href="activity.html" class="dropdown-item">🎯 Activities & Practice Arena</a>
-          <a class="dropdown-item" onclick="openModal('sampleModal'); toggleMenu();">📄 Sample Question Papers</a>
-          <a href="#ask-doubt" class="dropdown-item" onclick="toggleMenu()">❓ Ask a Doubt</a>
-          <a class="dropdown-item" onclick="openModal('doubtsModal'); toggleMenu();">💬 Check My Doubts & Replies</a>
+          
+          <div style="margin: 0.4rem 0.6rem; border-top: 1px solid rgba(255,255,255,0.08);"></div>
+          
+          <a href="https://drive.google.com/file/d/1v_zk-ouEZCNetdISDJTHVfIQoKUnnDB9/view?usp=drivesdk" class="dropdown-item" target="_blank" style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.84rem;">📄 Class 10th Sample Papers</span>
+            <span style="background: rgba(59,130,246,0.2); color: #93c5fd; padding: 0.15rem 0.5rem; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">View →</span>
+          </a>
+
+          <div class="dropdown-item" style="display: flex; justify-content: space-between; align-items: center; cursor: default;">
+            <span style="font-size: 0.84rem; color: #94a3b8;">💡 Teacher's Practical Answers</span>
+            <span style="background: rgba(245,158,11,0.15); color: #f59e0b; padding: 0.15rem 0.5rem; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">Coming Soon</span>
+          </div>
+
+          <div style="margin: 0.4rem 0.6rem; border-top: 1px solid rgba(255,255,255,0.08);"></div>
+
+          <a href="#ask-doubt" class="dropdown-item">❓ Ask a Doubt</a>
         </div>
       </div>
     </header>
 
     <main>
       <div class="hero">
-        <h1 class="hero-h1">Interactive Learning Hub</h1>
-        <p class="hero-p">Empowering secondary school education with structured curriculum notes, timelines, flashcards, and simulation drills.</p>
+        <div class="hero-tag">Academic Portal</div>
+        <h1 class="hero-h1">Social Science Hub</h1>
+        <p class="hero-p">Curated board study materials, flashcards, interactive practice simulations, and curriculum tools.</p>
       </div>
 
-      <!-- 1. CLASSES (Class 9 First, Class 10 Second) -->
-      <div class="section-title">🎓 Curriculum Study Materials (Classes 9 & 10)</div>
-      <div class="notes-grid">
+      <div class="hub-grid">
         <a href="class9.html" class="hub-card">
           <div>
             <div class="card-icon">📖</div>
-            <h2 class="card-h2">Class 9 Social Science</h2>
-            <p class="card-desc">Foundational curriculum study notes across History, Geography, Civics, and Economics.</p>
+            <h2 class="card-h2">Class 9 Notes</h2>
+            <p class="card-desc">Foundational curriculum notes, chapter breakdowns, and map guides.</p>
           </div>
-          <div class="card-cta cta-emerald">Access Class 9 →</div>
+          <div class="card-cta cta-amber">Explore Class 9 →</div>
         </a>
 
         <a href="class10.html" class="hub-card">
           <div>
             <div class="card-icon">🎓</div>
-            <h2 class="card-h2">Class 10 Social Science</h2>
-            <p class="card-desc">Chapter notes, key concepts, flowcharts, and previous years' question blueprints.</p>
+            <h2 class="card-h2">Class 10 Notes</h2>
+            <p class="card-desc">Board exam notes, flowcharts, and comprehensive chapter resources.</p>
           </div>
-          <div class="card-cta cta-teal">Access Class 10 →</div>
+          <div class="card-cta cta-emerald">Explore Class 10 →</div>
         </a>
-      </div>
 
-      <!-- 2. WHY THIS PORTAL EXISTS -->
-      <div class="info-box">
-        <h3>💡 Why This Portal Exists</h3>
-        <p>Built to bridge the gap between traditional textbook learning and interactive digital revision. This portal provides students and educators with fast-loading, zero-distraction academic resources designed specifically around CBSE board standards and conceptual mastery.</p>
-      </div>
-
-      <!-- 3. ASK A DOUBT OR QUERY FORM -->
-      <div class="info-box" id="ask-doubt">
-        <h3>❓ Ask a Doubt or Query</h3>
-        <p>Fill out the form below with your student details and query.</p>
-        
-        <div class="success-banner" id="successBanner">
-          Your doubt submitted successfully. Please remember your PIN and you can check it in Menu -> Check My Doubts & Replies.
-        </div>
-
-        <form id="doubtForm" onsubmit="submitDoubt(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Student Name</label>
-              <input type="text" id="studentName" class="form-input" placeholder="e.g. Rahul Sharma" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Security PIN (4 Digits)</label>
-              <input type="password" id="studentPin" class="form-input" placeholder="e.g. 1234" maxlength="4" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Class</label>
-              <select id="studentClass" class="form-select" required>
-                <option value="Class 9">Class 9</option>
-                <option value="Class 10">Class 10</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Section</label>
-              <select id="studentSection" class="form-select" required>
-                <option value="Section A">Section A</option>
-                <option value="Section B">Section B</option>
-                <option value="Section C">Section C</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Subject</label>
-              <select id="studentSubject" class="form-select" required>
-                <option value="History">History</option>
-                <option value="Geography">Geography</option>
-                <option value="Civics">Civics</option>
-                <option value="Economics">Economics</option>
-                <option value="Others">Others</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Chapter / Topic Name</label>
-              <input type="text" id="studentChapter" class="form-input" placeholder="e.g. Nationalism in India" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Your Query / Doubt</label>
-            <textarea id="studentQuery" class="form-textarea" rows="3" placeholder="Type your doubt clearly here..." required></textarea>
-          </div>
-
-          <button type="submit" class="submit-btn" id="submitBtn">Submit Doubt</button>
-        </form>
-      </div>
-
-      <!-- 4. INTERACTIVE REVISION & DRILLS (Activity & Practice Arena) -->
-      <div class="section-title">⚡ Interactive Revision & Drills</div>
-      <div class="grid">
         <a href="activity.html" class="hub-card">
           <div>
             <div class="card-icon">🎯</div>
-            <h2 class="card-h2">Activity & Practice Arena</h2>
-            <p class="card-desc">Comprehensive practice center featuring history timeline scrubbers, NCERT concept flashcards, and the full Assertion & Reason drill simulator.</p>
-            <div class="feature-pills">
-              <span class="feature-pill">📜 History Timelines</span>
-              <span class="feature-pill">🗂️ Flashcards</span>
-              <span class="feature-pill">⚖️ Assertion and Reason Practice</span>
-            </div>
+            <h2 class="card-h2">Practice Arena</h2>
+            <p class="card-desc">Master 1-mark flashcards, timeline drills, and Assertion & Reason simulators.</p>
           </div>
-          <div class="card-cta cta-amber">Open Practice Arena →</div>
+          <div class="card-cta cta-blue">Open Arena →</div>
         </a>
+
+        <a href="https://drive.google.com/file/d/1v_zk-ouEZCNetdISDJTHVfIQoKUnnDB9/view?usp=drivesdk" class="hub-card" target="_blank">
+          <div>
+            <div class="card-icon">📄</div>
+            <h2 class="card-h2">Sample Papers</h2>
+            <p class="card-desc">Access official board sample question papers and practice sets.</p>
+          </div>
+          <div class="card-cta cta-teal">View Papers →</div>
+        </a>
+      </div>
+
+      <div class="doubt-card" id="ask-doubt">
+        <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; color: #fff;">❓ Ask a Doubt</h2>
+        <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1.2rem;">Stuck on a concept? Submit your question below and get answers.</p>
+        
+        <form name="doubts" method="POST" data-netlify="true">
+          <div class="form-group">
+            <label class="form-label">Your Name & Class</label>
+            <input type="text" name="name" class="form-input" placeholder="e.g. Rahul Sharma, Class 10" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Question / Doubt</label>
+            <textarea name="doubt" class="form-textarea" rows="3" placeholder="Type your social science doubt here..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Submit Doubt →</button>
+        </form>
       </div>
     </main>
 
     <footer>
-      <p>© 2026 Social Science Academic Hub • Board Examination Preparation</p>
+      <p>© 2026 Social Science Academic Hub • Designed for Excellence</p>
     </footer>
   </div>
 
-  <!-- Modal: Sample Question Papers -->
-  <div class="modal-overlay" id="sampleModal">
-    <div class="modal-content">
-      <button type="button" class="close-modal" onclick="closeModal('sampleModal')">×</button>
-      <h3 style="color:#fff; margin-bottom:0.5rem; font-weight:800;">📄 Sample Question Papers</h3>
-      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.2rem;">Download official board pattern sample papers and practice sets.</p>
-      
-      <div class="paper-item">
-        <span class="paper-title">Class 10 Practice Paper 2026 (Set 1)</span>
-        <a href="class10.html" class="paper-link">View Notes →</a>
-      </div>
-      <div class="paper-item">
-        <span class="paper-title">Class 10 Map Guide & Blueprint</span>
-        <a href="activity.html" class="paper-link">Practice →</a>
-      </div>
-      <div class="paper-item">
-        <span class="paper-title">Class 9 Term Assessment Set</span>
-        <a href="class9.html" class="paper-link">View Notes →</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Check My Doubts & Replies -->
-  <div class="modal-overlay" id="doubtsModal">
-    <div class="modal-content">
-      <button type="button" class="close-modal" onclick="closeModal('doubtsModal')">×</button>
-      <h3 style="color:#fff; margin-bottom:0.5rem; font-weight:800;">💬 Check My Doubts & Replies</h3>
-      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1rem;">Enter your Name and PIN below to view your submitted questions.</p>
-      
-      <div class="form-group">
-        <input type="text" id="checkName" class="form-input" placeholder="Enter your Name">
-      </div>
-      <div class="form-group">
-        <input type="password" id="checkPin" class="form-input" placeholder="Enter your PIN" maxlength="4">
-      </div>
-      <button type="button" class="submit-btn" style="width:100%; margin-top:0.5rem;" onclick="checkDoubts()">View My Doubts</button>
-
-      <div id="doubtsResultContainer" style="margin-top: 1rem; max-height:280px; overflow-y:auto;"></div>
-    </div>
-  </div>
-
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvbccNHEk20IveFy0C-vPROrEPh-PzIRyNlGrhn2fm0RZM3IiHtAMnPNON_c4FrWvIzQ/exec';
-
     function toggleMenu() {
       const menu = document.getElementById('dropdownMenu');
       menu.classList.toggle('show');
     }
-
     window.addEventListener('click', function(e) {
       const menu = document.getElementById('dropdownMenu');
       const btn = document.querySelector('.menu-btn');
@@ -366,97 +224,6 @@
         menu.classList.remove('show');
       }
     });
-
-    function openModal(modalId) {
-      document.getElementById(modalId).style.display = 'flex';
-    }
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-    }
-
-    function submitDoubt(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const banner = document.getElementById('successBanner');
-      btn.innerText = "Submitting...";
-      btn.disabled = true;
-
-      const payload = {
-        name: document.getElementById('studentName').value.trim(),
-        pin: document.getElementById('studentPin').value.trim(),
-        classVal: document.getElementById('studentClass').value,
-        section: document.getElementById('studentSection').value,
-        subject: document.getElementById('studentSubject').value,
-        chapter: document.getElementById('studentChapter').value.trim(),
-        query: document.getElementById('studentQuery').value.trim()
-      };
-
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        banner.style.display = 'block';
-        document.getElementById('doubtForm').reset();
-        btn.innerText = "Submit Doubt";
-        btn.disabled = false;
-        setTimeout(() => { banner.style.display = 'none'; }, 8000);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error submitting doubt. Please try again.');
-        btn.innerText = "Submit Doubt";
-        btn.disabled = false;
-      });
-    }
-
-    function checkDoubts() {
-      const name = document.getElementById('checkName').value.trim();
-      const pin = document.getElementById('checkPin').value.trim();
-      const container = document.getElementById('doubtsResultContainer');
-
-      if (!name || !pin) {
-        alert('Please enter both your Name and PIN.');
-        return;
-      }
-
-      container.innerHTML = `<p style="color:var(--muted); font-size:0.85rem; margin-top:1rem;">Searching your doubts in Google Sheets...</p>`;
-
-      fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}`)
-      .then(response => response.json())
-      .then(data => {
-        if (!data || data.length === 0) {
-          container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.85rem;">No doubts found for "${name}" with this PIN.</p>`;
-          return;
-        }
-
-        let html = '';
-        data.forEach((d) => {
-          html += `
-          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:1rem; margin-top:0.7rem;">
-              <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--teal); font-weight:800; margin-bottom:0.3rem;">
-                <span>${d.classVal} • ${d.section} • ${d.subject}</span>
-                <span>${d.date}</span>
-              </div>
-              <div style="font-size:0.88rem; font-weight:700; color:#fff; margin-bottom:0.2rem;">Topic: ${d.chapter}</div>
-              <div style="font-size:0.82rem; color:var(--muted); line-height:1.4; margin-bottom:0.7rem;"><strong>Query:</strong> ${d.query}</div>
-              <div class="reply-card">
-                <div style="font-size:0.7rem; font-weight:800; color:var(--emerald); text-transform:uppercase; margin-bottom:0.2rem;">Teacher Response</div>
-                <div style="font-size:0.82rem; color:#e2e8f0; line-height:1.4;">${d.reply}</div>
-              </div>
-            </div>
-          `;
-        });
-        container.innerHTML = html;
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        container.innerHTML = `<p style="color:#fca5a5; margin-top:1rem; font-size:0.85rem;">Error loading data from Google Sheets.</p>`;
-      });
-    }
   </script>
 </body>
 </html>
