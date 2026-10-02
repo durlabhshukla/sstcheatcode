@@ -66,42 +66,19 @@
     }
     .dropdown-item:hover, .submenu-toggle:hover { background: rgba(59,130,246,0.2); color: #fff; }
 
-    /* Submenus for Classes and Sample Papers */
+    /* Submenus */
     .submenu-content {
       display: none; padding-left: 1rem; margin: 0.2rem 0; border-left: 2px solid rgba(59,130,246,0.3);
     }
     .submenu-content.show { display: block; }
 
     /* Hero Section */
-    .hero { text-align: center; margin-bottom: 2.2rem; }
+    .hero { text-align: center; margin-bottom: 2.5rem; padding: 2rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; }
     .hero-tag { font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem; }
     .hero-h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
     .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; max-width: 580px; margin: 0 auto; }
 
-    /* Hub Grid Layout */
-    .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-    @media(max-width: 640px) { .hub-grid { grid-template-columns: 1fr; } }
-
-    .hub-card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 20px; padding: 1.6rem; text-decoration: none; color: inherit;
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .hub-card:hover {
-      transform: translateY(-4px); border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
-    .card-icon { font-size: 2.2rem; margin-bottom: 0.7rem; }
-    .card-h2 { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem; }
-    .card-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.2rem; }
-
-    .card-cta { font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
-    .cta-amber { color: var(--amber); }
-    .cta-teal { color: var(--teal); }
-    .cta-emerald { color: var(--emerald); }
-    .cta-blue { color: var(--blue); }
-
-    /* Doubt & Reply Section Cards */
+    /* Doubt Form Card */
     .doubt-card {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 20px; padding: 1.8rem; margin-bottom: 2rem;
@@ -123,6 +100,26 @@
     }
     .submit-btn:hover { opacity: 0.9; }
 
+    /* Modal Popup Styles */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); z-index: 2000;
+      justify-content: center; align-items: center; padding: 1rem;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #111827; border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px; padding: 2rem; width: 100%; max-width: 520px;
+      position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+    .close-modal {
+      position: absolute; top: 1.2rem; right: 1.2rem; background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border); color: #fff; width: 32px; height: 32px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; cursor: pointer;
+    }
+    .close-modal:hover { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
+
     footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); }
   </style>
 </head>
@@ -139,7 +136,7 @@
         <div class="dropdown-menu" id="dropdownMenu">
           <a href="index.html" class="dropdown-item">🏠 Home</a>
           
-          <!-- Classes Toggle Menu Item -->
+          <!-- Classes Toggle -->
           <button type="button" class="submenu-toggle" onclick="toggleSubmenu('classesSubmenu')">
             <span>📚 Classes</span> <span>▼</span>
           </button>
@@ -150,7 +147,7 @@
 
           <a href="activity.html" class="dropdown-item">🎯 Activities & Practice Arena</a>
           
-          <!-- Sample Papers Toggle Menu Item -->
+          <!-- Sample Papers Toggle -->
           <button type="button" class="submenu-toggle" onclick="toggleSubmenu('samplesSubmenu')">
             <span>📄 Sample Papers</span> <span>▼</span>
           </button>
@@ -167,58 +164,21 @@
 
           <div style="margin: 0.4rem 0.6rem; border-top: 1px solid rgba(255,255,255,0.08);"></div>
 
-          <a href="#ask-doubt" class="dropdown-item">❓ Ask a Doubt</a>
-          <a href="#check-doubts" class="dropdown-item">💬 Check My Doubts & Replies</a>
+          <a href="#ask-doubt" class="dropdown-item" onclick="toggleMenu()">❓ Ask a Doubt</a>
+          <button type="button" class="dropdown-item" onclick="openModal(); toggleMenu();" style="width: 100%;">💬 Check My Doubts & Replies</button>
         </div>
       </div>
     </header>
 
     <main>
+      <!-- Clean Streamlined Hero Section -->
       <div class="hero">
         <div class="hero-tag">Academic Portal</div>
         <h1 class="hero-h1">Social Science Hub</h1>
-        <p class="hero-p">Curated board study materials, flashcards, interactive practice simulations, and curriculum tools.</p>
+        <p class="hero-p">Welcome to your digital learning space. Use the top menu to access Class 9 and 10 notes, practice arena modules, and official sample papers. Submit your questions below whenever you need assistance.</p>
       </div>
 
-      <div class="hub-grid">
-        <a href="class9.html" class="hub-card">
-          <div>
-            <div class="card-icon">📖</div>
-            <h2 class="card-h2">Class 9 Notes</h2>
-            <p class="card-desc">Foundational curriculum notes, chapter breakdowns, and map guides.</p>
-          </div>
-          <div class="card-cta cta-amber">Explore Class 9 →</div>
-        </a>
-
-        <a href="class10.html" class="hub-card">
-          <div>
-            <div class="card-icon">🎓</div>
-            <h2 class="card-h2">Class 10 Notes</h2>
-            <p class="card-desc">Board exam notes, flowcharts, and comprehensive chapter resources.</p>
-          </div>
-          <div class="card-cta cta-emerald">Explore Class 10 →</div>
-        </a>
-
-        <a href="activity.html" class="hub-card">
-          <div>
-            <div class="card-icon">🎯</div>
-            <h2 class="card-h2">Practice Arena</h2>
-            <p class="card-desc">Master 1-mark flashcards, timeline drills, and Assertion & Reason simulators.</p>
-          </div>
-          <div class="card-cta cta-blue">Open Arena →</div>
-        </a>
-
-        <a href="https://drive.google.com/file/d/1v_zk-ouEZCNetdISDJTHVfIQoKUnnDB9/view?usp=drivesdk" class="hub-card" target="_blank">
-          <div>
-            <div class="card-icon">📄</div>
-            <h2 class="card-h2">Sample Papers</h2>
-            <p class="card-desc">Access official board sample question papers and practice sets.</p>
-          </div>
-          <div class="card-cta cta-teal">View Papers →</div>
-        </a>
-      </div>
-
-      <!-- Ask a Doubt Form connected to Google Sheet Web App -->
+      <!-- Ask a Doubt Form Card -->
       <div class="doubt-card" id="ask-doubt">
         <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; color: #fff;">❓ Ask a Doubt</h2>
         <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1.2rem;">Stuck on a concept? Fill in your details below to submit your question to your teacher.</p>
@@ -281,32 +241,33 @@
           <button type="submit" id="submitBtn" class="submit-btn">Submit Doubt →</button>
         </form>
       </div>
-
-      <!-- Check My Doubts & Replies Section -->
-      <div class="doubt-card" id="check-doubts">
-        <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; color: #fff;">💬 Check My Doubts & Replies</h2>
-        <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1.2rem;">Enter your Name and 4-digit PIN to view teacher responses.</p>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Student Name</label>
-            <input type="text" id="checkName" class="form-input" placeholder="e.g. Rahul Sharma">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Security PIN (4 Digits)</label>
-            <input type="password" maxlength="4" id="checkPin" class="form-input" placeholder="e.g. 1234">
-          </div>
-        </div>
-
-        <button type="button" class="submit-btn" style="background: var(--blue); color: #fff;" onclick="checkReplies()">Check Replies →</button>
-        
-        <div id="replyResults" style="margin-top: 1rem;"></div>
-      </div>
     </main>
 
     <footer>
       <p>© 2026 Social Science Academic Hub • Designed for Excellence</p>
     </footer>
+  </div>
+
+  <!-- Interactive Popup Modal for Checking Doubts & Replies -->
+  <div class="modal-overlay" id="replyModal">
+    <div class="modal-box">
+      <button type="button" class="close-modal" onclick="closeModal()">✕</button>
+      <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.4rem;">💬 Check My Doubts & Replies</h2>
+      <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Enter your Name and 4-digit PIN to view teacher responses.</p>
+      
+      <div class="form-group">
+        <label class="form-label">Student Name</label>
+        <input type="text" id="checkName" class="form-input" placeholder="e.g. Rahul Sharma">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Security PIN (4 Digits)</label>
+        <input type="password" maxlength="4" id="checkPin" class="form-input" placeholder="e.g. 1234">
+      </div>
+
+      <button type="button" class="submit-btn" style="background: var(--blue); color: #fff;" onclick="checkReplies()">Check Replies →</button>
+      
+      <div id="replyResults" style="margin-top: 1.2rem;"></div>
+    </div>
   </div>
 
   <script>
@@ -322,15 +283,30 @@
       sub.classList.toggle('show');
     }
 
+    function openModal() {
+      document.getElementById('replyModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('replyModal').classList.remove('show');
+      document.getElementById('replyResults').innerHTML = '';
+      document.getElementById('checkName').value = '';
+      document.getElementById('checkPin').value = '';
+    }
+
     window.addEventListener('click', function(e) {
       const menu = document.getElementById('dropdownMenu');
       const btn = document.querySelector('.menu-btn');
+      const modal = document.getElementById('replyModal');
       if (!menu.contains(e.target) && !btn.contains(e.target)) {
         menu.classList.remove('show');
       }
+      if (e.target === modal) {
+        closeModal();
+      }
     });
 
-    // Handle form submission to Google Sheet Web App
+    // Handle form submission
     document.getElementById('doubtForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const formData = new FormData(this);
@@ -361,7 +337,7 @@
       });
     });
 
-    // Handle fetching replies from Google Sheet Web App
+    // Handle fetching replies inside modal
     function checkReplies() {
       const name = document.getElementById('checkName').value.trim();
       const pin = document.getElementById('checkPin').value.trim();
@@ -380,10 +356,10 @@
           if(data && data.length > 0) {
             let html = '';
             data.forEach(item => {
-              html += `<div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-top: 0.8rem;">
-                <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 0.3rem;"><b>Subject:</b> ${item.subject} | <b>Chapter:</b> ${item.chapter}</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><b>Your Query:</b> ${item.query}</p>
-                <p style="font-size: 0.9rem; color: var(--emerald);"><b>Teacher's Reply:</b> ${item.reply || 'Pending review by teacher...'}</p>
+              html += `<div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-top: 0.8rem;">
+                <p style="font-size: 0.82rem; color: var(--amber); margin-bottom: 0.3rem;"><b>Subject:</b> ${item.subject} | <b>Chapter:</b> ${item.chapter}</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #fff;"><b>Your Query:</b> ${item.query}</p>
+                <p style="font-size: 0.9rem; color: var(--emerald);"><b>Teacher's Answer:</b> ${item.reply || 'Pending review by teacher...'}</p>
               </div>`;
             });
             resultsDiv.innerHTML = html;
