@@ -35,8 +35,7 @@
       color: #fff; border-radius: 12px; padding: 0.55rem 0.9rem;
       font-size: 0.85rem; font-weight: 700; text-decoration: none;
     }
-
-    .module-nav {
+        .module-nav {
       display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 0.5rem;
       background: rgba(255,255,255,0.03); border: 1px solid var(--border);
       padding: 0.4rem; border-radius: 16px; margin-bottom: 1.6rem;
@@ -68,70 +67,10 @@
       cursor: pointer; transition: 0.2s; text-align: center;
     }
     .ch-btn.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #fff; }
-    .timeline-range {
-      width: 100%; height: 8px; border-radius: 5px; background: rgba(255,255,255,0.1);
-      outline: none; -webkit-appearance: none; cursor: pointer; margin: 1.2rem 0 0.8rem;
-    }
-    .timeline-range::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%;
-      background: var(--amber); cursor: pointer; box-shadow: 0 0 14px rgba(245,158,11,0.7);
-      border: 3px solid #fff;
-    }
-    .slider-ticks { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); font-weight: 700; margin-bottom: 1rem; }
-    .timeline-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 20px; padding: 1.4rem; }
-    .year-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; margin-bottom: 1rem; }
-    .year-pill { font-size: 2.2rem; font-weight: 900; color: var(--amber); }
-    .event-title { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 1rem; }
-    .breakdown-list { display: flex; flex-direction: column; gap: 0.8rem; }
-    .breakdown-item { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.86rem; line-height: 1.5; padding: 0.75rem 0.9rem; border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); }
-    .b-tag { font-size: 0.68rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
-    .nav-btn-row { display: flex; gap: 0.8rem; margin-top: 1.4rem; }
-    .nav-btn { flex: 1; padding: 0.85rem; border-radius: 14px; font-size: 0.88rem; font-weight: 700; cursor: pointer; border: 1px solid var(--border); }
-    .btn-prev { background: rgba(255,255,255,0.05); color: #fff; }
-    .btn-next { background: var(--amber); color: #000; border-color: var(--amber); }
-
-    .filter-scroll { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.6rem; margin-bottom: 1.2rem; scrollbar-width: none; }
-    .filter-scroll::-webkit-scrollbar { display: none; }
-    .filter-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 999px; padding: 0.45rem 1rem; font-size: 0.78rem; font-weight: 700; color: var(--muted); white-space: nowrap; cursor: pointer; }
-    .filter-btn.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #93c5fd; }
-    .progress-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
-    .track-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 6px; margin-bottom: 1.2rem; overflow: hidden; }
-    .track-fill { height: 100%; width: 0%; background: var(--teal); transition: width 0.3s; }
-    .flashcard-scene { perspective: 1000px; width: 100%; height: 320px; cursor: pointer; margin-bottom: 1.2rem; }
-    .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1); border-radius: 24px; }
-    .flashcard.flipped { transform: rotateY(180deg); }
-    .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 24px; padding: 1.8rem 1.4rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.45); border: 1px solid var(--border); }
-    .card-front { background: var(--card-bg); text-align: center; justify-content: center; align-items: center; }
-    .card-back { background: linear-gradient(135deg, rgba(20, 32, 54, 0.98) 0%, rgba(13, 20, 36, 0.96) 100%); transform: rotateY(180deg); text-align: left; }
-    .card-ch-badge { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--amber); margin-bottom: 0.6rem; }
-    .card-keyword { font-size: 1.85rem; font-weight: 900; color: #fff; line-height: 1.25; }
-    .def-label { font-size: 0.7rem; font-weight: 800; color: var(--teal); text-transform: uppercase; margin-bottom: 0.4rem; }
-    .def-text { font-size: 1.02rem; line-height: 1.55; color: #f1f5f9; font-weight: 500; }
-    .def-buzz { margin-top: 1rem; padding: 0.65rem 0.9rem; border-radius: 10px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); color: #6ee7b7; font-size: 0.82rem; font-weight: 700; }
-    .controls-grid { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 0.7rem; margin-bottom: 0.8rem; }
-    .btn-action { padding: 0.9rem 0.6rem; border-radius: 14px; font-size: 0.88rem; font-weight: 800; border: 1px solid var(--border); cursor: pointer; text-align: center; }
-
-    .score-banner { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.75rem 1.2rem; border-radius: 16px; margin-bottom: 1.2rem; }
-    .stat-item { display: flex; flex-direction: column; }
-    .stat-lbl { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: var(--muted); }
-    .stat-val { font-size: 1.15rem; font-weight: 900; color: #fff; }
-    .stmt-box { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.2rem; }
-    .stmt-row { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.9rem 1.1rem; border-radius: 14px; font-size: 0.92rem; line-height: 1.5; }
-    .stmt-tag { font-weight: 900; display: block; margin-bottom: 0.2rem; font-size: 0.8rem; }
-    .opt-grid { display: flex; flex-direction: column; gap: 0.6rem; }
-    .opt-btn { width: 100%; padding: 0.9rem 1rem; border-radius: 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: #e2e8f0; font-size: 0.86rem; font-weight: 600; text-align: left; cursor: pointer; line-height: 1.4; display: flex; align-items: flex-start; gap: 0.6rem; }
-    .opt-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
-    .opt-btn.correct { background: rgba(16,185,129,0.2) !important; border-color: var(--emerald) !important; color: #6ee7b7 !important; }
-    .opt-btn.wrong { background: rgba(239,68,68,0.2) !important; border-color: var(--crimson) !important; color: #fca5a5 !important; }
-    .opt-letter { background: rgba(255,255,255,0.1); padding: 0.15rem 0.5rem; border-radius: 6px; font-weight: 900; font-size: 0.78rem; flex-shrink: 0; color: #fff; }
-    .exp-box { margin-top: 1.2rem; padding: 1.1rem; border-radius: 14px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); font-size: 0.88rem; line-height: 1.5; color: #bfdbfe; display: none; }
-    .next-q-btn { width: 100%; padding: 0.95rem; border-radius: 14px; font-size: 0.92rem; font-weight: 800; background: var(--amber); color: #000; border: none; cursor: pointer; display: none; margin-top: 1rem; }
-
-    footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); margin-top: 2.5rem; }
   </style>
 </head>
 <body>
-    <div class="wrapper">
+  <div class="wrapper">
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <a href="index.html" class="home-link"><span>🏛</span> Home</a>
@@ -142,8 +81,7 @@
       <button type="button" class="mod-tab-btn" id="tabBtnCards" onclick="setModule('cards')">🗂️ Flashcards</button>
       <button type="button" class="mod-tab-btn" id="tabBtnAR" onclick="setModule('ar')">⚖️ Assertion and Reasons Practice</button>
     </div>
-
-    <main>
+        <main>
       <!-- MODULE 1 -->
       <section class="module-container active" id="secTimeline">
         <div class="module-card">
@@ -190,8 +128,7 @@
           </div>
         </div>
       </section>
-
-      <!-- MODULE 2 -->
+            <!-- MODULE 2 -->
       <section class="module-container" id="secCards">
         <div class="module-card">
           <div class="hero-tag" style="color:var(--teal);">MODULE 2 • 1-MARK REVISION</div>
@@ -239,8 +176,7 @@
           <button type="button" class="filter-btn" style="width:100%; border-radius:12px; padding:0.75rem;" onclick="shuffleFlashDeck()">🎲 Shuffle Deck</button>
         </div>
       </section>
-
-      <!-- MODULE 3 -->
+            <!-- MODULE 3 -->
       <section class="module-container" id="secAR">
         <div class="module-card">
           <div class="hero-tag" style="color:var(--amber);">MODULE 3 • EXAM DRILL</div>
@@ -321,8 +257,8 @@
     <footer>
       <p>© 2026 Social Science Academic Hub</p>
     </footer>
-    </div>
-      <script>
+  </div>
+    <script>
     const TIMELINE_DATA = {
       1: [
         { year: "1789", title: "The French Revolution", cause: "Absolute Bourbon monarchy and oppressive feudal estate privileges.", action: "Sovereignty transferred to French citizens; revolutionary measures introduced ideas of la patrie and le citoyen.", takeaway: "Marks the first clear expression of nationalism in Europe." },
@@ -368,7 +304,9 @@
       { subject: "History", chapter: "Nationalism in India", term: "Purna Swaraj", def: "A resolution adopted at the 1929 Lahore Congress Session under Jawaharlal Nehru that formalized the goal of the nationalist struggle as complete independence.", buzz: "complete independence" },
       { subject: "History", chapter: "Nationalism in India", term: "Harijan", def: "A compassionate term meaning \"children of God\" adopted by Mahatma Gandhi to restore the dignity of communities formerly degraded as untouchables.", buzz: "children of God" },
       { subject: "History", chapter: "Nationalism in India", term: "Civil Disobedience", def: "A mass protest strategy that moved beyond non-cooperation to systematically break discriminatory British statutes, distinguished by the deliberate violation of colonial laws.", buzz: "deliberate violation of colonial laws" },
-      { subject: "History", chapter: "Nationalism in India", term: "Khilafat Movement", def: "A pan-Islamic agitation launched by the Ali brothers to defend the temporal powers of the Ottoman Caliph, rallying support around the spiritual head of the Islamic world.", buzz: "defend the Ottoman Caliph" },
+      { subject: "History", chapter: "Nationalism in India", term: "Khilafat Movement", def: "A pan-Islamic agitation launched by the Ali brothers to defend the temporal powers of the Ottoman Caliph, rallying support around the spiritual head of the Islamic world.", buzz: "defend the Ottoman Caliph" }
+    ];
+          const MORE_FLASHCARDS_1 = [
       { subject: "History", chapter: "Making of a Global World", term: "Silk Routes", def: "Dynamic pre-modern overland and maritime networks that connected Asia with Europe and North Africa, facilitating pre-modern trade and cultural exchange.", buzz: "pre-modern trade and cultural exchange" },
       { subject: "History", chapter: "Making of a Global World", term: "Rinderpest", def: "A cattle plague introduced to Africa in the late 1880s that killed ninety percent of livestock and forced local Africans into the colonial labour market, acting as a devastating cattle plague.", buzz: "devastating cattle plague" },
       { subject: "History", chapter: "Making of a Global World", term: "Indentured Labour", def: "A bonded worker bound by a fixed-term contract to work for an employer in an overseas colony to pay off passage debt, categorized as contractual bonded labour.", buzz: "contractual bonded labour" },
@@ -388,10 +326,7 @@
       { subject: "History", chapter: "Print Culture", term: "Inquisition", def: "A historical Roman Catholic judicial tribunal established to hunt down, try, and punish religious dissidents, functioning as a heresy suppression tribunal.", buzz: "heresy suppression tribunal" },
       { subject: "History", chapter: "Print Culture", term: "Heretical", def: "Theological positions that challenged the established doctrines and ecclesiastical authority of the Catholic Church, condemned as anti-orthodox beliefs.", buzz: "anti-orthodox beliefs" },
       { subject: "History", chapter: "Print Culture", term: "Chapbooks", def: "Inexpensive, pocket-sized paper booklets sold by itinerant street peddlers in England for a single penny, known as penny pocketbooks.", buzz: "penny pocketbooks" },
-      { subject: "History", chapter: "Print Culture", term: "Vernacular Press Act", def: "An 1878 repressive statute modeled on the Irish Press Laws that empowered the British colonial regime to seize printing presses that published anti-government reports, enforcing colonial press censorship.", buzz: "colonial press censorship" }
-    ];
-          <script>
-    const MORE_FLASHCARDS_1 = [
+      { subject: "History", chapter: "Print Culture", term: "Vernacular Press Act", def: "An 1878 repressive statute modeled on the Irish Press Laws that empowered the British colonial regime to seize printing presses that published anti-government reports, enforcing colonial press censorship.", buzz: "colonial press censorship" },
       { subject: "Geography", chapter: "Resources and Development", term: "Resource", def: "Everything in our environment that is technologically accessible, economically viable, and culturally acceptable to fulfill human needs, functioning as an environmentally satisfying utility.", buzz: "environmentally satisfying utility" },
       { subject: "Geography", chapter: "Resources and Development", term: "Sustainable Development", def: "Economic growth that meets present societal needs without depleting the natural environment or compromising the survival of future generations, ensuring conservation-oriented growth.", buzz: "conservation-oriented growth" },
       { subject: "Geography", chapter: "Resources and Development", term: "Agenda 21", def: "A multilateral declaration ratified at the 1992 Rio Earth Summit to combat environmental destruction, poverty, and disease through local cooperative governance, pursuing global sustainable development.", buzz: "global sustainable development" },
@@ -411,7 +346,11 @@
       { subject: "Geography", chapter: "Forest and Wildlife", term: "Joint Forest Management (JFM)", def: "A conservation program that partners local village committees with state forest departments to restore damaged forests, based on participatory forest conservation.", buzz: "participatory forest conservation" },
       { subject: "Geography", chapter: "Forest and Wildlife", term: "Sacred Groves", def: "Patches of virgin forest preserved intact by indigenous communities because of traditional religious reverence, functioning as virgin religious forest sanctuaries.", buzz: "virgin religious forest sanctuaries" },
       { subject: "Geography", chapter: "Water Resources", term: "Water Scarcity", def: "An acute shortage of fresh water caused by over-exploitation, rising demand, and uneven access, defined as acute freshwater deficiency.", buzz: "acute freshwater deficiency" },
-      { subject: "Geography", chapter: "Water Resources", term: "Multipurpose Project", def: "Large dam systems designed to manage flood control, irrigation, hydro-power, and inland waterways at the same time, celebrated as the temples of modern India.", buzz: "temples of modern India" },
+      { subject: "Geography", chapter: "Water Resources", term: "Multipurpose Project", def: "Large dam systems designed to manage flood control, irrigation, hydro-power, and inland waterways at the same time, celebrated as the temples of modern India.", buzz: "temples of modern India" }
+    ];
+    ALL_FLASHCARDS.push(...MORE_FLASHCARDS_1);
+        <script>
+    const MORE_FLASHCARDS_2 = [
       { subject: "Geography", chapter: "Water Resources", term: "Rainwater Harvesting", def: "Capturing, storing, and recharging surface runoff and rainwater to replenish ground aquifers, categorized as a water conservation technique.", buzz: "water conservation technique" },
       { subject: "Geography", chapter: "Water Resources", term: "Rooftop Rainwater Harvesting", def: "Collecting rain from sloped house roofs using PVC pipes and directing it to underground sumps for later use, functioning as domestic water catchment.", buzz: "domestic water catchment" },
       { subject: "Geography", chapter: "Water Resources", term: "Guls / Kuls", def: "Traditional hillside diversion channels built in the Western Himalayas to direct glacier and stream runoff to terraced farms, serving as traditional mountain irrigation channels.", buzz: "traditional mountain irrigation channels" },
@@ -451,7 +390,10 @@
       { subject: "Civics", chapter: "Power Sharing", term: "Prudential Reason", def: "A justification for power sharing based on practical calculations that it lowers the risk of violent social conflicts, rooted in practical conflict reduction.", buzz: "practical conflict reduction" },
       { subject: "Civics", chapter: "Power Sharing", term: "Moral Reason", def: "A justification asserting that power sharing is essential because it embodies the fundamental spirit of democracy, upholding democratic intrinsic value.", buzz: "democratic intrinsic value" },
       { subject: "Civics", chapter: "Power Sharing", term: "Coalition Government", def: "An alliance administration formed by two or more political parties when no single party secures a majority in parliament, categorized as a multi-party alliance government.", buzz: "multi-party alliance government" },
-      { subject: "Civics", chapter: "Power Sharing", term: "Civil War", def: "A violent internal conflict between opposing groups within a nation that becomes so intense it looks like an active war, designated as an internal armed conflict.", buzz: "internal armed conflict" },
+      { subject: "Civics", chapter: "Power Sharing", term: "Civil War", def: "A violent internal conflict between opposing groups within a nation that becomes so intense it looks like an active war, designated as an internal armed conflict.", buzz: "internal armed conflict" }
+    ];
+    ALL_FLASHCARDS.push(...MORE_FLASHCARDS_2);
+          const MORE_FLASHCARDS_3 = [
       { subject: "Civics", chapter: "Power Sharing", term: "Checks and Balances", def: "A horizontal system of power sharing where the legislature, executive, and judiciary hold independent powers while keeping watch over one another, ensuring horizontal separation of powers.", buzz: "horizontal separation of powers" },
       { subject: "Civics", chapter: "Power Sharing", term: "Federal Division of Power", def: "A vertical system where constitutional authority is shared between a national government and regional state administrations, classified as vertical power sharing.", buzz: "vertical power sharing" },
       { subject: "Civics", chapter: "Federalism", term: "Federalism", def: "A system of government where constitutional power is divided between a central authority and various regional political units, characterized by two-tiered governance.", buzz: "two-tiered governance" },
@@ -462,7 +404,7 @@
       { subject: "Civics", chapter: "Federalism", term: "Concurrent List", def: "Matters of common concern like education and marriage where both central and state bodies can legislate, with central law winning in conflicts, categorized as shared legislative subjects.", buzz: "shared legislative subjects" },
       { subject: "Civics", chapter: "Federalism", term: "Residuary Subjects", def: "Matters like computer software that do not appear in any of the three constitutional lists, assigned exclusively to central parliament jurisdiction.", buzz: "central parliament jurisdiction" },
       { subject: "Civics", chapter: "Federalism", term: "Decentralisation", def: "The transfer of governmental power and resources away from central and state levels down to local bodies, defined as local authority devolution.", buzz: "local authority devolution" },
-            { subject: "Civics", chapter: "Federalism", term: "Scheduled Languages", def: "The 22 regional and national languages recognized in the Eighth Schedule of the Indian Constitution, designated as constitutionally recognized languages.", buzz: "constitutionally recognized languages" },
+      { subject: "Civics", chapter: "Federalism", term: "Scheduled Languages", def: "The 22 regional and national languages recognized in the Eighth Schedule of the Indian Constitution, designated as constitutionally recognized languages.", buzz: "constitutionally recognized languages" },
       { subject: "Civics", chapter: "Gender, Religion & Caste", term: "Sexual Division of Labour", def: "A social pattern where women are expected to do unpaid domestic chores while men handle public, income-earning jobs, governed by gender-based domestic segregation.", buzz: "gender-based domestic segregation" },
       { subject: "Civics", chapter: "Gender, Religion & Caste", term: "Feminist", def: "An individual who believes in and campaigns for equal rights, opportunities, and entitlements for women and men, defined as an advocate for gender equality.", buzz: "advocate for gender equality" },
       { subject: "Civics", chapter: "Gender, Religion & Caste", term: "Patriarchy", def: "A social structure that gives men authority and control over women, resulting in the subordination of women, known as male-dominated social rule.", buzz: "male-dominated social rule" },
@@ -491,7 +433,10 @@
       { subject: "Economics", chapter: "Development", term: "Per Capita Income", def: "The average income of a country's citizens, calculated by dividing national income by total population, known as average individual income.", buzz: "average individual income" },
       { subject: "Economics", chapter: "Development", term: "Infant Mortality Rate (IMR)", def: "The number of babies who die before completing their first year per 1,000 live births in a given year, serving as a child healthcare indicator.", buzz: "child healthcare indicator" },
       { subject: "Economics", chapter: "Development", term: "Literacy Rate", def: "The percentage of the population aged 7 years and older who can read and write with understanding, acting as an educational attainment index.", buzz: "educational attainment index" },
-      { subject: "Economics", chapter: "Development", term: "Net Attendance Ratio", def: "The percentage of youth aged 14 and 15 years attending secondary school out of all children in that age group, measuring secondary school attendance.", buzz: "secondary school attendance" },
+      { subject: "Economics", chapter: "Development", term: "Net Attendance Ratio", def: "The percentage of youth aged 14 and 15 years attending secondary school out of all children in that age group, measuring secondary school attendance.", buzz: "secondary school attendance" }
+    ];
+    ALL_FLASHCARDS.push(...MORE_FLASHCARDS_3);
+          const MORE_FLASHCARDS_4 = [
       { subject: "Economics", chapter: "Development", term: "Body Mass Index (BMI)", def: "A health indicator calculated by dividing adult weight in kilograms by the square of height in metres, indicating adult nutritional adequacy.", buzz: "adult nutritional adequacy" },
       { subject: "Economics", chapter: "Development", term: "Human Development Index (HDI)", def: "An international index that ranks countries using health, life expectancy, education, and per capita income data, determining comprehensive well-being rankings.", buzz: "comprehensive well-being rankings" },
       { subject: "Economics", chapter: "Development", term: "Life Expectancy at Birth", def: "The average number of years a newborn baby is expected to live based on current health and mortality trends, acting as a longevity benchmark.", buzz: "longevity benchmark" },
@@ -511,7 +456,7 @@
       { subject: "Economics", chapter: "Money and Credit", term: "Medium of Exchange", def: "An accepted exchange tool like currency that makes buying and selling simple without needing direct commodity trades, functioning as an intermediary transaction tool.", buzz: "intermediary transaction tool" },
       { subject: "Economics", chapter: "Money and Credit", term: "Currency", def: "Paper banknotes and metal coins authorized by the central government as legal tender for payments, defined as authorized legal tender.", buzz: "authorized legal tender" },
       { subject: "Economics", chapter: "Money and Credit", term: "Demand Deposits", def: "Bank deposits that account holders can withdraw or transfer whenever they choose, functioning as liquid deposit money.", buzz: "liquid deposit money" },
-      { subject: "Economics", chapter: "Money and Credit", term: "Cheque", def: "A paper payment order instructing a bank to pay a specific amount from an account to a named person, serving as a bank payment order.", buzz: "bank payment order" },
+      { subject: "Economics", chapter: "Money and Credit", term: "Cheque", def: "A paper payment order instructing a bank to pay a specific sum from an account to a named person, serving as a bank payment order.", buzz: "bank payment order" },
       { subject: "Economics", chapter: "Money and Credit", term: "Collateral", def: "An asset like land, livestock, or property that a borrower pledges to a lender until a loan is repaid, categorized as an asset loan security.", buzz: "asset loan security" },
       { subject: "Economics", chapter: "Money and Credit", term: "Terms of Credit", def: "The full lending agreement covering the interest rate, collateral, documentation, and repayment schedule, forming the credit condition contract.", buzz: "credit condition contract" },
       { subject: "Economics", chapter: "Money and Credit", term: "Debt-trap", def: "A crisis where a borrower must take a new loan to service an existing loan, leaving them trapped in inescapable compound debt.", buzz: "inescapable compound debt" },
@@ -528,8 +473,8 @@
       { subject: "Economics", chapter: "Globalisation", term: "Containerisation", def: "The transport of freight in standardized shipping containers on ships and trains, drastically cutting freight handling costs, recognized as standardized bulk freight transport.", buzz: "standardized bulk freight transport" },
       { subject: "Economics", chapter: "Globalisation", term: "Outsourcing", def: "The business practice of contracting regular services like customer call centres or programming to lower-cost foreign providers, termed cost-effective business delegation.", buzz: "cost-effective business delegation" }
     ];
-    ALL_FLASHCARDS.push(...MORE_FLASHCARDS_1);
-          <script>
+    ALL_FLASHCARDS.push(...MORE_FLASHCARDS_4);
+
     const MASTER_AR = [
       { id: 1, subj: "History", ch: "The Rise of Nationalism in Europe", a: "The Civil Code of 1804 (Napoleonic Code) abolished all privileges based on birth.", r: "Napoleon introduced the Code to re-establish the traditional feudal order across French-controlled territories.", ans: "C", exp: "Assertion (A) is correct, but Reason (R) is false because the Napoleonic Code aimed to abolish feudalism and establish equality before the law, rather than restoring the old feudal order." },
       { id: 2, subj: "History", ch: "The Rise of Nationalism in Europe", a: "In 1834, a customs union known as the Zollverein was established at the initiative of Prussia.", r: "The union dismantled internal tariff barriers and reduced the number of local currencies from over thirty to two.", ans: "A", exp: "Both statements are true, and Reason (R) correctly explains how the Zollverein unified the German states economically." },
@@ -571,7 +516,7 @@
       { id: 38, subj: "History", ch: "The Making of a Global World", a: "Spanish colonizers conquered the Americas primarily through the sheer military power of modern firearms and field artillery.", r: "Indigenous populations of the Americas lacked biological immunity against European diseases like smallpox.", ans: "D", exp: "Assertion (A) is false because the Spanish conquest was driven primarily by introduced diseases rather than firearms, while Reason (R) is true." },
       { id: 39, subj: "History", ch: "Print Culture and the Modern World", a: "Johannes Gutenberg developed the movable metal type printing press in Strasbourg during the 1430s.", r: "Gutenberg drew on the mechanics of the olive press and used metal moulds to cast individual letters of the alphabet.", ans: "A", exp: "Both statements are true, and Reason (R) correctly explains how Gutenberg adapted existing technology to invent the movable metal type press." },
       { id: 40, subj: "History", ch: "Print Culture and the Modern World", a: "The Roman Catholic Church began maintaining an official Index of Prohibited Books from 1558.", r: "The rapid spread of popular printed tracts enabled individual interpretations of faith, raising Church concerns over the spread of heretical ideas.", ans: "A", exp: "Both statements are true, and Reason (R) correctly explains why the Papacy instituted the Index of Prohibited Books to censor reading material." },
-            { id: 41, subj: "History", ch: "Print Culture and the Modern World", a: "In 1517, the religious reformer Martin Luther wrote the 'Ninety-Five Theses' challenging corrupt Catholic practices.", r: "Luther’s translated German New Testament sold thousands of copies within weeks, helping spark the Protestant Reformation.", ans: "B", exp: "Both statements are true historical facts, but the sales figures for his German New Testament describe the impact of print, not why he wrote the Ninety-Five Theses." },
+      { id: 41, subj: "History", ch: "Print Culture and the Modern World", a: "In 1517, the religious reformer Martin Luther wrote the 'Ninety-Five Theses' challenging corrupt Catholic practices.", r: "Luther’s translated German New Testament sold thousands of copies within weeks, helping spark the Protestant Reformation.", ans: "B", exp: "Both statements are true historical facts, but the sales figures for his German New Testament describe the impact of print, not why he wrote the Ninety-Five Theses." },
       { id: 42, subj: "History", ch: "Print Culture and the Modern World", a: "The Christian humanist Erasmus supported the unregulated printing and circulation of all kinds of books without restriction.", r: "Erasmus worried that an unchecked volume of vulgar and scandalous publications was undermining classical learning and Christian values.", ans: "D", exp: "Assertion (A) is false because Erasmus was critical of the uncontrolled spread of low-quality print, while Reason (R) accurately captures his concerns." },
       { id: 43, subj: "History", ch: "Print Culture and the Modern World", a: "The British colonial government passed the Vernacular Press Act in 1878 to suppress critical nationalist commentary.", r: "The Vernacular Press Act applied the same regulatory criteria and penalties to both English-language and vernacular Indian newspapers.", ans: "C", exp: "Assertion (A) is true, but Reason (R) is false because the 1878 Act targeted vernacular newspapers while exempting English-language publications." },
       { id: 44, subj: "History", ch: "Print Culture and the Modern World", a: "The eighteenth-century French novelist Louis-Sébastien Mercier declared: 'Tremble, therefore, tyrants of the world! Tremble before modular writers!'", r: "Mercier believed that the spread of books and print culture was a powerful force capable of dismantling monarchical despotism.", ans: "A", exp: "Both statements are true, and Reason (R) directly explains why Mercier viewed print and authors as threats to autocratic rulers." },
@@ -582,8 +527,7 @@
       { id: 49, subj: "History", ch: "Print Culture and the Modern World", a: "In nineteenth-century Europe, subscription and lending libraries served as hubs for educating lower-middle-class and working-class citizens.", r: "Many working-class individuals used their literacy to write political tracts and personal autobiographies.", ans: "B", exp: "Both are true statements regarding the spread of literacy in nineteenth-century Europe, but Reason (R) describes working-class writing rather than explaining why lending libraries were established." },
       { id: 50, subj: "History", ch: "Print Culture and the Modern World", a: "Penny chapbooks were expensive, leather-bound volumes sold exclusively to European aristocrats.", r: "Chapbooks were small, inexpensive paper booklets sold by traveling peddlers called chapmen for a single penny.", ans: "D", exp: "Assertion (A) is false because chapbooks were inexpensive books aimed at the common public, as accurately defined in Reason (R)." }
     ];
-          <script>
-    const MORE_AR = [
+          const MORE_AR = [
       { id: 51, subj: "Geography", ch: "Resources and Development", a: "Agenda 21 was adopted at the United Nations Conference on Environment and Development (UNCED) in Rio de Janeiro in 1992.", r: "It aims at achieving global sustainable development by addressing environmental damage, poverty, and disease through mutual cooperation and shared responsibilities.", ans: "A", exp: "Both statements are true, and Reason (R) correctly explains the core objective and purpose behind the adoption of Agenda 21." },
       { id: 52, subj: "Geography", ch: "Resources and Development", a: "Alluvial soils as a whole are very fertile and are intensively cultivated across northern India.", r: "Alluvial soils contain adequate proportions of potash, phosphoric acid, and lime, making them ideal for the growth of sugarcane, paddy, and wheat.", ans: "A", exp: "Both statements are true, and Reason (R) provides the exact chemical and mineral rationale for the high agricultural fertility of alluvial soils." },
       { id: 53, subj: "Geography", ch: "Resources and Development", a: "Black soils are well-known for their capacity to hold moisture over long dry periods.", r: "The black soils of the Deccan trap region were formed from the weathering of volcanic basalt rock.", ans: "B", exp: "Both statements are true facts from NCERT, but the moisture-holding capacity of black soil is due to its extremely fine, clayey texture, not simply its volcanic basalt origin." },
@@ -636,8 +580,7 @@
       { id: 100, subj: "Manufacturing Industries", a: "Discharging untreated industrial effluents into rivers causes severe environmental degradation and endangers aquatic life.", r: "Draining hot water from thermal plants into ponds before cooling increases dissolved oxygen levels and benefits aquatic ecosystems.", ans: "C", exp: "Assertion (A) is true, but Reason (R) is false because draining uncooled, hot wastewater (thermal pollution) depletes dissolved oxygen and harms aquatic life." }
     ];
     MASTER_AR.push(...MORE_AR);
-          <script>
-    const MORE_AR_2 = [
+          const MORE_AR_2 = [
       { id: 101, subj: "Political Science", ch: "Power Sharing", a: "Between 1970 and 1993, the leaders of Belgium amended their constitution four times.", r: "The amendments were made to work out an innovative arrangement that would enable all linguistic communities to live together peacefully.", ans: "A", exp: "Both statements are true, and Reason (R) correctly explains why the Belgian government repeatedly amended its constitution to accommodate regional diversities." },
       { id: 102, subj: "Political Science", ch: "Power Sharing", a: "The government of Sri Lanka adopted a series of majoritarian measures after gaining independence in 1948.", r: "Under the 1956 Official Language Act, Tamil was declared an official language alongside Sinhala to safeguard minority rights.", ans: "C", exp: "Assertion (A) is true, but Reason (R) is false because the 1956 Act made Sinhala the sole official language, completely disregarding Tamil." },
       { id: 103, subj: "Political Science", ch: "Power Sharing", a: "The horizontal division of power places the legislature, executive, and judiciary at the same level.", r: "The Community Government in Belgium is elected by people belonging to one language community—Dutch, French, or German-speaking.", ans: "B", exp: "Both are true NCERT facts, but the structure of Belgium's community government does not explain the concept of horizontal separation of powers between constitutional organs." },
@@ -676,7 +619,7 @@
       { id: 136, subj: "Political Science", ch: "Political Parties", a: "To become a recognized National Party, a party must secure at least 6 percent of total votes in Lok Sabha elections (or assembly polls in four states) and win at least four seats in the Lok Sabha.", r: "The Supreme Court of India passed an order making it mandatory for every election candidate to file an affidavit detailing their property and criminal cases.", ans: "B", exp: "Both statements are true facts from NCERT, but candidate affidavit regulations do not explain the criteria for recognition as a National Party." },
       { id: 137, subj: "Political Science", ch: "Political Parties", a: "Most political parties across the world demonstrate internal democracy and hold open, transparent leadership elections.", r: "In most political parties, power tends to concentrate within the hands of one or a few top leaders who make all key decisions.", ans: "D", exp: "Assertion (A) is false because the lack of internal democracy is a major challenge confronting parties globally, which Reason (R) accurately highlights." },
       { id: 138, subj: "Political Science", ch: "Political Parties", a: "Political parties play a decisive role in shaping public opinion by raising and highlighting major societal issues.", r: "Political parties operate entirely without mass front organizations, youth wings, or trade union affiliates in civil society.", ans: "C", exp: "Assertion (A) is true, but Reason (R) is false because political parties maintain extensive mass organizations, trade unions, and youth wings that mobilize lakhs of citizens." },
-       { id: 139, subj: "Political Science", ch: "Political Parties", a: "Dynastic succession remains a major challenge that prevents ordinary party workers from rising to leadership positions.", r: "In recent years, there has been a decline in the ideological differences among major political parties in several democratic nations.", ans: "B", exp: "Both statements describe distinct challenges facing political parties in NCERT, but ideological convergence does not cause or explain dynastic succession." },
+      { id: 139, subj: "Political Science", ch: "Political Parties", a: "Dynastic succession remains a major challenge that prevents ordinary party workers from rising to leadership positions.", r: "In recent years, there has been a decline in the ideological differences among major political parties in several democratic nations.", ans: "B", exp: "Both statements describe distinct challenges facing political parties in NCERT, but ideological convergence does not cause or explain dynastic succession." },
       { id: 140, subj: "Political Science", ch: "Political Parties", a: "Modern large-scale democracies can easily function without any political parties if all candidates contest as independents.", r: "Without political parties, every candidate would be independent, making collective policy decisions impossible and leaving no one accountable for running the country.", ans: "D", exp: "Assertion (A) is false because modern representative democracies require parties to form stable governments, as correctly explained by Reason (R)." },
       { id: 141, subj: "Political Science", ch: "Outcomes of Democracy", a: "Decision-making in a democracy is often slower compared to non-democratic regimes.", r: "Democratic governance is based on the idea of deliberation and negotiation, requiring consultations and consensus before decisions are made.", ans: "A", exp: "Both statements are true, and Reason (R) correctly explains why adherence to democratic procedures and consultations requires more time." },
       { id: 142, subj: "Political Science", ch: "Outcomes of Democracy", a: "A democratic government is fundamentally a legitimate government.", r: "Democratic governments are always completely free from corruption, highly efficient, and consistently outperform all autocracies in economic growth.", ans: "C", exp: "Assertion (A) is true (it is the people's own elected government), but Reason (R) is false because democracies can suffer from corruption, delays, and varying economic performance." },
@@ -690,8 +633,7 @@
       { id: 150, subj: "Political Science", ch: "Outcomes of Democracy", a: "In a democracy, most citizens believe that their vote makes a meaningful difference to the way the country is run.", r: "Cross-country surveys in South Asia demonstrate that the majority of citizens prefer military rule over representative democracy.", ans: "C", exp: "Assertion (A) is true, but Reason (R) is false because surveys across South Asia show overwhelming popular preference for democracy over military rule or dictatorship." }
     ];
     MASTER_AR.push(...MORE_AR_2);
-          <script>
-    const MORE_AR_3 = [
+          const MORE_AR_3 = [
       { id: 151, subj: "Economics", ch: "Development", a: "What may be development for one person may not be development for another; it may even be destructive for the other.", r: "Different persons have different aspirations and life situations, leading to conflicting developmental goals (such as an industrialist wanting large dams versus displaced tribal populations).", ans: "A", exp: "Both statements are true, and Reason (R) directly explains why conflicting priorities cause developmental goals to differ or clash between people." },
       { id: 152, subj: "Economics", ch: "Development", a: "In the World Development Reports brought out by the World Bank, per capita income is used as the criterion to classify countries.", r: "Kerala has a low Infant Mortality Rate because it has adequate provision of basic health and educational facilities.", ans: "B", exp: "Both are true NCERT facts, but Kerala's low infant mortality rate does not explain why the World Bank adopts per capita income to classify global economies." },
       { id: 153, subj: "Economics", ch: "Development", a: "National income alone is not a sufficient indicator to compare the development levels of different countries.", r: "National income reflects the exact distribution of prosperity and indicates how much income each individual citizen actually receives.", ans: "C", exp: "Assertion (A) is true, but Reason (R) is false because national income is an aggregate total that hides income inequalities and gives no measure of individual distribution." },
@@ -743,6 +685,8 @@
       { id: 199, subj: "Economics", ch: "Globalisation and the Indian Economy", a: "Small-scale domestic manufacturers of batteries, capacitors, plastic toys, and dairy products in India faced severe distress following trade liberalisation.", r: "Small producers could not compete with cheaper, mass-produced imports that entered the domestic market once import restrictions were lifted.", ans: "A", exp: "Both statements are true, and Reason (R) correctly explains how cheaper imported goods caused factory closures and distress among small local manufacturers." },
       { id: 200, subj: "Economics", ch: "Globalisation and the Indian Economy", a: "Developing nations have successfully used the WTO to eliminate all agricultural subsidies in developed nations like the United States.", r: "Developed nations continue to provide massive agricultural subsidies to their farmers while pressuring developing countries to open their markets and reduce farm support.", ans: "D", exp: "Assertion (A) is false because developed countries have retained high agricultural subsidies despite WTO negotiations, as correctly explained in Reason (R)." }
     ];
+    MASTER_AR.push(...MORE_AR);
+    MASTER_AR.push(...MORE_AR_2);
     MASTER_AR.push(...MORE_AR_3);
 
     /* ================= TAB CONTROLLER ================= */
