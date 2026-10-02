@@ -60,7 +60,7 @@
 
     .map-stage {
       position: relative; background: #0c1220; border: 1px solid var(--border);
-      border-radius: 20px; overflow: hidden; padding: 0.5rem;
+      border-radius: 20px; overflow: hidden; padding: 0.4rem;
       display: flex; justify-content: center; align-items: center;
     }
     .map-svg { width: 100%; height: auto; max-height: 480px; display: block; }
@@ -114,7 +114,7 @@
     <main>
       <div class="hero-tag">MODULE 1 • MAP TRAINER</div>
       <h1 class="hero-h1">2D Graphical Map Trainer</h1>
-      <p class="hero-p">CBSE Board Exam syllabus. Inspect the map and select which pin marks the target location.</p>
+      <p class="hero-p">CBSE Board Exam syllabus. Look at the map pins to choose the correct location.</p>
 
       <!-- Category Filter -->
       <div class="cat-scroll">
@@ -127,7 +127,7 @@
       </div>
 
       <div class="map-grid">
-        <!-- SVG Vector Map Canvas -->
+        <!-- SVG Vector Map Canvas (Calibrated 800x600) -->
         <div class="map-stage">
           <svg class="map-svg" viewBox="0 0 800 600" id="mapSvg">
             <image href="india-map.png" x="0" y="0" width="800" height="600" preserveAspectRatio="none" />
@@ -160,19 +160,19 @@
           <div class="q-title" id="qTitle">Loading Question...</div>
           <div class="q-clue" id="qClue">Clue: ...</div>
 
-          <!-- Options hide the answer: students must look at the map -->
+          <!-- Options hide answers initially so students must inspect the map -->
           <div class="opt-list">
             <button type="button" class="opt-btn" id="btnA" onclick="checkChoice('A')">
-              <span>📍 Choose Pin A</span> <span id="labelA" style="font-size:0.75rem; color:var(--muted);"></span>
+              <span>📍 Choose Pin A</span> <span id="labelA" style="font-size:0.75rem; color:var(--muted); font-weight:600;"></span>
             </button>
             <button type="button" class="opt-btn" id="btnB" onclick="checkChoice('B')">
-              <span>📍 Choose Pin B</span> <span id="labelB" style="font-size:0.75rem; color:var(--muted);"></span>
+              <span>📍 Choose Pin B</span> <span id="labelB" style="font-size:0.75rem; color:var(--muted); font-weight:600;"></span>
             </button>
             <button type="button" class="opt-btn" id="btnC" onclick="checkChoice('C')">
-              <span>📍 Choose Pin C</span> <span id="labelC" style="font-size:0.75rem; color:var(--muted);"></span>
+              <span>📍 Choose Pin C</span> <span id="labelC" style="font-size:0.75rem; color:var(--muted); font-weight:600;"></span>
             </button>
             <button type="button" class="opt-btn" id="btnD" onclick="checkChoice('D')">
-              <span>📍 Choose Pin D</span> <span id="labelD" style="font-size:0.75rem; color:var(--muted);"></span>
+              <span>📍 Choose Pin D</span> <span id="labelD" style="font-size:0.75rem; color:var(--muted); font-weight:600;"></span>
             </button>
           </div>
 
@@ -187,78 +187,87 @@
     </footer>
   </div>
     <script>
-    /* 1. ACCURATE COORDINATE REGISTRY (Calibrated strictly to 800x600 India map) */
+    /* 1. CALIBRATED COORDINATE REGISTRY (Accurately positioned inside state borders) */
     const COORDS = {
-      calcutta: ["Calcutta (Kolkata), West Bengal", 525, 320],
-      nagpur: ["Nagpur, Maharashtra", 370, 335],
-      madras: ["Madras (Chennai), Tamil Nadu", 385, 495],
-      champaran: ["Champaran, Bihar", 460, 220],
-      kheda: ["Kheda, Gujarat", 245, 310],
-      ahmedabad: ["Ahmedabad, Gujarat", 245, 300],
-      amritsar: ["Amritsar, Punjab", 290, 145],
-      chauri_chaura: ["Chauri Chaura, Uttar Pradesh", 445, 230],
-      dandi: ["Dandi, Gujarat", 240, 350],
-      salal: ["Salal Dam, J&K", 295, 85],
-      bhakra: ["Bhakra Nangal Dam, HP/Punjab", 315, 140],
-      tehri: ["Tehri Dam, Uttarakhand", 350, 150],
-      rana_pratap: ["Rana Pratap Sagar, Rajasthan", 290, 265],
-      sardar_sarovar: ["Sardar Sarovar Dam, Gujarat", 265, 330],
-      hirakud: ["Hirakud Dam, Odisha", 465, 335],
-      nagarjuna: ["Nagarjuna Sagar Dam, AP/Telangana", 365, 440],
-      tungabhadra: ["Tungabhadra Dam, Karnataka", 320, 450],
-      mayurbhanj: ["Mayurbhanj Iron Ore, Odisha", 500, 320],
-      durg: ["Durg Iron Ore, Chhattisgarh", 410, 345],
-      bailadila: ["Bailadila Iron Ore, Chhattisgarh", 405, 410],
-      ballari: ["Ballari Iron Ore, Karnataka", 320, 450],
-      kudremukh: ["Kudremukh Iron Ore, Karnataka", 280, 490],
-      raniganj: ["Raniganj Coal Mine, West Bengal", 495, 290],
-      bokaro: ["Bokaro Coal / Steel, Jharkhand", 490, 280],
-      talcher: ["Talcher Coal Mine, Odisha", 490, 345],
-      neyveli: ["Neyveli Lignite, Tamil Nadu", 360, 530],
-      digboi: ["Digboi Oil Field, Assam", 635, 190],
-      naharkatia: ["Naharkatia Oil Field, Assam", 625, 200],
-      mumbai_high: ["Mumbai High Offshore, Arabian Sea", 215, 380],
-      bassein: ["Bassein Offshore, Arabian Sea", 220, 395],
-      kalol: ["Kalol Oil Field, Gujarat", 245, 290],
-      ankaleshwar: ["Ankaleshwar Oil Field, Gujarat", 245, 335],
-      namrup: ["Namrup Thermal Power, Assam", 625, 205],
-      singrauli: ["Singrauli Thermal Power, MP", 450, 270],
-      ramagundam: ["Ramagundam Thermal Power, Telangana", 370, 390],
-      narora: ["Narora Nuclear Power, UP", 350, 210],
-      rawatbhata: ["Rawatbhata Nuclear Power, Rajasthan", 290, 265],
-      kakrapar: ["Kakrapar Nuclear Power, Gujarat", 245, 340],
-      tarapur: ["Tarapur Nuclear Power, Maharashtra", 245, 370],
-      kaiga: ["Kaiga Nuclear Power, Karnataka", 265, 470],
-      kalpakkam: ["Kalpakkam Nuclear Power, Tamil Nadu", 385, 510],
-      mumbai: ["Mumbai, Maharashtra", 245, 385],
-      indore: ["Indore, Madhya Pradesh", 305, 310],
-      surat: ["Surat, Gujarat", 245, 340],
-      kanpur: ["Kanpur, Uttar Pradesh", 395, 245],
-      coimbatore: ["Coimbatore, Tamil Nadu", 310, 535],
-      durgapur: ["Durgapur Steel Plant, West Bengal", 510, 295],
-      jamshedpur: ["Jamshedpur (TISCO), Jharkhand", 490, 310],
-      rourkela: ["Rourkela Steel Plant, Odisha", 465, 315],
-      bhilai: ["Bhilai Steel Plant, Chhattisgarh", 410, 345],
-      vijayanagar: ["Vijayanagar Steel Plant, Karnataka", 320, 450],
-      salem: ["Salem Steel Plant, Tamil Nadu", 340, 525],
-      noida: ["Noida STP, Uttar Pradesh", 335, 195],
-      gandhinagar: ["Gandhinagar STP, Gujarat", 245, 290],
-      pune: ["Pune STP, Maharashtra", 270, 395],
-      hyderabad: ["Hyderabad STP / Airport, Telangana", 355, 420],
-      bengaluru: ["Bengaluru STP, Karnataka", 330, 495],
-      thiruvananthapuram: ["Thiruvananthapuram STP, Kerala", 310, 575],
-      kandla: ["Kandla (Deendayal) Port, Gujarat", 195, 285],
-      marmagao: ["Marmagao Port, Goa", 255, 460],
-      new_mangalore: ["New Mangalore Port, Karnataka", 270, 500],
-      kochi: ["Kochi Port, Kerala", 295, 550],
-      tuticorin: ["Tuticorin Port, Tamil Nadu", 330, 570],
-      visakhapatnam: ["Visakhapatnam Port, Andhra Pradesh", 440, 420],
-      paradip: ["Paradip Port, Odisha", 520, 355],
-      haldia: ["Haldia Port, West Bengal", 520, 340],
-      delhi: ["IGI Airport, New Delhi", 335, 190]
+      // History
+      calcutta: ["Calcutta (Kolkata), West Bengal", 518, 320],
+      nagpur: ["Nagpur, Maharashtra", 375, 345],
+      madras: ["Madras (Chennai), Tamil Nadu", 382, 498],
+      champaran: ["Champaran, Bihar", 455, 235],
+      kheda: ["Kheda, Gujarat", 258, 316],
+      ahmedabad: ["Ahmedabad, Gujarat", 255, 305],
+      amritsar: ["Amritsar, Punjab", 292, 160],
+      chauri_chaura: ["Chauri Chaura, Uttar Pradesh", 448, 248],
+      dandi: ["Dandi, Gujarat", 265, 356],
+
+      // Dams
+      salal: ["Salal Dam, J&K", 298, 95],
+      bhakra: ["Bhakra Nangal Dam, HP/Punjab", 320, 165],
+      tehri: ["Tehri Dam, Uttarakhand", 342, 172],
+      rana_pratap: ["Rana Pratap Sagar, Rajasthan", 308, 282],
+      sardar_sarovar: ["Sardar Sarovar Dam, Gujarat", 278, 332],
+      hirakud: ["Hirakud Dam, Odisha", 460, 340],
+      nagarjuna: ["Nagarjuna Sagar Dam, AP/Telangana", 380, 440],
+      tungabhadra: ["Tungabhadra Dam, Karnataka", 330, 450],
+
+      // Mines & Energy
+      mayurbhanj: ["Mayurbhanj Iron Ore, Odisha", 498, 318],
+      durg: ["Durg Iron Ore, Chhattisgarh", 415, 355],
+      bailadila: ["Bailadila Iron Ore, Chhattisgarh", 410, 420],
+      ballari: ["Ballari Iron Ore, Karnataka", 330, 450],
+      kudremukh: ["Kudremukh Iron Ore, Karnataka", 292, 495],
+      raniganj: ["Raniganj Coal Mine, West Bengal", 500, 292],
+      bokaro: ["Bokaro Coal / Steel, Jharkhand", 485, 285],
+      talcher: ["Talcher Coal Mine, Odisha", 480, 348],
+      neyveli: ["Neyveli Lignite, Tamil Nadu", 368, 525],
+      digboi: ["Digboi Oil Field, Assam", 625, 202],
+      naharkatia: ["Naharkatia Oil Field, Assam", 610, 215],
+      mumbai_high: ["Mumbai High Offshore, Arabian Sea", 235, 385],
+      bassein: ["Bassein Offshore, Arabian Sea", 238, 400],
+      kalol: ["Kalol Oil Field, Gujarat", 255, 298],
+      ankaleshwar: ["Ankaleshwar Oil Field, Gujarat", 265, 338],
+      namrup: ["Namrup Thermal Power, Assam", 610, 215],
+      singrauli: ["Singrauli Thermal Power, MP", 450, 285],
+      ramagundam: ["Ramagundam Thermal Power, Telangana", 378, 390],
+      narora: ["Narora Nuclear Power, UP", 350, 225],
+      rawatbhata: ["Rawatbhata Nuclear Power, Rajasthan", 308, 282],
+      kakrapar: ["Kakrapar Nuclear Power, Gujarat", 265, 348],
+      tarapur: ["Tarapur Nuclear Power, Maharashtra", 260, 375],
+      kaiga: ["Kaiga Nuclear Power, Karnataka", 280, 470],
+      kalpakkam: ["Kalpakkam Nuclear Power, Tamil Nadu", 382, 510],
+
+      // Industries & STPs
+      mumbai: ["Mumbai, Maharashtra", 260, 390],
+      indore: ["Indore, Madhya Pradesh", 315, 320],
+      surat: ["Surat, Gujarat", 265, 348],
+      kanpur: ["Kanpur, Uttar Pradesh", 395, 260],
+      coimbatore: ["Coimbatore, Tamil Nadu", 320, 530],
+      durgapur: ["Durgapur Steel Plant, West Bengal", 505, 295],
+      jamshedpur: ["Jamshedpur (TISCO), Jharkhand", 488, 312],
+      rourkela: ["Rourkela Steel Plant, Odisha", 470, 320],
+      bhilai: ["Bhilai Steel Plant, Chhattisgarh", 415, 355],
+      vijayanagar: ["Vijayanagar Steel Plant, Karnataka", 330, 450],
+      salem: ["Salem Steel Plant, Tamil Nadu", 342, 518],
+      noida: ["Noida STP, Uttar Pradesh", 332, 218],
+      gandhinagar: ["Gandhinagar STP, Gujarat", 255, 298],
+      pune: ["Pune STP, Maharashtra", 280, 405],
+      hyderabad: ["Hyderabad STP / Airport, Telangana", 360, 422],
+      bengaluru: ["Bengaluru STP, Karnataka", 338, 495],
+      thiruvananthapuram: ["Thiruvananthapuram STP, Kerala", 322, 572],
+
+      // Ports & Airports
+      kandla: ["Kandla (Deendayal) Port, Gujarat", 220, 290],
+      marmagao: ["Marmagao Port, Goa", 270, 465],
+      new_mangalore: ["New Mangalore Port, Karnataka", 288, 502],
+      kochi: ["Kochi Port, Kerala", 308, 545],
+      tuticorin: ["Tuticorin Port, Tamil Nadu", 338, 570],
+      visakhapatnam: ["Visakhapatnam Port, Andhra Pradesh", 450, 410],
+      paradip: ["Paradip Port, Odisha", 515, 360],
+      haldia: ["Haldia Port, West Bengal", 515, 338],
+      delhi: ["IGI Airport, New Delhi", 332, 218]
     };
 
-    /* 2. COMPLETE QUESTION POOL */
+    /* 2. DEDUPLICATED MAP QUESTIONS */
     const QUESTIONS = [
       ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in September 1920?", "Capital of West Bengal, near the Hugli River.", "calcutta", "The September 1920 Special Congress session in Calcutta adopted the Non-Cooperation resolution."],
       ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in December 1920?", "Eastern Maharashtra (Vidarbha region).", "nagpur", "At Nagpur in December 1920, the Non-Cooperation program was formally ratified."],
@@ -330,7 +339,7 @@
       ["Ports", "GEOGRAPHY – AIRPORTS", "Locate Indira Gandhi International Airport.", "National Capital Territory of Delhi.", "delhi", "IGI Airport in New Delhi is the primary aviation hub of northern India."]
     ];
 
-    /* 3. ZERO-REPEAT DECK & SCRAMBLE CONTROLLER */
+    /* 3. ZERO-REPEAT SHUFFLE CONTROLLER */
     let unplayedDeck = [];
     let currentCategory = 'ALL';
     let currentQ = null;
@@ -368,12 +377,12 @@
       const correctKey = currentQ[4];
       const correctLoc = COORDS[correctKey];
 
-      // Pick 3 random, distinct distractors
+      // Pick 3 random distractors
       const otherKeys = Object.keys(COORDS).filter(k => k !== correctKey);
       shuffle(otherKeys);
       const distractors = otherKeys.slice(0, 3);
 
-      // Scramble option positions across Pin A, B, C, D
+      // Scramble options across Pin A, B, C, D
       const roundOptions = [
         { key: correctKey, name: correctLoc[0], x: correctLoc[1], y: correctLoc[2], isCorrect: true },
         { key: distractors[0], name: COORDS[distractors[0]][0], x: COORDS[distractors[0]][1], y: COORDS[distractors[0]][2], isCorrect: false },
@@ -389,7 +398,6 @@
         D: roundOptions[3]
       };
 
-      // Set text & scoreboard
       document.getElementById('qCatLabel').innerText = `${currentQ[1]} (${unplayedDeck.length} remaining)`;
       document.getElementById('qScoreLabel').innerText = `Score: ${score} / ${totalAnswered}`;
       document.getElementById('qTitle').innerText = currentQ[2];
@@ -397,7 +405,7 @@
       document.getElementById('feedbackBox').style.display = 'none';
       document.getElementById('nextBtn').style.display = 'none';
 
-      // Reposition SVG pins & reset button labels
+      // Reposition SVG pins and clear revealed names from buttons
       ['A', 'B', 'C', 'D'].forEach(letter => {
         const item = activeMapping[letter];
         const gPin = document.getElementById('pin' + letter);
@@ -413,7 +421,7 @@
 
         const btn = document.getElementById('btn' + letter);
         btn.querySelector('span:first-child').innerText = `📍 Choose Pin ${letter}`;
-        document.getElementById('label' + letter).innerText = ''; // Hide place names so answers aren't revealed
+        document.getElementById('label' + letter).innerText = ''; // Hide place name before answer
         btn.className = "opt-btn";
         btn.disabled = false;
       });
@@ -429,7 +437,7 @@
         if (activeMapping[letter].isCorrect) correctLetter = letter;
         const btn = document.getElementById('btn' + letter);
         btn.disabled = true;
-        // Reveal location names on the buttons after answering
+        // Reveal location names on buttons after answering
         document.getElementById('label' + letter).innerText = activeMapping[letter].name;
       });
 
@@ -440,7 +448,7 @@
         score++;
         chosenPin.className.baseVal = "map-pin correct";
         document.getElementById('btn' + choice).classList.add('correct');
-        fbBox.innerHTML = `<strong>✓ Correct!</strong> Pin ${choice} is <strong>${chosen.name}</strong>.<br>${currentQ[5]}`;
+        fbBox.innerHTML = `<strong>✓ Correct!</strong> Pin ${choice} marks <strong>${chosen.name}</strong>.<br>${currentQ[5]}`;
         fbBox.style.background = "rgba(16,185,129,0.18)";
         fbBox.style.color = "#6ee7b7";
       } else {
@@ -448,7 +456,7 @@
         correctPin.className.baseVal = "map-pin correct";
         document.getElementById('btn' + choice).classList.add('wrong');
         document.getElementById('btn' + correctLetter).classList.add('correct');
-        fbBox.innerHTML = `<strong>✗ Incorrect.</strong> Pin ${choice} is ${chosen.name}.<br>The correct location for <strong>${activeMapping[correctLetter].name}</strong> is <strong>Pin ${correctLetter}</strong>.<br>${currentQ[5]}`;
+        fbBox.innerHTML = `<strong>✗ Incorrect.</strong> Pin ${choice} is ${chosen.name}.<br>The correct position for <strong>${activeMapping[correctLetter].name}</strong> is <strong>Pin ${correctLetter}</strong>.<br>${currentQ[5]}`;
         fbBox.style.background = "rgba(239,68,68,0.18)";
         fbBox.style.color = "#fca5a5";
       }
