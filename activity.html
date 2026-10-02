@@ -54,7 +54,7 @@
     }
     .cat-pill.active { background: rgba(59,130,246,0.18); border-color: var(--blue); color: #93c5fd; }
 
-    /* Map Grid Layout */
+    /* Map Layout */
     .map-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.2rem; align-items: start; }
     @media(max-width: 680px) { .map-grid { grid-template-columns: 1fr; } }
 
@@ -81,23 +81,23 @@
     /* Control Column */
     .control-col { display: flex; flex-direction: column; gap: 0.75rem; }
     .q-cat { font-size: 0.72rem; font-weight: 800; color: var(--amber); letter-spacing: 1px; text-transform: uppercase; }
-    .q-title { font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1.35; }
+    .q-title { font-size: 1.15rem; font-weight: 800; color: #fff; line-height: 1.35; }
     .q-clue { font-size: 0.84rem; color: var(--muted); line-height: 1.4; }
 
-    .opt-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.3rem; }
+    .opt-list { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.4rem; }
     .opt-btn {
-      width: 100%; padding: 0.75rem 1rem; border-radius: 12px;
+      width: 100%; padding: 0.85rem 1rem; border-radius: 12px;
       background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      color: #fff; font-size: 0.86rem; font-weight: 600; text-align: left;
+      color: #fff; font-size: 0.9rem; font-weight: 700; text-align: left;
       cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: space-between;
     }
-    .opt-btn:hover { background: rgba(255,255,255,0.08); }
+    .opt-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); }
     .opt-btn.correct { background: rgba(16,185,129,0.2) !important; border-color: var(--emerald) !important; color: #6ee7b7; }
     .opt-btn.wrong { background: rgba(239,68,68,0.2) !important; border-color: var(--crimson) !important; color: #fca5a5; }
 
     .feedback-box { padding: 0.9rem; border-radius: 12px; font-size: 0.84rem; display: none; line-height: 1.45; }
     .next-btn {
-      width: 100%; padding: 0.8rem; border-radius: 12px; font-size: 0.88rem; font-weight: 700;
+      width: 100%; padding: 0.85rem; border-radius: 12px; font-size: 0.9rem; font-weight: 700;
       background: var(--amber); color: #000; border: none; cursor: pointer; display: none; margin-top: 0.3rem;
     }
     footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); margin-top: 2.5rem; }
@@ -114,7 +114,7 @@
     <main>
       <div class="hero-tag">MODULE 1 • MAP TRAINER</div>
       <h1 class="hero-h1">2D Graphical Map Trainer</h1>
-      <p class="hero-p">CBSE Board Exam syllabus. No repeated questions. Pins and options randomize every round.</p>
+      <p class="hero-p">CBSE Board Exam syllabus. Inspect the map and select which pin marks the target location.</p>
 
       <!-- Category Filter -->
       <div class="cat-scroll">
@@ -129,24 +129,24 @@
       <div class="map-grid">
         <!-- SVG Vector Map Canvas -->
         <div class="map-stage">
-          <svg class="map-svg" viewBox="0 0 800 650" id="mapSvg">
-            <image href="india-map.png" x="0" y="0" width="800" height="650" preserveAspectRatio="xMidYMid meet" />
+          <svg class="map-svg" viewBox="0 0 800 600" id="mapSvg">
+            <image href="india-map.png" x="0" y="0" width="800" height="600" preserveAspectRatio="none" />
             
             <g class="map-pin" id="pinA" onclick="checkChoice('A')">
-              <circle cx="285" cy="145" r="16"/>
-              <text x="285" y="145">A</text>
+              <circle cx="290" cy="145" r="15"/>
+              <text x="290" y="145">A</text>
             </g>
             <g class="map-pin" id="pinB" onclick="checkChoice('B')">
-              <circle cx="235" cy="360" r="16"/>
-              <text x="235" y="360">B</text>
+              <circle cx="245" cy="350" r="15"/>
+              <text x="245" y="350">B</text>
             </g>
             <g class="map-pin" id="pinC" onclick="checkChoice('C')">
-              <circle cx="535" cy="325" r="16"/>
-              <text x="535" y="325">C</text>
+              <circle cx="525" cy="320" r="15"/>
+              <text x="525" y="320">C</text>
             </g>
             <g class="map-pin" id="pinD" onclick="checkChoice('D')">
-              <circle cx="365" cy="525" r="16"/>
-              <text x="365" y="525">D</text>
+              <circle cx="330" cy="570" r="15"/>
+              <text x="330" y="570">D</text>
             </g>
           </svg>
         </div>
@@ -160,11 +160,20 @@
           <div class="q-title" id="qTitle">Loading Question...</div>
           <div class="q-clue" id="qClue">Clue: ...</div>
 
+          <!-- Options hide the answer: students must look at the map -->
           <div class="opt-list">
-            <button type="button" class="opt-btn" id="btnA" onclick="checkChoice('A')"><span>📍 Pin A</span> <span id="labelA">...</span></button>
-            <button type="button" class="opt-btn" id="btnB" onclick="checkChoice('B')"><span>📍 Pin B</span> <span id="labelB">...</span></button>
-            <button type="button" class="opt-btn" id="btnC" onclick="checkChoice('C')"><span>📍 Pin C</span> <span id="labelC">...</span></button>
-            <button type="button" class="opt-btn" id="btnD" onclick="checkChoice('D')"><span>📍 Pin D</span> <span id="labelD">...</span></button>
+            <button type="button" class="opt-btn" id="btnA" onclick="checkChoice('A')">
+              <span>📍 Choose Pin A</span> <span id="labelA" style="font-size:0.75rem; color:var(--muted);"></span>
+            </button>
+            <button type="button" class="opt-btn" id="btnB" onclick="checkChoice('B')">
+              <span>📍 Choose Pin B</span> <span id="labelB" style="font-size:0.75rem; color:var(--muted);"></span>
+            </button>
+            <button type="button" class="opt-btn" id="btnC" onclick="checkChoice('C')">
+              <span>📍 Choose Pin C</span> <span id="labelC" style="font-size:0.75rem; color:var(--muted);"></span>
+            </button>
+            <button type="button" class="opt-btn" id="btnD" onclick="checkChoice('D')">
+              <span>📍 Choose Pin D</span> <span id="labelD" style="font-size:0.75rem; color:var(--muted);"></span>
+            </button>
           </div>
 
           <div class="feedback-box" id="feedbackBox"></div>
@@ -178,91 +187,88 @@
     </footer>
   </div>
     <script>
-    /* 1. COORDINATE REGISTRY */
+    /* 1. ACCURATE COORDINATE REGISTRY (Calibrated strictly to 800x600 India map) */
     const COORDS = {
-      calcutta: ["Calcutta (Kolkata), West Bengal", 535, 325],
-      nagpur: ["Nagpur, Maharashtra", 375, 340],
-      madras: ["Madras (Chennai), Tamil Nadu", 365, 525],
-      champaran: ["Champaran, Bihar", 480, 225],
-      kheda: ["Kheda, Gujarat", 235, 325],
-      ahmedabad: ["Ahmedabad, Gujarat", 235, 315],
-      amritsar: ["Amritsar, Punjab", 285, 145],
-      chauri_chaura: ["Chauri Chaura, Uttar Pradesh", 465, 235],
-      dandi: ["Dandi, Gujarat", 235, 360],
-      salal: ["Salal Dam, J&K", 280, 85],
-      bhakra: ["Bhakra Nangal Dam, HP/Punjab", 310, 145],
-      tehri: ["Tehri Dam, Uttarakhand", 345, 165],
-      rana_pratap: ["Rana Pratap Sagar, Rajasthan", 280, 265],
-      sardar_sarovar: ["Sardar Sarovar Dam, Gujarat", 255, 340],
-      hirakud: ["Hirakud Dam, Odisha", 485, 350],
-      nagarjuna: ["Nagarjuna Sagar Dam, AP/Telangana", 375, 465],
-      tungabhadra: ["Tungabhadra Dam, Karnataka", 310, 485],
-      mayurbhanj: ["Mayurbhanj Iron Ore, Odisha", 520, 340],
-      durg: ["Durg Iron Ore, Chhattisgarh", 425, 360],
-      bailadila: ["Bailadila Iron Ore, Chhattisgarh", 425, 420],
-      ballari: ["Ballari Iron Ore, Karnataka", 315, 480],
-      kudremukh: ["Kudremukh Iron Ore, Karnataka", 260, 515],
-      raniganj: ["Raniganj Coal Mine, West Bengal", 535, 310],
-      bokaro: ["Bokaro Coal / Steel, Jharkhand", 515, 300],
-      talcher: ["Talcher Coal Mine, Odisha", 505, 355],
-      neyveli: ["Neyveli Lignite, Tamil Nadu", 355, 565],
-      digboi: ["Digboi Oil Field, Assam", 675, 215],
-      naharkatia: ["Naharkatia Oil Field, Assam", 665, 225],
-      mumbai_high: ["Mumbai High Offshore, Arabian Sea", 205, 395],
-      bassein: ["Bassein Offshore, Arabian Sea", 215, 410],
-      kalol: ["Kalol Oil Field, Gujarat", 230, 305],
-      ankaleshwar: ["Ankaleshwar Oil Field, Gujarat", 235, 345],
-      namrup: ["Namrup Thermal Power, Assam", 660, 225],
-      singrauli: ["Singrauli Thermal Power, MP", 455, 285],
-      ramagundam: ["Ramagundam Thermal Power, Telangana", 375, 425],
-      narora: ["Narora Nuclear Power, UP", 340, 205],
-      rawatbhata: ["Rawatbhata Nuclear Power, Rajasthan", 280, 265],
-      kakrapar: ["Kakrapar Nuclear Power, Gujarat", 235, 350],
-      tarapur: ["Tarapur Nuclear Power, Maharashtra", 235, 390],
-      kaiga: ["Kaiga Nuclear Power, Karnataka", 255, 495],
-      kalpakkam: ["Kalpakkam Nuclear Power, Tamil Nadu", 370, 540],
-      mumbai: ["Mumbai, Maharashtra", 235, 395],
-      indore: ["Indore, Madhya Pradesh", 290, 320],
-      surat: ["Surat, Gujarat", 235, 355],
-      kanpur: ["Kanpur, Uttar Pradesh", 390, 245],
-      coimbatore: ["Coimbatore, Tamil Nadu", 305, 565],
-      durgapur: ["Durgapur Steel Plant, West Bengal", 530, 315],
-      jamshedpur: ["Jamshedpur (TISCO), Jharkhand", 520, 330],
-      rourkela: ["Rourkela Steel Plant, Odisha", 485, 335],
-      bhilai: ["Bhilai Steel Plant, Chhattisgarh", 420, 360],
-      vijayanagar: ["Vijayanagar Steel Plant, Karnataka", 310, 480],
-      salem: ["Salem Steel Plant, Tamil Nadu", 340, 550],
-      noida: ["Noida STP, Uttar Pradesh", 325, 195],
-      gandhinagar: ["Gandhinagar STP, Gujarat", 235, 310],
-      pune: ["Pune STP, Maharashtra", 255, 420],
-      hyderabad: ["Hyderabad STP / Airport, Telangana", 365, 440],
-      bengaluru: ["Bengaluru STP, Karnataka", 325, 525],
-      thiruvananthapuram: ["Thiruvananthapuram STP, Kerala", 305, 625],
-      kandla: ["Kandla (Deendayal) Port, Gujarat", 185, 295],
-      marmagao: ["Marmagao Port, Goa", 245, 485],
-      new_mangalore: ["New Mangalore Port, Karnataka", 260, 530],
-      kochi: ["Kochi Port, Kerala", 295, 600],
-      tuticorin: ["Tuticorin Port, Tamil Nadu", 325, 630],
-      visakhapatnam: ["Visakhapatnam Port, Andhra Pradesh", 480, 435],
-      paradip: ["Paradip Port, Odisha", 535, 375],
-      haldia: ["Haldia Port, West Bengal", 535, 345],
-      delhi: ["IGI Airport, New Delhi", 320, 190]
+      calcutta: ["Calcutta (Kolkata), West Bengal", 525, 320],
+      nagpur: ["Nagpur, Maharashtra", 370, 335],
+      madras: ["Madras (Chennai), Tamil Nadu", 385, 495],
+      champaran: ["Champaran, Bihar", 460, 220],
+      kheda: ["Kheda, Gujarat", 245, 310],
+      ahmedabad: ["Ahmedabad, Gujarat", 245, 300],
+      amritsar: ["Amritsar, Punjab", 290, 145],
+      chauri_chaura: ["Chauri Chaura, Uttar Pradesh", 445, 230],
+      dandi: ["Dandi, Gujarat", 240, 350],
+      salal: ["Salal Dam, J&K", 295, 85],
+      bhakra: ["Bhakra Nangal Dam, HP/Punjab", 315, 140],
+      tehri: ["Tehri Dam, Uttarakhand", 350, 150],
+      rana_pratap: ["Rana Pratap Sagar, Rajasthan", 290, 265],
+      sardar_sarovar: ["Sardar Sarovar Dam, Gujarat", 265, 330],
+      hirakud: ["Hirakud Dam, Odisha", 465, 335],
+      nagarjuna: ["Nagarjuna Sagar Dam, AP/Telangana", 365, 440],
+      tungabhadra: ["Tungabhadra Dam, Karnataka", 320, 450],
+      mayurbhanj: ["Mayurbhanj Iron Ore, Odisha", 500, 320],
+      durg: ["Durg Iron Ore, Chhattisgarh", 410, 345],
+      bailadila: ["Bailadila Iron Ore, Chhattisgarh", 405, 410],
+      ballari: ["Ballari Iron Ore, Karnataka", 320, 450],
+      kudremukh: ["Kudremukh Iron Ore, Karnataka", 280, 490],
+      raniganj: ["Raniganj Coal Mine, West Bengal", 495, 290],
+      bokaro: ["Bokaro Coal / Steel, Jharkhand", 490, 280],
+      talcher: ["Talcher Coal Mine, Odisha", 490, 345],
+      neyveli: ["Neyveli Lignite, Tamil Nadu", 360, 530],
+      digboi: ["Digboi Oil Field, Assam", 635, 190],
+      naharkatia: ["Naharkatia Oil Field, Assam", 625, 200],
+      mumbai_high: ["Mumbai High Offshore, Arabian Sea", 215, 380],
+      bassein: ["Bassein Offshore, Arabian Sea", 220, 395],
+      kalol: ["Kalol Oil Field, Gujarat", 245, 290],
+      ankaleshwar: ["Ankaleshwar Oil Field, Gujarat", 245, 335],
+      namrup: ["Namrup Thermal Power, Assam", 625, 205],
+      singrauli: ["Singrauli Thermal Power, MP", 450, 270],
+      ramagundam: ["Ramagundam Thermal Power, Telangana", 370, 390],
+      narora: ["Narora Nuclear Power, UP", 350, 210],
+      rawatbhata: ["Rawatbhata Nuclear Power, Rajasthan", 290, 265],
+      kakrapar: ["Kakrapar Nuclear Power, Gujarat", 245, 340],
+      tarapur: ["Tarapur Nuclear Power, Maharashtra", 245, 370],
+      kaiga: ["Kaiga Nuclear Power, Karnataka", 265, 470],
+      kalpakkam: ["Kalpakkam Nuclear Power, Tamil Nadu", 385, 510],
+      mumbai: ["Mumbai, Maharashtra", 245, 385],
+      indore: ["Indore, Madhya Pradesh", 305, 310],
+      surat: ["Surat, Gujarat", 245, 340],
+      kanpur: ["Kanpur, Uttar Pradesh", 395, 245],
+      coimbatore: ["Coimbatore, Tamil Nadu", 310, 535],
+      durgapur: ["Durgapur Steel Plant, West Bengal", 510, 295],
+      jamshedpur: ["Jamshedpur (TISCO), Jharkhand", 490, 310],
+      rourkela: ["Rourkela Steel Plant, Odisha", 465, 315],
+      bhilai: ["Bhilai Steel Plant, Chhattisgarh", 410, 345],
+      vijayanagar: ["Vijayanagar Steel Plant, Karnataka", 320, 450],
+      salem: ["Salem Steel Plant, Tamil Nadu", 340, 525],
+      noida: ["Noida STP, Uttar Pradesh", 335, 195],
+      gandhinagar: ["Gandhinagar STP, Gujarat", 245, 290],
+      pune: ["Pune STP, Maharashtra", 270, 395],
+      hyderabad: ["Hyderabad STP / Airport, Telangana", 355, 420],
+      bengaluru: ["Bengaluru STP, Karnataka", 330, 495],
+      thiruvananthapuram: ["Thiruvananthapuram STP, Kerala", 310, 575],
+      kandla: ["Kandla (Deendayal) Port, Gujarat", 195, 285],
+      marmagao: ["Marmagao Port, Goa", 255, 460],
+      new_mangalore: ["New Mangalore Port, Karnataka", 270, 500],
+      kochi: ["Kochi Port, Kerala", 295, 550],
+      tuticorin: ["Tuticorin Port, Tamil Nadu", 330, 570],
+      visakhapatnam: ["Visakhapatnam Port, Andhra Pradesh", 440, 420],
+      paradip: ["Paradip Port, Odisha", 520, 355],
+      haldia: ["Haldia Port, West Bengal", 520, 340],
+      delhi: ["IGI Airport, New Delhi", 335, 190]
     };
 
-    /* 2. DEDUPLICATED MAP QUESTION DATABASE */
+    /* 2. COMPLETE QUESTION POOL */
     const QUESTIONS = [
-      // History Sessions
       ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in September 1920?", "Capital of West Bengal, near the Hugli River.", "calcutta", "The September 1920 Special Congress session in Calcutta adopted the Non-Cooperation resolution."],
       ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in December 1920?", "Eastern Maharashtra (Vidarbha region).", "nagpur", "At Nagpur in December 1920, the Non-Cooperation program was formally ratified."],
       ["History", "HISTORY – CONGRESS SESSIONS", "Where was the Indian National Congress session held in 1927?", "Northern coastal capital of Tamil Nadu.", "madras", "The 1927 Madras session, presided by Dr. Ansari, resolved to boycott the Simon Commission."],
-      // History Satyagraha
       ["History", "HISTORY – MOVEMENT CENTRES", "Where did Mahatma Gandhi organize a Satyagraha for Indigo Planters?", "North-western district of Bihar bordering Nepal.", "champaran", "Champaran (1917) was Gandhi's first Satyagraha in India against the tinkathia indigo system."],
       ["History", "HISTORY – MOVEMENT CENTRES", "Where was the Peasant Satyagraha organized to demand revenue relaxation?", "Central Gujarat, south of Ahmedabad.", "kheda", "In Kheda (1918), peasants refused revenue payment following crop failure and plague."],
       ["History", "HISTORY – MOVEMENT CENTRES", "Where did Mahatma Gandhi organize a Satyagraha for Cotton Mill Workers?", "Central-western Gujarat on Sabarmati River banks.", "ahmedabad", "Ahmedabad (1918) witnessed Gandhi's hunger strike demanding a 35% wage bonus for mill workers."],
       ["History", "HISTORY – MOVEMENT CENTRES", "Where did the infamous Jallianwala Bagh massacre take place?", "North-western Punjab near the Wagah border (13 April 1919).", "amritsar", "General Dyer opened fire on peaceful citizens gathered on Baisakhi at Jallianwala Bagh, Amritsar."],
       ["History", "HISTORY – MOVEMENT CENTRES", "Where did the incident occur that caused Gandhi to call off Non-Cooperation?", "Eastern Uttar Pradesh, near Gorakhpur (Feb 1922).", "chauri_chaura", "At Chauri Chaura, 22 policemen were killed when a police post was set on fire, halting the movement."],
       ["History", "HISTORY – MOVEMENT CENTRES", "From where did Gandhi break the Salt Law to initiate Civil Disobedience?", "Coastal village in Navsari district, south Gujarat (6 April 1930).", "dandi", "The Salt March ended at Dandi, where Gandhi boiled seawater to break the British salt monopoly."],
-      // Dams
       ["Dams", "GEOGRAPHY – DAMS", "Locate and label Salal Dam.", "Chenab River in southern Jammu & Kashmir.", "salal", "Salal Dam is a major hydroelectric station on the Chenab River in J&K."],
       ["Dams", "GEOGRAPHY – DAMS", "Locate and label Bhakra Nangal Dam.", "Satluj River on Himachal Pradesh / Punjab border.", "bhakra", "Bhakra Nangal is one of India's highest gravity dams, built on the Satluj River."],
       ["Dams", "GEOGRAPHY – DAMS", "Locate and label Tehri Dam.", "Highest dam in India, Bhagirathi River in Uttarakhand.", "tehri", "Tehri Dam is located in Garhwal hills, Uttarakhand on the Bhagirathi River."],
@@ -271,7 +277,6 @@
       ["Dams", "GEOGRAPHY – DAMS", "Locate and label Hirakud Dam.", "Mahanadi River near Sambalpur in western Odisha.", "hirakud", "Hirakud is one of the world's longest earthen dams on the Mahanadi River."],
       ["Dams", "GEOGRAPHY – DAMS", "Locate and label Nagarjuna Sagar Dam.", "Krishna River on Telangana / Andhra Pradesh border.", "nagarjuna", "Nagarjuna Sagar Dam on the Krishna River supplies extensive irrigation across AP and Telangana."],
       ["Dams", "GEOGRAPHY – DAMS", "Locate and label Tungabhadra Dam.", "Tungabhadra River in central-eastern Karnataka.", "tungabhadra", "Tungabhadra Dam is located near Ballari on the Tungabhadra River."],
-      // Mines & Energy
       ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Mayurbhanj Iron Ore Mine.", "Northernmost district of Odisha.", "mayurbhanj", "Mayurbhanj holds high-grade hematite deposits in the Badampahar range."],
       ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Durg Iron Ore Mine.", "Central-western Chhattisgarh.", "durg", "Durg supplies essential iron ore to the Bhilai Steel Plant."],
       ["Mines", "GEOGRAPHY – IRON ORE", "Locate and label Bailadila Iron Ore Mine.", "Southern Bastar district of Chhattisgarh.", "bailadila", "Bailadila produces high-grade hematite exported via Visakhapatnam port."],
@@ -296,7 +301,6 @@
       ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Tarapur Nuclear Power Plant.", "Coastal northern Maharashtra, north of Mumbai.", "tarapur", "Tarapur was India's first commercial atomic power station (1969)."],
       ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Kaiga Nuclear Power Plant.", "Western Ghats, Uttara Kannada district in Karnataka.", "kaiga", "Kaiga operates four heavy water reactors on the Kali River in Karnataka."],
       ["Mines", "GEOGRAPHY – NUCLEAR PLANTS", "Locate and label Kalpakkam Nuclear Power Plant.", "Coromandel Coast south of Chennai, Tamil Nadu.", "kalpakkam", "Kalpakkam (Madras Atomic Power Station) is in Tamil Nadu."],
-      // Industries & STPs
       ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Mumbai Cotton Textile Centre.", "Western coastal capital of Maharashtra.", "mumbai", "Mumbai was historically referred to as the Cottonopolis of India."],
       ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Indore Cotton Textile Centre.", "Malwa plateau in western Madhya Pradesh.", "indore", "Indore is a leading textile manufacturing and trading city in MP."],
       ["Industry", "GEOGRAPHY – TEXTILES", "Locate and label Surat Cotton Textile Centre.", "Coastal southern Gujarat.", "surat", "Surat is an internationally recognized center for textiles."],
@@ -314,7 +318,6 @@
       ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Hyderabad Software Technology Park.", "Capital city of Telangana.", "hyderabad", "HITEC City in Hyderabad is a leading software technology center."],
       ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Bengaluru Software Technology Park.", "Southern plateau capital of Karnataka.", "bengaluru", "Bengaluru is recognized globally as the Silicon Valley of India."],
       ["Industry", "GEOGRAPHY – TECH PARKS", "Locate and label Thiruvananthapuram Software Technology Park.", "Southernmost coastal capital of Kerala.", "thiruvananthapuram", "Technopark in Thiruvananthapuram was India's first software park."],
-      // Ports & Airports
       ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Kandla (Deendayal) Sea Port.", "Tidal port in Gulf of Kuchchh, Gujarat.", "kandla", "Kandla was the first major port developed after independence to relieve Mumbai."],
       ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label Marmagao Sea Port.", "Central coast of Goa at Zuari estuary.", "marmagao", "Marmagao is India's premier iron ore exporting port."],
       ["Ports", "GEOGRAPHY – MAJOR SEAPORTS", "Locate and label New Mangalore Sea Port.", "Coastal southern Karnataka.", "new_mangalore", "New Mangalore port caters to Kudremukh iron ore exports."],
@@ -357,14 +360,11 @@
     }
 
     function loadQuestion() {
-      // Auto-reshuffle only when all questions in category have been answered
       if (unplayedDeck.length === 0) {
         initDeck(currentCategory);
       }
 
-      // Pop next question (guarantees zero repetition)
       currentQ = unplayedDeck.pop();
-
       const correctKey = currentQ[4];
       const correctLoc = COORDS[correctKey];
 
@@ -373,7 +373,7 @@
       shuffle(otherKeys);
       const distractors = otherKeys.slice(0, 3);
 
-      // Scramble option positions across A, B, C, D
+      // Scramble option positions across Pin A, B, C, D
       const roundOptions = [
         { key: correctKey, name: correctLoc[0], x: correctLoc[1], y: correctLoc[2], isCorrect: true },
         { key: distractors[0], name: COORDS[distractors[0]][0], x: COORDS[distractors[0]][1], y: COORDS[distractors[0]][2], isCorrect: false },
@@ -389,7 +389,7 @@
         D: roundOptions[3]
       };
 
-      // Update question text and scoreboard
+      // Set text & scoreboard
       document.getElementById('qCatLabel').innerText = `${currentQ[1]} (${unplayedDeck.length} remaining)`;
       document.getElementById('qScoreLabel').innerText = `Score: ${score} / ${totalAnswered}`;
       document.getElementById('qTitle').innerText = currentQ[2];
@@ -397,7 +397,7 @@
       document.getElementById('feedbackBox').style.display = 'none';
       document.getElementById('nextBtn').style.display = 'none';
 
-      // Reposition SVG pins and update buttons
+      // Reposition SVG pins & reset button labels
       ['A', 'B', 'C', 'D'].forEach(letter => {
         const item = activeMapping[letter];
         const gPin = document.getElementById('pin' + letter);
@@ -412,7 +412,8 @@
         gPin.className.baseVal = "map-pin";
 
         const btn = document.getElementById('btn' + letter);
-        document.getElementById('label' + letter).innerText = item.name;
+        btn.querySelector('span:first-child').innerText = `📍 Choose Pin ${letter}`;
+        document.getElementById('label' + letter).innerText = ''; // Hide place names so answers aren't revealed
         btn.className = "opt-btn";
         btn.disabled = false;
       });
@@ -426,7 +427,10 @@
       let correctLetter = 'A';
       ['A', 'B', 'C', 'D'].forEach(letter => {
         if (activeMapping[letter].isCorrect) correctLetter = letter;
-        document.getElementById('btn' + letter).disabled = true;
+        const btn = document.getElementById('btn' + letter);
+        btn.disabled = true;
+        // Reveal location names on the buttons after answering
+        document.getElementById('label' + letter).innerText = activeMapping[letter].name;
       });
 
       const chosenPin = document.getElementById('pin' + choice);
@@ -436,7 +440,7 @@
         score++;
         chosenPin.className.baseVal = "map-pin correct";
         document.getElementById('btn' + choice).classList.add('correct');
-        fbBox.innerHTML = `<strong>✓ Correct!</strong> You accurately located <strong>${chosen.name}</strong>.<br>${currentQ[5]}`;
+        fbBox.innerHTML = `<strong>✓ Correct!</strong> Pin ${choice} is <strong>${chosen.name}</strong>.<br>${currentQ[5]}`;
         fbBox.style.background = "rgba(16,185,129,0.18)";
         fbBox.style.color = "#6ee7b7";
       } else {
@@ -444,7 +448,7 @@
         correctPin.className.baseVal = "map-pin correct";
         document.getElementById('btn' + choice).classList.add('wrong');
         document.getElementById('btn' + correctLetter).classList.add('correct');
-        fbBox.innerHTML = `<strong>✗ Incorrect.</strong> You picked Pin ${choice} (${chosen.name}).<br>The correct position is <strong>Pin ${correctLetter} (${activeMapping[correctLetter].name})</strong>.<br>${currentQ[5]}`;
+        fbBox.innerHTML = `<strong>✗ Incorrect.</strong> Pin ${choice} is ${chosen.name}.<br>The correct location for <strong>${activeMapping[correctLetter].name}</strong> is <strong>Pin ${correctLetter}</strong>.<br>${currentQ[5]}`;
         fbBox.style.background = "rgba(239,68,68,0.18)";
         fbBox.style.color = "#fca5a5";
       }
