@@ -19,10 +19,10 @@
     * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
     
     /* Universal Spring Bounce Animation */
-    button, a, .hub-card, .dropdown-item, .menu-btn, .submit-btn {
+    button, a, .hub-card, .dropdown-item, .menu-btn, .submit-btn, .submenu-toggle {
       transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
     }
-    button:active, a:active, .hub-card:active, .dropdown-item:active, .menu-btn:active, .submit-btn:active {
+    button:active, a:active, .hub-card:active, .dropdown-item:active, .menu-btn:active, .submit-btn:active, .submenu-toggle:active {
       transform: scale(0.95) translateY(1px) !important;
     }
 
@@ -58,11 +58,19 @@
       box-shadow: 0 15px 35px rgba(0,0,0,0.6); padding: 0.6rem; z-index: 1000;
     }
     .dropdown-menu.show { display: block; }
-    .dropdown-item {
-      display: block; padding: 0.7rem 1rem; color: #cbd5e1; text-decoration: none;
-      font-size: 0.86rem; font-weight: 700; border-radius: 10px; cursor: pointer; margin-bottom: 2px;
+    
+    .dropdown-item, .submenu-toggle {
+      display: flex; justify-content: space-between; align-items: center; width: 100%;
+      padding: 0.75rem 1rem; color: #cbd5e1; text-decoration: none; background: none; border: none;
+      font-size: 0.88rem; font-weight: 700; border-radius: 10px; cursor: pointer; margin-bottom: 2px; text-align: left;
     }
-    .dropdown-item:hover { background: rgba(59,130,246,0.2); color: #fff; }
+    .dropdown-item:hover, .submenu-toggle:hover { background: rgba(59,130,246,0.2); color: #fff; }
+
+    /* Submenus for Classes and Sample Papers */
+    .submenu-content {
+      display: none; padding-left: 1rem; margin: 0.2rem 0; border-left: 2px solid rgba(59,130,246,0.3);
+    }
+    .submenu-content.show { display: block; }
 
     /* Hero Section */
     .hero { text-align: center; margin-bottom: 2.2rem; }
@@ -130,23 +138,31 @@
         </button>
         <div class="dropdown-menu" id="dropdownMenu">
           <a href="index.html" class="dropdown-item">🏠 Home</a>
-          <a href="class9.html" class="dropdown-item">📖 Class 9 Notes</a>
-          <a href="class10.html" class="dropdown-item">🎓 Class 10 Notes</a>
+          
+          <!-- Classes Toggle Menu Item -->
+          <button type="button" class="submenu-toggle" onclick="toggleSubmenu('classesSubmenu')">
+            <span>📚 Classes</span> <span>▼</span>
+          </button>
+          <div class="submenu-content" id="classesSubmenu">
+            <a href="class9.html" class="dropdown-item">📖 Class 9 Notes</a>
+            <a href="class10.html" class="dropdown-item">🎓 Class 10 Notes</a>
+          </div>
+
           <a href="activity.html" class="dropdown-item">🎯 Activities & Practice Arena</a>
           
-          <div style="margin: 0.4rem 0.6rem; border-top: 1px solid rgba(255,255,255,0.08);"></div>
-          
-          <!-- Merged Sample Papers (Class 10th) Section -->
-          <div style="padding: 0.4rem 0.8rem; font-size: 0.76rem; font-weight: 800; color: var(--amber); text-transform: uppercase; letter-spacing: 0.5px;">📄 Sample Papers (Class 10th)</div>
-          
-          <a href="https://drive.google.com/file/d/1v_zk-ouEZCNetdISDJTHVfIQoKUnnDB9/view?usp=drivesdk" class="dropdown-item" target="_blank" style="display: flex; justify-content: space-between; align-items: center; padding-left: 1.2rem;">
-            <span style="font-size: 0.82rem;">• Sample Paper</span>
-            <span style="background: rgba(59,130,246,0.2); color: #93c5fd; padding: 0.12rem 0.45rem; border-radius: 6px; font-size: 0.7rem; font-weight: 800;">View →</span>
-          </a>
-
-          <div class="dropdown-item" style="display: flex; justify-content: space-between; align-items: center; padding-left: 1.2rem; cursor: default;">
-            <span style="font-size: 0.82rem; color: #94a3b8;">• Teacher's Practical Answers</span>
-            <span style="background: rgba(245,158,11,0.15); color: #f59e0b; padding: 0.12rem 0.45rem; border-radius: 6px; font-size: 0.7rem; font-weight: 800;">Coming Soon</span>
+          <!-- Sample Papers Toggle Menu Item -->
+          <button type="button" class="submenu-toggle" onclick="toggleSubmenu('samplesSubmenu')">
+            <span>📄 Sample Papers</span> <span>▼</span>
+          </button>
+          <div class="submenu-content" id="samplesSubmenu">
+            <a href="https://drive.google.com/file/d/1v_zk-ouEZCNetdISDJTHVfIQoKUnnDB9/view?usp=drivesdk" class="dropdown-item" target="_blank">
+              <span>Sample Paper</span>
+              <span style="background: rgba(59,130,246,0.2); color: #93c5fd; padding: 0.1rem 0.4rem; border-radius: 6px; font-size: 0.7rem; font-weight: 800;">View →</span>
+            </a>
+            <div class="dropdown-item" style="cursor: default;">
+              <span style="color: #94a3b8; font-size: 0.82rem;">Teacher's Practical Answers</span>
+              <span style="background: rgba(245,158,11,0.15); color: #f59e0b; padding: 0.1rem 0.4rem; border-radius: 6px; font-size: 0.7rem; font-weight: 800;">Coming Soon</span>
+            </div>
           </div>
 
           <div style="margin: 0.4rem 0.6rem; border-top: 1px solid rgba(255,255,255,0.08);"></div>
@@ -301,6 +317,11 @@
       menu.classList.toggle('show');
     }
 
+    function toggleSubmenu(id) {
+      const sub = document.getElementById(id);
+      sub.classList.toggle('show');
+    }
+
     window.addEventListener('click', function(e) {
       const menu = document.getElementById('dropdownMenu');
       const btn = document.querySelector('.menu-btn');
@@ -325,7 +346,7 @@
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }
       })
       .then(res => res.json())
-      .catch(() => ({})) // ignore CORS parse error if script returns plain text
+      .catch(() => ({}))
       .then(() => {
         alert('Doubt submitted successfully! Your teacher can now review and reply.');
         this.reset();
