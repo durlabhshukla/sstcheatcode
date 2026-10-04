@@ -13,16 +13,16 @@
       --blue: #3b82f6;
       --teal: #14b8a6;
       --emerald: #10b981;
+      --purple: #a855f7;
       --text: #f8fafc;
       --muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
     
-    /* Universal Spring Bounce Animation */
-    button, a, .hub-card, .dropdown-item, .menu-btn, .submit-btn, .submenu-toggle {
-      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+    button, a, .hub-card, .dropdown-item, .menu-btn, .submit-btn, .submenu-toggle, .character-card, .power-pod {
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease !important;
     }
-    button:active, a:active, .hub-card:active, .dropdown-item:active, .menu-btn:active, .submit-btn:active, .submenu-toggle:active {
+    button:active, a:active, .hub-card:active, .dropdown-item:active, .menu-btn:active, .submit-btn:active, .submenu-toggle:active, .character-card:active, .power-pod:active {
       transform: scale(0.95) translateY(1px) !important;
     }
 
@@ -35,20 +35,89 @@
     }
     .wrapper { max-width: 820px; margin: 0 auto; position: relative; }
 
-    /* Top Navigation Bar with Menu Button */
+    /* Glowing Red Alert Badges */
+    .notif-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 900;
+      min-width: 19px;
+      height: 19px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.8), 0 0 20px rgba(239, 68, 68, 0.5);
+      animation: pulseRed 1.8s infinite;
+      border: 2px solid #090d16;
+      line-height: 1;
+    }
+    .notif-badge-inline {
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+      animation: pulseRed 1.8s infinite;
+    }
+    @keyframes pulseRed {
+      0%, 100% {
+        box-shadow: 0 0 8px rgba(239, 68, 68, 0.8), 0 0 16px rgba(239, 68, 68, 0.4);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 14px rgba(239, 68, 68, 1), 0 0 24px rgba(239, 68, 68, 0.7);
+        transform: scale(1.1);
+      }
+    }
+
+    .custom-toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: #111827;
+      border: 1px solid rgba(16, 185, 129, 0.6);
+      color: #fff;
+      padding: 0.85rem 1.4rem;
+      border-radius: 14px;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.7), 0 0 20px rgba(16, 185, 129, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+    }
+    .custom-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.8rem 1.2rem; background: rgba(16, 24, 40, 0.85);
-      border: 1px solid var(--border); border-radius: 16px; margin-bottom: 2rem;
+      border: 1px solid var(--border); border-radius: 16px; margin-bottom: 1.5rem;
       backdrop-filter: blur(10px); position: relative; z-index: 100;
     }
-    .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
+    .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
     .brand span { color: var(--amber); }
-    
+
     .menu-btn {
       background: rgba(255,255,255,0.06); border: 1px solid var(--border);
-      color: #fff; border-radius: 10px; padding: 0.5rem 0.9rem;
-      font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;
+      color: #fff; border-radius: 10px; padding: 0.52rem 0.95rem;
+      font-size: 0.86rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;
+      white-space: nowrap; position: relative;
     }
     .menu-btn:hover { background: rgba(59,130,246,0.2); border-color: var(--blue); }
 
@@ -66,77 +135,258 @@
     }
     .dropdown-item:hover, .submenu-toggle:hover { background: rgba(59,130,246,0.2); color: #fff; }
 
-    /* Submenus */
+    .profile-menu-item {
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #93c5fd;
+      padding: 0.85rem 1rem; border-radius: 12px; margin-bottom: 0.4rem;
+    }
+    .profile-menu-item:hover { background: rgba(59,130,246,0.22); color: #fff; }
+    .profile-info { display: flex; align-items: center; gap: 0.55rem; overflow: hidden; }
+    .profile-text-wrap { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .menu-avatar-circle {
+      width: 26px; height: 26px; border-radius: 50%; overflow: hidden;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+    .menu-avatar-circle img { width: 100%; height: 100%; object-fit: contain; }
+
     .submenu-content {
       display: none; padding-left: 1rem; margin: 0.2rem 0; border-left: 2px solid rgba(59,130,246,0.3);
     }
     .submenu-content.show { display: block; }
 
-    /* Hero Section */
-    .hero { text-align: center; margin-bottom: 2.5rem; padding: 2rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; }
+    .hero { text-align: center; margin-bottom: 1.4rem; padding: 2rem 1.2rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; }
     .hero-tag { font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem; }
-    .hero-h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+    .hero-h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
     .hero-p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; max-width: 580px; margin: 0 auto; }
 
-    /* Doubt Form Card */
+    .audit-banner-locked {
+      background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 1.5rem 1.2rem; margin-bottom: 1.4rem; text-align: center;
+    }
+
+    .home-student-hub {
+      display: none; flex-direction: column; gap: 0.9rem; margin-bottom: 1.4rem;
+    }
+
+    .home-avatar-card {
+      background: var(--card-bg); border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 18px; padding: 1rem 1.3rem; display: flex;
+      align-items: center; justify-content: space-between; gap: 1rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+    .home-avatar-left { display: flex; align-items: center; gap: 0.95rem; }
+    .home-avatar-circle {
+      width: 58px; height: 58px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: 2.5px solid var(--amber);
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.4);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; flex-shrink: 0; padding: 3px; position: relative;
+    }
+    .home-avatar-circle img { width: 100%; height: 100%; object-fit: contain; }
+        .home-audit-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+    .home-audit-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;
+    }
+    .subject-audit-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.9rem;
+    }
+    @media(max-width: 440px) { .subject-audit-grid { grid-template-columns: 1fr; } }
+
+    .subject-pill {
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
+      padding: 0.75rem 0.85rem; border-radius: 12px; display: flex;
+      flex-direction: column; gap: 0.35rem;
+    }
+    .subject-name-tag { font-size: 0.72rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+
+    .audit-badge {
+      font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.5rem;
+      border-radius: 6px; width: fit-content; display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .audit-badge.completed {
+      background: rgba(16, 185, 129, 0.16); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .audit-badge.pending {
+      background: rgba(245, 158, 11, 0.16); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .audit-badge.unavailable {
+      background: rgba(148, 163, 184, 0.12); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.28);
+    }
+
+    .power-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; margin-bottom: 1.4rem; }
+    @media(max-width: 550px) { .power-grid { grid-template-columns: 1fr; } }
+    .power-pod {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.2rem 1.1rem; text-decoration: none; color: #fff;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .power-pod:hover { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.3); }
+    .pod-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .pod-title { font-size: 0.96rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem; }
+    .pod-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; margin-bottom: 0.7rem; }
+    .pod-link { font-size: 0.76rem; font-weight: 800; color: var(--amber); }
+
+    .fact-card {
+      background: linear-gradient(135deg, rgba(20, 32, 54, 0.7) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 16px;
+      padding: 1.2rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;
+    }
+
     .doubt-card {
       background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 20px; padding: 1.8rem; margin-bottom: 2rem;
+      border-radius: 20px; padding: 1.6rem; margin-bottom: 2rem;
     }
     .form-group { margin-bottom: 1rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media(max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
 
-    .form-label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--muted); margin-bottom: 0.4rem; text-transform: uppercase; }
+    .form-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--muted); margin-bottom: 0.4rem; text-transform: uppercase; }
     .form-input, .form-textarea, .form-select {
       width: 100%; padding: 0.85rem 1rem; background: rgba(255,255,255,0.04);
       border: 1px solid var(--border); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none;
     }
     .form-select option { background: #111827; color: #fff; }
     .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--blue); background: rgba(59,130,246,0.05); }
+
+    .form-select:disabled, .form-input:disabled {
+      opacity: 0.55; cursor: not-allowed; border-color: rgba(255,255,255,0.05); background: rgba(0,0,0,0.35); color: #94a3b8;
+    }
+
     .submit-btn {
       background: var(--amber); color: #000; border: none; width: 100%;
-      padding: 0.95rem; border-radius: 12px; font-weight: 800; font-size: 0.92rem; cursor: pointer; margin-top: 0.5rem;
+      padding: 0.95rem; border-radius: 12px; font-weight: 800; font-size: 0.92rem; cursor: pointer; margin-top: 0.4rem;
     }
     .submit-btn:hover { opacity: 0.9; }
 
-    /* Modal Popup Styles */
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); z-index: 2000;
+      background: rgba(0, 0, 0, 0.84); backdrop-filter: blur(6px); z-index: 2000;
       justify-content: center; align-items: center; padding: 1rem;
     }
     .modal-overlay.show { display: flex; }
     .modal-box {
       background: #111827; border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px; padding: 2rem; width: 100%; max-width: 520px;
+      border-radius: 20px; padding: 1.8rem; width: 100%; max-width: 490px;
       position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     }
     .close-modal {
       position: absolute; top: 1.2rem; right: 1.2rem; background: rgba(255,255,255,0.06);
       border: 1px solid var(--border); color: #fff; width: 32px; height: 32px;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-weight: bold; cursor: pointer;
+      font-weight: bold; cursor: pointer; z-index: 10;
     }
     .close-modal:hover { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
 
+    .avatar-preview-badge {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05); border: 2px solid var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; flex-shrink: 0; padding: 2px;
+    }
+    .avatar-preview-badge img { width: 100%; height: 100%; object-fit: contain; }
+
+    .characters-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem; margin: 1rem 0; max-height: 52vh;
+      overflow-y: auto; padding-right: 4px;
+    }
+    @media (max-width: 440px) { .characters-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .character-card {
+      background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border);
+      border-radius: 14px; padding: 0.75rem 0.4rem; text-align: center; cursor: pointer;
+    }
+    .character-card:hover { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.3); }
+    .character-card.selected {
+      background: rgba(245, 158, 11, 0.12); border-color: var(--amber);
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.35); transform: translateY(-2px);
+    }
+
+    .avatar-wrapper {
+      width: 58px; height: 58px; margin: 0 auto 0.4rem; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05); border: 1.5px solid rgba(255, 255, 255, 0.12);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 3px; position: relative;
+    }
+    .character-card.selected .avatar-wrapper { border-color: var(--amber); }
+    .avatar-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+
+    .crop-chest {
+      object-fit: cover !important; object-position: top center !important;
+      transform: scale(1.45) translateY(2px) !important; transform-origin: top center !important;
+    }
+    .crop-nobita {
+      object-fit: cover !important; object-position: top center !important;
+      transform: scale(1.52) translateX(4px) translateY(2px) !important; transform-origin: top center !important;
+    }
+    .crop-rapunzel {
+      object-fit: cover !important; object-position: top center !important;
+      transform: scale(1.6) translateY(5px) !important; transform-origin: top center !important;
+    }
+
+    .profile-hero {
+      display: flex; align-items: center; gap: 1rem; padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border); margin-bottom: 1.2rem;
+    }
+    .profile-avatar-big {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(59,130,246,0.12); border: 2.5px solid var(--amber);
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; padding: 4px; position: relative;
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.45);
+    }
+    .profile-avatar-big img { width: 100%; height: 100%; object-fit: contain; }
+
     footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); }
+
+    @media (max-width: 500px) {
+      body { padding: 0.8rem; }
+      .top-bar { padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; }
+      .brand { font-size: 1.15rem; }
+      .dropdown-menu { width: calc(100vw - 2.2rem); max-width: 290px; right: 0; }
+      .modal-box { padding: 1.3rem; }
+      .hero { padding: 1.5rem 0.9rem; }
+      .hero-h1 { font-size: 1.8rem; }
+    }
   </style>
 </head>
 <body>
 
+  <div class="custom-toast" id="toastBox">
+    <span id="toastIcon">✨</span>
+    <span id="toastMsg">Profile updated successfully!</span>
+  </div>
+
   <div class="wrapper">
-    <!-- Top Navigation Bar -->
     <header class="top-bar">
       <a href="index.html" class="brand">Social Science<span>.</span></a>
       <div style="position: relative;">
         <button type="button" class="menu-btn" onclick="toggleMenu()">
           <span>Menu</span> ☰
+          <span id="menuBadge" class="notif-badge" style="display: none;">0</span>
         </button>
+
         <div class="dropdown-menu" id="dropdownMenu">
+          <button type="button" class="dropdown-item profile-menu-item" id="menuProfileBtn" onclick="openAccountModal(); toggleMenu();">
+            <div class="profile-info">
+              <span class="menu-avatar-circle" id="menuAvatar">
+                <span style="font-size: 0.85rem;">👤</span>
+              </span>
+              <span class="profile-text-wrap" id="menuProfileText">Log In</span>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--blue);">→</span>
+          </button>
+
+          <div style="margin: 0.4rem 0.6rem; border-top: 1px solid rgba(255,255,255,0.08);"></div>
+
           <a href="index.html" class="dropdown-item">🏠 Home</a>
           
-          <!-- Classes Toggle -->
           <button type="button" class="submenu-toggle" onclick="toggleSubmenu('classesSubmenu')">
             <span>📚 Classes</span> <span>▼</span>
           </button>
@@ -147,7 +397,6 @@
 
           <a href="activity.html" class="dropdown-item">🎯 Activities & Practice Arena</a>
           
-          <!-- Sample Papers Toggle -->
           <button type="button" class="submenu-toggle" onclick="toggleSubmenu('samplesSubmenu')">
             <span>📄 Sample Papers</span> <span>▼</span>
           </button>
@@ -165,56 +414,141 @@
           <div style="margin: 0.4rem 0.6rem; border-top: 1px solid rgba(255,255,255,0.08);"></div>
 
           <a href="#ask-doubt" class="dropdown-item" onclick="toggleMenu()">❓ Ask a Doubt</a>
-          <button type="button" class="dropdown-item" onclick="openModal(); toggleMenu();" style="width: 100%;">💬 Check My Doubts & Replies</button>
+          
+          <button type="button" class="dropdown-item" onclick="openInboxDirectly(); toggleMenu();" style="width: 100%;">
+            <span>📬 Doubt Inbox</span>
+            <span id="inboxBadge" class="notif-badge-inline" style="display: none;">0</span>
+          </button>
         </div>
       </div>
     </header>
 
     <main>
-      <!-- Clean Streamlined Hero Section -->
       <div class="hero">
-        <div class="hero-tag">Academic Portal</div>
+        <div class="hero-tag">Academic Launchpad</div>
         <h1 class="hero-h1">Social Science Hub</h1>
-        <p class="hero-p">Welcome to your digital learning space. Use the top menu to access Class 9 and 10 notes, practice arena modules, and official sample papers. Submit your questions below whenever you need assistance.</p>
+        <p class="hero-p">Structured notes, board exam practice, and direct teacher guidance designed for Class 9 & Class 10 excellence.</p>
       </div>
 
-      <!-- Ask a Doubt Form Card -->
+      <div class="audit-banner-locked" id="homeAuditLocked">
+        <div style="font-size: 1.8rem; margin-bottom: 0.3rem;">🔒</div>
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem;">Student Notebook & Work Audit</h3>
+        <p style="color: var(--muted); font-size: 0.84rem; max-width: 440px; margin: 0 auto 1.1rem; line-height: 1.45;">
+          Log in to view your personalized subject verification report and check your notebook status.
+        </p>
+        <button type="button" class="submit-btn" style="background: var(--blue); color: #fff; max-width: 220px; margin: 0 auto;" onclick="openAccountModal()">Log In to Check Report →</button>
+      </div>
+            <div class="home-student-hub" id="homeStudentHub">
+        <div class="home-avatar-card">
+          <div class="home-avatar-left">
+            <div class="home-avatar-circle" id="homeAvatarBox"></div>
+            <div>
+              <div style="font-size: 0.72rem; color: var(--amber); font-weight: 800; text-transform: uppercase;">Active Student Portal</div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #fff;" id="homeStudentName">Student Name</div>
+              <div style="font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-top: 0.1rem;" id="homeStudentClassSec">Class 10 • Section A</div>
+            </div>
+          </div>
+          <button type="button" onclick="openAccountModal()" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: #fff; padding: 0.5rem 0.85rem; border-radius: 10px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap;">
+            Profile / Edit ⚙️
+          </button>
+        </div>
+
+        <div class="home-audit-card">
+          <div class="home-audit-header">
+            <div style="font-size: 0.84rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px;">
+              📊 Student Notebook & Progress Audit
+            </div>
+            <!-- Dynamic Student Standing / Rank Badge -->
+            <span id="homeStatusBadge" style="background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 8px;">Active Scholar</span>
+          </div>
+
+          <div class="subject-audit-grid">
+            <div class="subject-pill">
+              <span class="subject-name-tag">📚 History</span>
+              <span id="homeAuditHistoryBadge" class="audit-badge unavailable">Unavailable</span>
+            </div>
+
+            <div class="subject-pill">
+              <span class="subject-name-tag">🌍 Geography</span>
+              <span id="homeAuditGeographyBadge" class="audit-badge unavailable">Unavailable</span>
+            </div>
+
+            <div class="subject-pill">
+              <span class="subject-name-tag">⚖️ Civics</span>
+              <span id="homeAuditCivicsBadge" class="audit-badge unavailable">Unavailable</span>
+            </div>
+
+            <div class="subject-pill">
+              <span class="subject-name-tag">📈 Economics</span>
+              <span id="homeAuditEconomicsBadge" class="audit-badge unavailable">Unavailable</span>
+            </div>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.25); border-left: 3px solid var(--amber); padding: 0.75rem 0.9rem; border-radius: 8px;">
+            <div style="font-size: 0.7rem; font-weight: 800; color: var(--amber); text-transform: uppercase; margin-bottom: 0.2rem;">Teacher's Assessment</div>
+            <p id="homeRemarkText" style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.45;">Academic profile connected. Present your subject notebooks to your teacher for evaluation.</p>
+          </div>
+
+          <!-- Direct Notebook Submission Box with WhatsApp Redirection -->
+          <div style="background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.25); border-radius: 12px; padding: 0.85rem 1rem; margin-top: 0.85rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 800; color: #4ade80;">📸 Submit Notebook for Verification</div>
+              <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.15rem; line-height: 1.4;">
+                Send a photo of the completed last page of your chapter on WhatsApp to get your audit badge updated.
+              </div>
+            </div>
+            <button type="button" onclick="sendNotebookOnWhatsApp()" style="background: #25D366; color: #000; border: none; font-size: 0.78rem; font-weight: 800; padding: 0.55rem 0.95rem; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap;">
+              <span>📲 Send on WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="power-grid">
+        <a href="activity.html" class="power-pod">
+          <div>
+            <div class="pod-icon">🎯</div>
+            <div class="pod-title">Practice Arena</div>
+            <div class="pod-desc">200 Assertion & Reasoning drills and interactive exam questions.</div>
+          </div>
+          <div class="pod-link">Start Practice →</div>
+        </a>
+
+        <a href="https://drive.google.com/file/d/1v_zk-ouEZCNetdISDJTHVfIQoKUnnDB9/view?usp=drivesdk" target="_blank" class="power-pod">
+          <div>
+            <div class="pod-icon">📄</div>
+            <div class="pod-title">Sample Papers</div>
+            <div class="pod-desc">Official CBSE pattern papers and practical answer frameworks.</div>
+          </div>
+          <div class="pod-link">View Paper →</div>
+        </a>
+      </div>
+
+      <div class="fact-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.75rem; font-weight: 800; color: var(--amber); text-transform: uppercase;">💡 Did You Know? • Fact Spotlight</span>
+          <button type="button" onclick="shuffleFact()" style="background: none; border: none; color: #94a3b8; font-size: 0.75rem; font-weight: 700; cursor: pointer;">🎲 Next Fact</button>
+        </div>
+        <p id="factContent" style="font-size: 0.88rem; color: #e2e8f0; line-height: 1.5; font-weight: 500;">
+          During the 1923 hyperinflation crisis in Germany, the mark lost so much value that people carried cash in wheelbarrows, and children used stacks of banknotes as building blocks!
+        </p>
+      </div>
+
       <div class="doubt-card" id="ask-doubt">
-        <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; color: #fff;">❓ Ask a Doubt</h2>
-        <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1.2rem;">Stuck on a concept? Fill in your details below to submit your question to your teacher.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff;">❓ Ask a Doubt</h2>
+          <div id="doubtUserTag" style="display: none; font-size: 0.75rem; color: var(--emerald); font-weight: 700; background: rgba(16,185,129,0.12); padding: 0.2rem 0.6rem; border-radius: 8px;">Logged In ✓</div>
+        </div>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Submit your academic query directly to your teacher.</p>
         
-        <form id="doubtForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Student Name</label>
-              <input type="text" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Security PIN (4 Digits)</label>
-              <input type="password" maxlength="4" name="pin" class="form-input" placeholder="e.g. 1234" required>
-            </div>
-          </div>
+        <div id="doubtLockedView" style="text-align: center; padding: 2rem 1rem; background: rgba(255,255,255,0.02); border: 1px dashed var(--border); border-radius: 14px;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem;">Login Required</h3>
+          <p style="color: var(--muted); font-size: 0.84rem; max-width: 380px; margin: 0 auto 1.2rem;">You must be logged in to your student account to ask doubts and receive teacher replies.</p>
+          <button type="button" class="submit-btn" style="background: var(--blue); color: #fff; max-width: 240px; margin: 0 auto;" onclick="openAccountModal()">Log In / Sign Up →</button>
+        </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Class</label>
-              <select name="class" class="form-select" required>
-                <option value="" disabled selected>Select Class</option>
-                <option value="Class 9">Class 9</option>
-                <option value="Class 10">Class 10</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Section</label>
-              <select name="section" class="form-select" required>
-                <option value="" disabled selected>Select Section</option>
-                <option value="Section A">Section A</option>
-                <option value="Section B">Section B</option>
-                <option value="Section C">Section C</option>
-              </select>
-            </div>
-          </div>
-
+        <form id="doubtForm" style="display: none;">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Subject</label>
@@ -228,14 +562,14 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Chapter / Topic Name</label>
+              <label class="form-label">Chapter / Topic</label>
               <input type="text" name="chapter" class="form-input" placeholder="e.g. Federalism" required>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Your Query / Doubt</label>
-            <textarea name="query" class="form-textarea" rows="3" placeholder="Type your social science doubt here..." required></textarea>
+            <label class="form-label">Your Query</label>
+            <textarea name="query" class="form-textarea" rows="3" placeholder="Type your social science question here..." required></textarea>
           </div>
 
           <button type="submit" id="submitBtn" class="submit-btn">Submit Doubt →</button>
@@ -247,129 +581,844 @@
       <p>© 2026 Social Science Academic Hub • Designed for Excellence</p>
     </footer>
   </div>
-
-  <!-- Interactive Popup Modal for Checking Doubts & Replies -->
-  <div class="modal-overlay" id="replyModal">
+    <div class="modal-overlay" id="accountModal">
     <div class="modal-box">
-      <button type="button" class="close-modal" onclick="closeModal()">✕</button>
-      <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.4rem;">💬 Check My Doubts & Replies</h2>
-      <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Enter your Name and 4-digit PIN to view teacher responses.</p>
+      <button type="button" class="close-modal" onclick="closeAccountModal()">✕</button>
       
-      <div class="form-group">
-        <label class="form-label">Student Name</label>
-        <input type="text" id="checkName" class="form-input" placeholder="e.g. Rahul Sharma">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Security PIN (4 Digits)</label>
-        <input type="password" maxlength="4" id="checkPin" class="form-input" placeholder="e.g. 1234">
+      <div id="viewLogin">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem;">👤 Student Log In</h2>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Enter your registered Name and 4-digit PIN.</p>
+        
+        <div class="form-group">
+          <label class="form-label">Student Name</label>
+          <input type="text" id="loginName" class="form-input" placeholder="e.g. Rahul Sharma">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Security PIN (Strictly 4 Digits)</label>
+          <input type="password" maxlength="4" id="loginPin" class="form-input" placeholder="e.g. 1234">
+        </div>
+
+        <button type="button" class="submit-btn" style="background: var(--blue); color: #fff;" onclick="handleLogin()">Log In →</button>
+        <div id="loginError" style="margin-top: 0.8rem;"></div>
+
+        <div style="text-align: center; margin-top: 1.2rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+          <span style="font-size: 0.82rem; color: var(--muted);">New student? </span>
+          <button type="button" onclick="switchAccountView('signup')" style="background: none; border: none; color: var(--amber); font-weight: 800; font-size: 0.82rem; cursor: pointer; text-decoration: underline;">Create Account (Sign Up)</button>
+        </div>
       </div>
 
-      <button type="button" class="submit-btn" style="background: var(--blue); color: #fff;" onclick="checkReplies()">Check Replies →</button>
-      
-      <div id="replyResults" style="margin-top: 1.2rem;"></div>
+      <div id="viewSignup" style="display: none;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem;">✨ Student Registration</h2>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Fill in your details to set up your profile.</p>
+        
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="regName" class="form-input" placeholder="e.g. Rahul Sharma">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Class</label>
+            <select id="regClass" class="form-select">
+              <option value="Class 10" selected>Class 10</option>
+              <option value="Class 9">Class 9</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Section</label>
+            <select id="regSection" class="form-select">
+              <option value="Section A" selected>Section A</option>
+              <option value="Section B">Section B</option>
+              <option value="Section C">Section C</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Security PIN (Strictly 4 Digits)</label>
+          <input type="password" maxlength="4" id="regPin" class="form-input" placeholder="4-digit number (e.g. 1234)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Profile Avatar</label>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 14px; padding: 0.6rem 0.9rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div class="avatar-preview-badge" id="signupAvatarPreview"></div>
+              <div>
+                <div id="signupAvatarName" style="font-size: 0.88rem; font-weight: 700; color: #fff;">Doraemon</div>
+                <div style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase;">Default Avatar</div>
+              </div>
+            </div>
+            <button type="button" class="submit-btn" style="width: auto; padding: 0.45rem 0.85rem; font-size: 0.8rem; background: rgba(59,130,246,0.2); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); margin-top: 0;" onclick="openAvatarPicker('signup')">Change Avatar 🎨</button>
+          </div>
+        </div>
+
+        <button type="button" class="submit-btn" style="background: var(--emerald); color: #000;" onclick="handleSignup()">Complete Sign Up →</button>
+        <div id="signupError" style="margin-top: 0.8rem;"></div>
+
+        <div style="text-align: center; margin-top: 1.2rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+          <span style="font-size: 0.82rem; color: var(--muted);">Already registered? </span>
+          <button type="button" onclick="switchAccountView('login')" style="background: none; border: none; color: var(--blue); font-weight: 800; font-size: 0.82rem; cursor: pointer; text-decoration: underline;">Log In</button>
+        </div>
+      </div>
+
+      <div id="viewProfile" style="display: none;">
+        <div class="profile-hero">
+          <div class="profile-avatar-big" id="profAvatar"></div>
+          <div>
+            <h2 style="font-size: 1.25rem; font-weight: 800; color: #fff;" id="profName">Student Name</h2>
+            <p style="font-size: 0.8rem; color: var(--amber); font-weight: 700; margin-top: 0.15rem;" id="profClassSec">Class 10 • Section A</p>
+          </div>
+        </div>
+
+        <button type="button" class="submit-btn" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: #fff; margin-top: 0; margin-bottom: 0.6rem;" onclick="openEditView()">✏️ Edit Profile</button>
+        <button type="button" onclick="logoutStudent()" style="width: 100%; background: none; border: none; color: #ef4444; font-size: 0.8rem; font-weight: 700; padding: 0.5rem; cursor: pointer;">🚪 Log Out of Account</button>
+      </div>
+
+      <div id="viewEdit" style="display: none;">
+        <h2 style="font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem;">✏️ Edit Profile</h2>
+        <p style="color: var(--muted); font-size: 0.84rem; margin-bottom: 1.2rem;">Update your name, 4-digit PIN, or avatar.</p>
+        
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="editName" class="form-input">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Class <span style="font-size: 0.7rem; color: var(--amber); text-transform: none;">(Locked 🔒)</span></label>
+            <select id="editClass" class="form-select" disabled>
+              <option value="Class 10">Class 10</option>
+              <option value="Class 9">Class 9</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Section <span style="font-size: 0.7rem; color: var(--amber); text-transform: none;">(Locked 🔒)</span></label>
+            <select id="editSection" class="form-select" disabled>
+              <option value="Section A">Section A</option>
+              <option value="Section B">Section B</option>
+              <option value="Section C">Section C</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Security PIN (Strictly 4 Digits)</label>
+          <input type="password" maxlength="4" id="editPin" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Profile Avatar</label>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 14px; padding: 0.6rem 0.9rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div class="avatar-preview-badge" id="editAvatarPreview"></div>
+              <div>
+                <div id="editAvatarName" style="font-size: 0.88rem; font-weight: 700; color: #fff;">Doraemon</div>
+                <div style="font-size: 0.7rem; color: var(--amber); text-transform: uppercase;">Selected Avatar</div>
+              </div>
+            </div>
+            <button type="button" class="submit-btn" style="width: auto; padding: 0.45rem 0.85rem; font-size: 0.8rem; background: rgba(59,130,246,0.2); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); margin-top: 0;" onclick="openAvatarPicker('edit')">Change Avatar 🎨</button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+          <button type="button" class="submit-btn" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: #fff; margin-top: 0;" onclick="switchAccountView('profile')">Cancel</button>
+          <button type="button" class="submit-btn" style="background: var(--amber); color: #000; margin-top: 0;" onclick="handleSaveEdit()">Save Changes →</button>
+        </div>
+        <div id="editError" style="margin-top: 0.8rem;"></div>
+      </div>
+
+      <div id="viewAvatarPicker" style="display: none;">
+        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; padding-right: 45px;">
+          <button type="button" onclick="closeAvatarPicker()" style="background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff; padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+            ← Back
+          </button>
+          <h2 style="font-size: 1.12rem; font-weight: 800; color: #fff;">Choose Avatar</h2>
+        </div>
+        <p style="color: var(--muted); font-size: 0.8rem; margin-bottom: 0.8rem;">Tap any character to select, then confirm below.</p>
+        
+        <div class="characters-grid" id="pickerGrid"></div>
+
+        <button type="button" class="submit-btn" style="background: var(--amber); color: #000;" onclick="closeAvatarPicker()">Confirm Selection →</button>
+      </div>
     </div>
   </div>
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvbccNHEk20IveFy0C-vPROrEPh-PzIRyNlGrhn2fm0RZM3IiHtAMnPNON_c4FrWvIzQ/exec";
+  <div class="modal-overlay" id="inboxModal">
+    <div class="modal-box">
+      <button type="button" class="close-modal" onclick="closeInboxModal()">✕</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.6rem;">
+        <div>
+          <h2 style="font-size: 1.1rem; font-weight: 800; color: #fff;" id="studentGreeting">Your Inbox</h2>
+          <p style="font-size: 0.78rem; color: var(--muted);">Tap any query to view the teacher's reply.</p>
+        </div>
+      </div>
+      <div id="inboxList" style="display: flex; flex-direction: column; gap: 0.6rem;"></div>
+    </div>
+  </div>
+    <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwLd3C7OfNYY5wGy67L3YuwEcTAxfDYSRIQP5b-BQsfI1rtnNtjmIYNsQR6ZVuqBmZT/exec";
 
-    function toggleMenu() {
-      const menu = document.getElementById('dropdownMenu');
-      menu.classList.toggle('show');
+    // Verified WhatsApp contact with 91 country code prefix (no plus sign)
+    const TEACHER_WHATSAPP_NUMBER = "919337982056";
+
+    const AVATARS = [
+      { id: "doraemon", name: "Doraemon", img: "avatars/doraemon.png" },
+      { id: "nobita", name: "Nobita Nobi", img: "avatars/nobita.png", crop: "nobita" },
+      { id: "shizuka", name: "Shizuka", img: "avatars/shizuka.png" },
+      { id: "gian", name: "Gian", img: "avatars/gian.png", crop: "chest" },
+      { id: "bubbles", name: "Bubbles", img: "avatars/bubbles.png" },
+      { id: "elsa", name: "Elsa", img: "avatars/elsa.png" },
+      { id: "rapunzel", name: "Rapunzel", img: "avatars/rapunzel.png", crop: "rapunzel" },
+      { id: "ironman", name: "Iron Man", img: "avatars/ironman.png", crop: "chest" },
+      { id: "spiderman", name: "Spider-Man", img: "avatars/spiderman.png" },
+      { id: "pikachu", name: "Pikachu", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" },
+      { id: "charizard", name: "Charizard", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" },
+      { id: "jigglypuff", name: "Jigglypuff", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png" }
+    ];
+
+    const FACTS = [
+      "During the 1923 hyperinflation crisis in Germany, the mark lost so much value that people carried cash in wheelbarrows, and children used stacks of banknotes as building blocks!",
+      "The symbol of French Liberty and the Republic is 'Marianne', chosen to underline the idea of a people's nation based on Liberty and Reason.",
+      "Sri Lanka faced severe civil war because the 1956 Act established Sinhala as the sole official language, completely disregarding Sri Lankan Tamils.",
+      "More than 50% of the world's bauxite (aluminum ore) reserves in India are located in Odisha, making it the top producer in the country.",
+      "The Reserve Bank of India (RBI) monitors banks to ensure they lend not just to profit-making businesses, but also to small cultivators and small-scale industries."
+    ];
+
+    let currentFactIndex = 0;
+    let chosenAvatarId = "doraemon";
+    let avatarPickerCaller = "edit";
+    let toastTimer = null;
+
+    function showToast(message, icon = "✨") {
+      const toast = document.getElementById("toastBox");
+      const msgEl = document.getElementById("toastMsg");
+      const iconEl = document.getElementById("toastIcon");
+
+      if (!toast) return;
+      if (toastTimer) clearTimeout(toastTimer);
+
+      msgEl.textContent = message;
+      iconEl.textContent = icon;
+      toast.classList.add("show");
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2800);
     }
 
-    function toggleSubmenu(id) {
-      const sub = document.getElementById(id);
-      sub.classList.toggle('show');
+    function getAvatarObj(id) {
+      return AVATARS.find(a => a.id === id || a.img === id) || AVATARS[0];
     }
 
-    function openModal() {
-      document.getElementById('replyModal').classList.add('show');
-    }
-
-    function closeModal() {
-      document.getElementById('replyModal').classList.remove('show');
-      document.getElementById('replyResults').innerHTML = '';
-      document.getElementById('checkName').value = '';
-      document.getElementById('checkPin').value = '';
-    }
-
-    window.addEventListener('click', function(e) {
-      const menu = document.getElementById('dropdownMenu');
-      const btn = document.querySelector('.menu-btn');
-      const modal = document.getElementById('replyModal');
-      if (!menu.contains(e.target) && !btn.contains(e.target)) {
-        menu.classList.remove('show');
+    function handleImgFallback(imgEl) {
+      if (!imgEl.dataset.fallbackApplied) {
+        imgEl.dataset.fallbackApplied = "true";
+        if (imgEl.src.includes("avatars/")) {
+          imgEl.src = imgEl.src.replace("avatars/", "");
+        }
       }
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
+    }
 
-    // Handle form submission
-    document.getElementById('doubtForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
-      
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.disabled = true;
+    function resolveCropClass(crop) {
+      if (!crop) return "";
+      if (crop === "nobita") return "crop-nobita";
+      if (crop === "rapunzel") return "crop-rapunzel";
+      if (crop === "chest") return "crop-chest";
+      return "crop-" + crop;
+    }
 
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-      })
-      .then(res => res.json())
-      .catch(() => ({}))
-      .then(() => {
-        alert('Doubt submitted successfully! Your teacher can now review and reply.');
-        this.reset();
-        submitBtn.textContent = 'Submit Doubt →';
-        submitBtn.disabled = false;
-      })
-      .catch(() => {
-        alert('Doubt submitted successfully!');
-        this.reset();
-        submitBtn.textContent = 'Submit Doubt →';
-        submitBtn.disabled = false;
-      });
-    });
+    function renderAvatarImgTag(avatarObj, extraClass = "") {
+      const cropClass = resolveCropClass(avatarObj.crop);
+      return `<img src="${avatarObj.img}" alt="${avatarObj.name}" class="${cropClass} ${extraClass}" onerror="handleImgFallback(this)">`;
+    }
 
-    // Handle fetching replies inside modal
-    function checkReplies() {
-      const name = document.getElementById('checkName').value.trim();
-      const pin = document.getElementById('checkPin').value.trim();
-      const resultsDiv = document.getElementById('replyResults');
-
-      if(!name || !pin) {
-        alert('Please enter both Student Name and Security PIN.');
+    function sendNotebookOnWhatsApp() {
+      const user = getSavedUser();
+      if (!user) {
+        openAccountModal();
         return;
       }
+      const msg = `Hello Sir! 📚\n\nI am submitting my Social Science notebook verification photos.\n\n👤 *Student Name:* ${user.name}\n🎓 *Class:* ${user.sClass} (${user.section})\n\n(Attaching the last page photo of my completed work below 👇)`;
+      const webUrl = `https://api.whatsapp.com/send/?phone=${TEACHER_WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
 
-      resultsDiv.innerHTML = '<p style="color: var(--muted); margin-top: 0.8rem;">Checking replies...</p>';
+      try {
+        const win = window.open(webUrl, "_blank");
+        if (!win || win.closed || typeof win.closed === "undefined") {
+          window.location.href = webUrl;
+        }
+      } catch (e) {
+        navigator.clipboard.writeText("+919337982056");
+        showToast("Teacher number copied: +91 9337982056", "📋");
+      }
+    }
 
-      fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}`)
+    document.addEventListener("DOMContentLoaded", () => {
+      syncAuthState();
+      setInterval(() => {
+        const user = getSavedUser();
+        if (user) checkUnreadReplies(user.name, user.pin);
+      }, 20000);
+    });
+
+    function shuffleFact() {
+      currentFactIndex = (currentFactIndex + 1) % FACTS.length;
+      document.getElementById("factContent").textContent = FACTS[currentFactIndex];
+    }
+
+    function getSavedUser() {
+      const name = localStorage.getItem("hub_student_name");
+      const pin = localStorage.getItem("hub_student_pin");
+      const avatar = localStorage.getItem("hub_student_avatar") || "doraemon";
+      const sClass = localStorage.getItem("hub_student_class") || "Class 10";
+      const section = localStorage.getItem("hub_student_section") || "Section A";
+      return (name && pin) ? { name, pin, avatar, sClass, section } : null;
+    }
+
+    function saveUser(name, pin, sClass, section, avatar) {
+      localStorage.setItem("hub_student_name", name);
+      localStorage.setItem("hub_student_pin", pin);
+      localStorage.setItem("hub_student_class", sClass);
+      localStorage.setItem("hub_student_section", section);
+      localStorage.setItem("hub_student_avatar", avatar);
+      syncAuthState();
+    }
+
+    function logoutStudent() {
+      localStorage.removeItem("hub_student_name");
+      localStorage.removeItem("hub_student_pin");
+      localStorage.removeItem("hub_student_avatar");
+      localStorage.removeItem("hub_student_class");
+      localStorage.removeItem("hub_student_section");
+      
+      const menuBadge = document.getElementById("menuBadge");
+      const inboxBadge = document.getElementById("inboxBadge");
+      if (menuBadge) menuBadge.style.display = "none";
+      if (inboxBadge) inboxBadge.style.display = "none";
+
+      syncAuthState();
+      closeAccountModal();
+      showToast("Logged out successfully.", "👋");
+    }
+
+    function applyAuditBadge(elementId, statusText) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+
+      const clean = (statusText || "").toLowerCase().trim();
+      if (clean === "completed" || clean === "done" || clean === "verified") {
+        el.className = "audit-badge completed";
+        el.textContent = "Completed ✓";
+      } else if (clean === "pending" || clean.includes("check")) {
+        el.className = "audit-badge pending";
+        el.textContent = "Get checked from teacher ⚠️";
+      } else {
+        el.className = "audit-badge unavailable";
+        el.textContent = "Unavailable";
+      }
+    }
+
+    function checkUnreadReplies(name, pin) {
+      if (!name || !pin) return;
+      fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}&_t=${Date.now()}`)
         .then(res => res.json())
         .then(data => {
-          if(data && data.length > 0) {
-            let html = '';
-            data.forEach(item => {
-              html += `<div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-top: 0.8rem;">
-                <p style="font-size: 0.82rem; color: var(--amber); margin-bottom: 0.3rem;"><b>Subject:</b> ${item.subject} | <b>Chapter:</b> ${item.chapter}</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #fff;"><b>Your Query:</b> ${item.query}</p>
-                <p style="font-size: 0.9rem; color: var(--emerald);"><b>Teacher's Answer:</b> ${item.reply || 'Pending review by teacher...'}</p>
-              </div>`;
+          if (Array.isArray(data)) {
+            const answeredItems = data.filter(item => {
+              const reply = (item.reply || "").trim();
+              const lower = reply.toLowerCase();
+              return reply.length > 0 &&
+                     !lower.includes("received successfully") &&
+                     !lower.includes("review and reply here soon") &&
+                     !lower.includes("pending review");
             });
-            resultsDiv.innerHTML = html;
+
+            const seenSignatures = JSON.parse(localStorage.getItem("hub_seen_replies") || "[]");
+            const unreadItems = answeredItems.filter(item => {
+              const sig = (item.query || "").trim() + "___" + (item.reply || "").trim();
+              return !seenSignatures.includes(sig);
+            });
+
+            const count = unreadItems.length;
+            const menuBadge = document.getElementById("menuBadge");
+            const inboxBadge = document.getElementById("inboxBadge");
+
+            if (count > 0) {
+              if (menuBadge) {
+                menuBadge.textContent = count;
+                menuBadge.style.display = "flex";
+              }
+              if (inboxBadge) {
+                inboxBadge.textContent = count;
+                inboxBadge.style.display = "inline-block";
+              }
+            } else {
+              if (menuBadge) menuBadge.style.display = "none";
+              if (inboxBadge) inboxBadge.style.display = "none";
+            }
+          }
+        })
+        .catch(() => {});
+    }
+
+    function syncAuthState() {
+      const user = getSavedUser();
+      const menuAvatar = document.getElementById("menuAvatar");
+      const menuProfileText = document.getElementById("menuProfileText");
+      const doubtLocked = document.getElementById("doubtLockedView");
+      const doubtForm = document.getElementById("doubtForm");
+      const doubtTag = document.getElementById("doubtUserTag");
+      
+      const homeLocked = document.getElementById("homeAuditLocked");
+      const homeHub = document.getElementById("homeStudentHub");
+      const homeAvatarBox = document.getElementById("homeAvatarBox");
+      const homeName = document.getElementById("homeStudentName");
+      const homeClassSec = document.getElementById("homeStudentClassSec");
+
+      if (user) {
+        chosenAvatarId = user.avatar;
+        const curAvatar = getAvatarObj(user.avatar);
+
+        if (menuAvatar) menuAvatar.innerHTML = renderAvatarImgTag(curAvatar);
+        if (menuProfileText) menuProfileText.textContent = user.name;
+        if (doubtLocked) doubtLocked.style.display = "none";
+        if (doubtForm) doubtForm.style.display = "block";
+        if (doubtTag) doubtTag.style.display = "block";
+
+        if (homeLocked) homeLocked.style.display = "none";
+        if (homeHub) {
+          homeHub.style.display = "flex";
+          homeAvatarBox.innerHTML = renderAvatarImgTag(curAvatar);
+          homeName.textContent = user.name;
+          homeClassSec.textContent = `${user.sClass} • ${user.section}`;
+        }
+
+        document.getElementById("profAvatar").innerHTML = renderAvatarImgTag(curAvatar);
+        document.getElementById("profName").textContent = user.name;
+        document.getElementById("profClassSec").textContent = `${user.sClass} • ${user.section}`;
+
+        switchAccountView("profile");
+        fetchStudentProgress(user.name, user.pin);
+        checkUnreadReplies(user.name, user.pin);
+      } else {
+        chosenAvatarId = "doraemon";
+        if (menuAvatar) menuAvatar.innerHTML = '<span style="font-size: 0.85rem;">👤</span>';
+        if (menuProfileText) menuProfileText.textContent = "Log In";
+        if (doubtLocked) doubtLocked.style.display = "block";
+        if (doubtForm) doubtForm.style.display = "none";
+        if (doubtTag) doubtTag.style.display = "none";
+
+        if (homeLocked) homeLocked.style.display = "block";
+        if (homeHub) homeHub.style.display = "none";
+
+        const menuBadge = document.getElementById("menuBadge");
+        const inboxBadge = document.getElementById("inboxBadge");
+        if (menuBadge) menuBadge.style.display = "none";
+        if (inboxBadge) inboxBadge.style.display = "none";
+
+        switchAccountView("login");
+      }
+    }
+
+    function fetchStudentProgress(name, pin) {
+      const remarkEl = document.getElementById("homeRemarkText");
+      const statusBadge = document.getElementById("homeStatusBadge");
+
+      fetch(`${SCRIPT_URL}?type=progress&name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}&_t=${Date.now()}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.found) {
+            if (remarkEl && data.remark) remarkEl.textContent = data.remark;
+            if (statusBadge) statusBadge.textContent = data.status || "Active Scholar";
+
+            applyAuditBadge("homeAuditHistoryBadge", data.history || "Unavailable");
+            applyAuditBadge("homeAuditGeographyBadge", data.geography || "Unavailable");
+            applyAuditBadge("homeAuditCivicsBadge", data.civics || "Unavailable");
+            applyAuditBadge("homeAuditEconomicsBadge", data.economics || "Unavailable");
           } else {
-            resultsDiv.innerHTML = '<p style="color: var(--amber); margin-top: 0.8rem;">No doubts found with this Name and PIN, or replies are still pending.</p>';
+            applyAuditBadge("homeAuditHistoryBadge", "Unavailable");
+            applyAuditBadge("homeAuditGeographyBadge", "Unavailable");
+            applyAuditBadge("homeAuditCivicsBadge", "Unavailable");
+            applyAuditBadge("homeAuditEconomicsBadge", "Unavailable");
           }
         })
         .catch(() => {
-          resultsDiv.innerHTML = '<p style="color: #ef4444; margin-top: 0.8rem;">Unable to fetch replies. Please check your connection and try again.</p>';
+          applyAuditBadge("homeAuditHistoryBadge", "Unavailable");
+          applyAuditBadge("homeAuditGeographyBadge", "Unavailable");
+          applyAuditBadge("homeAuditCivicsBadge", "Unavailable");
+          applyAuditBadge("homeAuditEconomicsBadge", "Unavailable");
         });
+    }
+
+    function switchAccountView(view) {
+      document.getElementById("viewLogin").style.display = (view === "login") ? "block" : "none";
+      document.getElementById("viewSignup").style.display = (view === "signup") ? "block" : "none";
+      document.getElementById("viewProfile").style.display = (view === "profile") ? "block" : "none";
+      document.getElementById("viewEdit").style.display = (view === "edit") ? "block" : "none";
+      document.getElementById("viewAvatarPicker").style.display = (view === "avatarPicker") ? "block" : "none";
+    }
+
+    function openEditView() {
+      const user = getSavedUser();
+      if (!user) return;
+      document.getElementById("editName").value = user.name;
+      document.getElementById("editPin").value = user.pin;
+      document.getElementById("editClass").value = user.sClass;
+      document.getElementById("editSection").value = user.section;
+      
+      chosenAvatarId = user.avatar;
+      updateEditBadge();
+      switchAccountView("edit");
+    }
+
+    function updateEditBadge() {
+      const avatarObj = getAvatarObj(chosenAvatarId);
+      document.getElementById("editAvatarPreview").innerHTML = renderAvatarImgTag(avatarObj);
+      document.getElementById("editAvatarName").textContent = avatarObj.name;
+    }
+
+    function updateSignupBadge() {
+      const avatarObj = getAvatarObj(chosenAvatarId);
+      document.getElementById("signupAvatarPreview").innerHTML = renderAvatarImgTag(avatarObj);
+      document.getElementById("signupAvatarName").textContent = avatarObj.name;
+    }
+
+    function openAvatarPicker(caller) {
+      avatarPickerCaller = caller;
+      renderPickerGrid();
+      switchAccountView("avatarPicker");
+    }
+
+    function closeAvatarPicker() {
+      if (avatarPickerCaller === "signup") {
+        updateSignupBadge();
+        switchAccountView("signup");
+      } else {
+        updateEditBadge();
+        switchAccountView("edit");
+      }
+    }
+
+    function renderPickerGrid() {
+      const grid = document.getElementById("pickerGrid");
+      grid.innerHTML = "";
+
+      AVATARS.forEach(avatar => {
+        const isSelected = (avatar.id === chosenAvatarId);
+        const card = document.createElement("div");
+        card.className = `character-card ${isSelected ? 'selected' : ''}`;
+        card.onclick = () => {
+          chosenAvatarId = avatar.id;
+          renderPickerGrid();
+        };
+
+        const cropClass = resolveCropClass(avatar.crop);
+
+        card.innerHTML = `
+          <div class="avatar-wrapper">
+            <img src="${avatar.img}" alt="${avatar.name}" class="${cropClass}" onerror="handleImgFallback(this)">
+          </div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: #fff;">${avatar.name}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openAccountModal() {
+      document.getElementById("accountModal").classList.add("show");
+      const user = getSavedUser();
+      if (user) fetchStudentProgress(user.name, user.pin);
+    }
+    function closeAccountModal() {
+      document.getElementById("accountModal").classList.remove("show");
+    }
+
+    function openInboxDirectly() {
+      const user = getSavedUser();
+      if (!user) {
+        openAccountModal();
+        return;
+      }
+      document.getElementById("inboxModal").classList.add("show");
+      
+      const menuBadge = document.getElementById("menuBadge");
+      const inboxBadge = document.getElementById("inboxBadge");
+      if (menuBadge) menuBadge.style.display = "none";
+      if (inboxBadge) inboxBadge.style.display = "none";
+
+      fetchInbox(user.name, user.pin);
+    }
+    function closeInboxModal() {
+      document.getElementById("inboxModal").classList.remove("show");
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById("dropdownMenu");
+      if (menu) menu.classList.toggle("show");
+    }
+    function toggleSubmenu(id) {
+      const sub = document.getElementById(id);
+      if (sub) sub.classList.toggle("show");
+    }
+
+    window.addEventListener("click", function(e) {
+      const menu = document.getElementById("dropdownMenu");
+      const btn = document.querySelector(".menu-btn");
+      const accModal = document.getElementById("accountModal");
+      const inModal = document.getElementById("inboxModal");
+      if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("show");
+      if (e.target === accModal) closeAccountModal();
+      if (e.target === inModal) closeInboxModal();
+    });
+
+    function isValidPin(pin) {
+      return /^\d{4}$/.test(pin);
+    }
+
+    function handleLogin() {
+      const name = document.getElementById("loginName").value.trim();
+      const pin = document.getElementById("loginPin").value.trim();
+      const err = document.getElementById("loginError");
+      const loginBtn = document.querySelector("#viewLogin .submit-btn");
+
+      if (!name || !pin) {
+        err.innerHTML = '<p style="color: var(--amber); font-size: 0.85rem;">Please enter both Name and Security PIN.</p>';
+        return;
+      }
+      if (!isValidPin(pin)) {
+        err.innerHTML = '<p style="color: #ef4444; font-size: 0.85rem;">Security PIN must be strictly 4 digits.</p>';
+        return;
+      }
+
+      const originalBtnText = loginBtn.textContent;
+      loginBtn.textContent = "Verifying Account...";
+      loginBtn.disabled = true;
+      err.innerHTML = "";
+
+      fetch(`${SCRIPT_URL}?type=progress&name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}&_t=${Date.now()}`)
+        .then(res => res.json())
+        .then(data => {
+          loginBtn.textContent = originalBtnText;
+          loginBtn.disabled = false;
+
+          if (data && data.found) {
+            saveUser(data.name, pin, data.class || "Class 10", data.section || "Section A", data.avatar || "doraemon");
+            err.innerHTML = "";
+            closeAccountModal();
+            showToast(`Welcome back, ${data.name}!`, "👋");
+          } else {
+            err.innerHTML = '<p style="color: #ef4444; font-size: 0.85rem;">No registered student found with this Name and PIN. Please check your credentials or Sign Up first.</p>';
+          }
+        })
+        .catch(() => {
+          loginBtn.textContent = originalBtnText;
+          loginBtn.disabled = false;
+          err.innerHTML = '<p style="color: #ef4444; font-size: 0.85rem;">Connection error. Please check your internet and try again.</p>';
+        });
+    }
+
+    function handleSignup() {
+      const name = document.getElementById("regName").value.trim();
+      const pin = document.getElementById("regPin").value.trim();
+      const sClass = document.getElementById("regClass").value;
+      const section = document.getElementById("regSection").value;
+      const err = document.getElementById("signupError");
+
+      if (!name || !pin) {
+        err.innerHTML = '<p style="color: var(--amber); font-size: 0.85rem;">Please complete all required fields.</p>';
+        return;
+      }
+      if (!isValidPin(pin)) {
+        err.innerHTML = '<p style="color: #ef4444; font-size: 0.85rem;">Security PIN must be strictly 4 digits.</p>';
+        return;
+      }
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "register",
+          name: name,
+          pin: pin,
+          class: sClass,
+          section: section,
+          avatar: chosenAvatarId
+        }),
+        headers: { "Content-Type": "text/plain;charset=utf-8" }
+      }).catch(() => {});
+
+      saveUser(name, pin, sClass, section, chosenAvatarId);
+      err.innerHTML = "";
+      closeAccountModal();
+      showToast(`Welcome, ${name}! Profile created.`, "✨");
+    }
+
+    function handleSaveEdit() {
+      const user = getSavedUser();
+      const name = document.getElementById("editName").value.trim();
+      const pin = document.getElementById("editPin").value.trim();
+      const sClass = user ? user.sClass : document.getElementById("editClass").value;
+      const section = user ? user.section : document.getElementById("editSection").value;
+      const err = document.getElementById("editError");
+
+      if (!name || !pin) {
+        err.innerHTML = '<p style="color: var(--amber); font-size: 0.85rem;">Name and PIN cannot be empty.</p>';
+        return;
+      }
+      if (!isValidPin(pin)) {
+        err.innerHTML = '<p style="color: #ef4444; font-size: 0.85rem;">PIN must be strictly 4 digits.</p>';
+        return;
+      }
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "register",
+          oldName: user ? user.name : name,
+          oldPin: user ? user.pin : pin,
+          name: name,
+          pin: pin,
+          class: sClass,
+          section: section,
+          avatar: chosenAvatarId
+        }),
+        headers: { "Content-Type": "text/plain;charset=utf-8" }
+      }).catch(() => {});
+
+      saveUser(name, pin, sClass, section, chosenAvatarId);
+      err.innerHTML = "";
+      switchAccountView("profile");
+      showToast("Profile updated successfully!", "✅");
+    }
+
+    const doubtForm = document.getElementById("doubtForm");
+    if (doubtForm) {
+      doubtForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const user = getSavedUser();
+        if (!user) {
+          openAccountModal();
+          return;
+        }
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        data.name = user.name;
+        data.pin = user.pin;
+        data.class = user.sClass;
+        data.section = user.section;
+
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.textContent = "Submitting...";
+        submitBtn.disabled = true;
+
+        fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: { "Content-Type": "text/plain;charset=utf-8" }
+        })
+        .then(res => res.json())
+        .catch(() => ({}))
+        .then(() => {
+          showToast("Doubt submitted! Teacher will reply soon.", "📬");
+          this.reset();
+          submitBtn.textContent = "Submit Doubt →";
+          submitBtn.disabled = false;
+        })
+        .catch(() => {
+          showToast("Doubt submitted successfully!", "📬");
+          this.reset();
+          submitBtn.textContent = "Submit Doubt →";
+          submitBtn.disabled = false;
+        });
+      });
+    }
+
+    function fetchInbox(name, pin) {
+      const list = document.getElementById("inboxList");
+      list.innerHTML = '<p style="color: var(--muted); font-size: 0.85rem; padding: 1rem 0;">Checking doubts & teacher replies...</p>';
+
+      fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}&pin=${encodeURIComponent(pin)}&_t=${Date.now()}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.length > 0) {
+            document.getElementById("studentGreeting").textContent = `${name}'s Queries`;
+            let html = "";
+            
+            const answeredSignatures = data.filter(item => {
+              const rawReply = (item.reply || "").trim();
+              const lowerReply = rawReply.toLowerCase();
+              const isDefaultMsg = lowerReply.includes("received successfully") || 
+                                   lowerReply.includes("review and reply here soon") ||
+                                   lowerReply.includes("pending review");
+              return rawReply.length > 0 && !isDefaultMsg;
+            }).map(item => (item.query || "").trim() + "___" + (item.reply || "").trim());
+
+            localStorage.setItem("hub_seen_replies", JSON.stringify(answeredSignatures));
+
+            data.forEach((item, index) => {
+              const rawReply = (item.reply || "").trim();
+              const lowerReply = rawReply.toLowerCase();
+              
+              const isDefaultMsg = lowerReply.includes("received successfully") || 
+                                   lowerReply.includes("review and reply here soon") ||
+                                   lowerReply.includes("pending review");
+
+              const isAnswered = rawReply.length > 0 && !isDefaultMsg;
+
+              const badge = isAnswered 
+                ? '<span style="background: rgba(16,185,129,0.15); color: #10b981; padding: 0.15rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 800;">Answered ✓</span>'
+                : '<span style="background: rgba(245,158,11,0.15); color: #f59e0b; padding: 0.15rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 800;">Pending Review</span>';
+
+              const answerHeader = isAnswered 
+                ? '<div style="font-size: 0.75rem; font-weight: 800; color: var(--emerald); text-transform: uppercase; margin-bottom: 0.3rem;">Teacher\'s Answer</div>'
+                : '<div style="font-size: 0.75rem; font-weight: 800; color: var(--amber); text-transform: uppercase; margin-bottom: 0.3rem;">Status</div>';
+
+              const answerContent = isAnswered 
+                ? rawReply 
+                : "Your doubt has been received! The teacher is reviewing it and will post the answer here soon.";
+
+              html += `
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+                  <button type="button" onclick="toggleDoubtItem(${index})" style="width: 100%; text-align: left; padding: 0.9rem; background: none; border: none; color: #fff; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+                    <div>
+                      <div style="font-size: 0.75rem; color: var(--amber); font-weight: 700; text-transform: uppercase; margin-bottom: 0.2rem;">${item.subject || 'Social Science'} • ${item.chapter || 'General'}</div>
+                      <div style="font-size: 0.88rem; font-weight: 600; line-height: 1.4; color: #f8fafc;">${item.query}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;">
+                      ${badge}
+                      <span id="arrow-${index}" style="font-size: 0.75rem; color: var(--muted); transition: transform 0.2s;">▼</span>
+                    </div>
+                  </button>
+                  <div id="reply-body-${index}" style="display: none; padding: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(0,0,0,0.25);">
+                    ${answerHeader}
+                    <div style="font-size: 0.86rem; color: #cbd5e1; line-height: 1.5; white-space: pre-wrap;">${answerContent}</div>
+                  </div>
+                </div>
+              `;
+            });
+            list.innerHTML = html;
+          } else {
+            list.innerHTML = '<p style="color: var(--amber); font-size: 0.85rem; padding: 1rem 0;">No doubts logged under this account yet. Submit your questions above to view replies!</p>';
+          }
+        })
+        .catch(() => {
+          list.innerHTML = '<p style="color: #ef4444; font-size: 0.85rem; padding: 1rem 0;">Network issue. Please try again.</p>';
+        });
+    }
+
+    function toggleDoubtItem(index) {
+      const body = document.getElementById(`reply-body-${index}`);
+      const arrow = document.getElementById(`arrow-${index}`);
+      if (body) {
+        if (body.style.display === "none") {
+          body.style.display = "block";
+          if (arrow) arrow.style.transform = "rotate(180deg)";
+        } else {
+          body.style.display = "none";
+          if (arrow) arrow.style.transform = "rotate(0deg)";
+        }
+      }
     }
   </script>
 </body>
