@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBSE Class 10 Map Practice Arena</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: linear-gradient(135deg, rgba(16, 24, 40, 0.95) 0%, rgba(20, 32, 54, 0.85) 100%);
+      --border: rgba(255, 255, 255, 0.1);
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 0.8rem;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Top Return Bar (Aligned to Right) */
+    .top-nav-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+    .btn-return-arena {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.5rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      position: relative;
+      z-index: 50;
+      transition: all 0.2s ease;
+    }
+    .btn-return-arena:hover,
+    .btn-return-arena:active {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    /* Primary Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.35rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 0.6rem;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 0.6rem 0.5rem;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+    }
+        /* Sub Tabs (Geography Chapters) */
+    .sub-tabs-container {
+      display: flex;
+      gap: 0.35rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.8rem;
+      scrollbar-width: none;
+    }
+    .sub-tabs-container::-webkit-scrollbar { display: none; }
+    .sub-tab-btn {
+      flex-shrink: 0;
+      padding: 0.45rem 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .sub-tab-btn.active {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    /* Quiz Card Container */
+    .quiz-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.1rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 1. Map Display Frame (Top of Card) */
+    .map-frame {
+      position: relative;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #061126;
+      margin-bottom: 1rem;
+    }
+    .map-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Compact 18px Pin Markers */
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 18px;
+      height: 18px;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.62rem;
+      font-weight: 900;
+      line-height: 1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 6px rgba(239, 68, 68, 0.9), 0 0 10px rgba(239, 68, 68, 0.4);
+      border: 1.5px solid #ffffff;
+      animation: pulsePin 1.8s infinite;
+      z-index: 10;
+    }
+    @keyframes pulsePin {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.12); }
+    }
+        /* 2. Question Metadata & Text Under Map */
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .q-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .score-badge {
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      color: #cbd5e1;
+    }
+    .q-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      line-height: 1.45;
+      margin-bottom: 0.35rem;
+      color: #fff;
+    }
+    .pyq-badge {
+      color: #38bdf8;
+      font-weight: 700;
+      font-size: 0.78rem;
+      margin-bottom: 0.9rem;
+      display: block;
+      letter-spacing: 0.2px;
+    }
+
+    /* 3. Options Grid Under Question */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 480px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+
+    .option-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      padding: 0.8rem 0.9rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+    }
+    .option-btn:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: var(--blue);
+    }
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.22) !important;
+      border-color: var(--emerald) !important;
+      color: #34d399 !important;
+    }
+    .option-btn.wrong {
+      background: rgba(244, 63, 94, 0.22) !important;
+      border-color: var(--rose) !important;
+      color: #fb7185 !important;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      margin-bottom: 1rem;
+    }
+
+    /* Control Bar */
+    .control-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .ctrl-btn {
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-prev { background: rgba(255, 255, 255, 0.08); color: #e2e8f0; }
+    .btn-restart {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+    }
+    .btn-restart:hover { background: rgba(239, 68, 68, 0.25); }
+    .btn-next { background: var(--amber); color: #000; flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Top-Right Back Navigation Bar -->
+    <div class="top-nav-bar">
+      <a href="activity.html" class="btn-return-arena">← Back to Arena</a>
+    </div>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+      <button type="button" class="tab-btn active" onclick="switchMainTab('all', this)">🗺️ All Maps</button>
+      <button type="button" class="tab-btn" onclick="switchMainTab('history', this)">📜 History (Ch 2)</button>
+      <button type="button" class="tab-btn" onclick="switchMainTab('geography', this)">🌍 Geography</button>
+    </div>
+
+    <!-- Geography Chapter Sub-Tabs -->
+    <div class="sub-tabs-container" id="geoSubTabs" style="display: none;">
+      <button type="button" class="sub-tab-btn active" onclick="switchGeoSubTab('all', this)">All Geography</button>
+      <button type="button" class="sub-tab-btn" onclick="switchGeoSubTab('ch3', this)">Ch 3: Dams</button>
+      <button type="button" class="sub-tab-btn" onclick="switchGeoSubTab('ch5', this)">Ch 5: Minerals & Energy</button>
+      <button type="button" class="sub-tab-btn" onclick="switchGeoSubTab('ch6', this)">Ch 6: Industries</button>
+      <button type="button" class="sub-tab-btn" onclick="switchGeoSubTab('ch7', this)">Ch 7: Ports & Airports</button>
+    </div>
+
+    <!-- Single Quiz Card Structure -->
+    <div class="quiz-card">
+      
+      <!-- 1. MAP AT TOP -->
+      <div class="map-frame">
+        <img src="india-map.png" alt="India Political Map" class="map-img">
+        <div id="pinsContainer"></div>
+      </div>
+
+      <!-- 2. QUESTION & CBSE PYQ TAG UNDER MAP -->
+      <div class="q-meta">
+        <span class="q-tag" id="categoryTag">CBSE Class 10 Map Practice</span>
+        <span class="score-badge" id="counterBadge">Question 1 of 1</span>
+      </div>
+
+      <h2 class="q-title" id="questionTitle">Loading practice question...</h2>
+      <p class="pyq-badge" id="pyqTag"></p>
+
+      <!-- 3. OPTIONS DIRECTLY UNDER QUESTION -->
+      <div class="options-grid" id="optionsGrid"></div>
+
+      <!-- 4. FEEDBACK BOX -->
+      <div class="feedback-box" id="feedbackBox"></div>
+
+      <!-- 5. BOTTOM CONTROLS -->
+      <div class="control-bar">
+        <button type="button" class="ctrl-btn btn-prev" onclick="prevQuestion()">← Prev</button>
+        <button type="button" class="ctrl-btn btn-restart" onclick="restartQuiz()">🔄 Restart</button>
+        <button type="button" class="ctrl-btn btn-next" id="nextBtn" onclick="nextQuestion()">Next →</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+          let currentMainFilter = "all";
+    let currentGeoSubFilter = "all";
+    let activeQuestionList = [];
+    let currentIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    // Fisher-Yates Randomizer: Guarantees exact 1/4 (25%) probability for Pin A, B, C, D
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function applyFilters() {
+      if (currentMainFilter === "all") {
+        activeQuestionList = [...ALL_QUESTIONS];
+      } else if (currentMainFilter === "history") {
+        activeQuestionList = ALL_QUESTIONS.filter(q => q.main === "history");
+      } else if (currentMainFilter === "geography") {
+        if (currentGeoSubFilter === "all") {
+          activeQuestionList = ALL_QUESTIONS.filter(q => q.main === "geography");
+        } else {
+          activeQuestionList = ALL_QUESTIONS.filter(q => q.main === "geography" && q.sub === currentGeoSubFilter);
+        }
+      }
+      currentIndex = 0;
+      score = 0;
+      loadQuestion(0);
+    }
+
+    function switchMainTab(filterName, btnEl) {
+      currentMainFilter = filterName;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btnEl.classList.add("active");
+      document.getElementById("geoSubTabs").style.display = (filterName === "geography") ? "flex" : "none";
+      applyFilters();
+    }
+
+    function switchGeoSubTab(subName, btnEl) {
+      currentGeoSubFilter = subName;
+      document.querySelectorAll(".sub-tab-btn").forEach(b => b.classList.remove("active"));
+      btnEl.classList.add("active");
+      applyFilters();
+    }
+        function loadQuestion(index) {
+      answered = false;
+      const q = activeQuestionList[index];
+      document.getElementById("categoryTag").textContent = q.tag;
+      document.getElementById("counterBadge").textContent = `Q ${index + 1} of ${activeQuestionList.length} • Score: ${score}`;
+      
+      // Question text without location spoilers
+      document.getElementById("questionTitle").textContent = q.title;
+
+      // CBSE PYQ Tag under question as a separate paragraph
+      const pyqEl = document.getElementById("pyqTag");
+      if (q.pyq && q.pyq.trim() !== "") {
+        pyqEl.textContent = `[CBSE ${q.pyq}]`;
+        pyqEl.style.display = "block";
+      } else {
+        pyqEl.textContent = "";
+        pyqEl.style.display = "none";
+      }
+
+      // Shuffle pins to give exact 1/4 (25%) probability to Pin A, B, C, D
+      const shuffledPins = shuffleArray([...q.pins]);
+      let correctIndex = -1;
+      const labels = ["A", "B", "C", "D"];
+      const pinsContainer = document.getElementById("pinsContainer");
+      pinsContainer.innerHTML = "";
+
+      shuffledPins.forEach((pin, idx) => {
+        const letter = labels[idx];
+        if (pin.isTarget) correctIndex = idx;
+        const p = document.createElement("div");
+        p.className = "map-pin";
+        p.style.top = pin.top;
+        p.style.left = pin.left;
+        p.textContent = letter;
+        pinsContainer.appendChild(p);
+      });
+
+      const optionsGrid = document.getElementById("optionsGrid");
+      optionsGrid.innerHTML = "";
+      labels.forEach((letter, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-btn";
+        btn.textContent = `Pin ${letter}`;
+        btn.onclick = () => selectOption(btn, idx, correctIndex, q.explanation);
+        optionsGrid.appendChild(btn);
+      });
+
+      document.getElementById("feedbackBox").style.display = "none";
+    }
+
+    function selectOption(btn, chosenIdx, correctIdx, explanation) {
+      if (answered) return;
+      answered = true;
+      const fb = document.getElementById("feedbackBox");
+      const allButtons = document.querySelectorAll(".option-btn");
+      if (chosenIdx === correctIdx) {
+        score++;
+        btn.classList.add("correct");
+        fb.style.display = "block";
+        fb.style.background = "rgba(16, 185, 129, 0.15)";
+        fb.style.border = "1px solid rgba(16, 185, 129, 0.35)";
+        fb.style.color = "#34d399";
+        fb.innerHTML = `<strong>Correct! ✓</strong> ${explanation}`;
+      } else {
+        btn.classList.add("wrong");
+        allButtons[correctIdx].classList.add("correct");
+        fb.style.display = "block";
+        fb.style.background = "rgba(244, 63, 94, 0.15)";
+        fb.style.border = "1px solid rgba(244, 63, 94, 0.35)";
+        fb.style.color = "#fb7185";
+        fb.innerHTML = `<strong>Incorrect. ✕</strong> ${explanation}`;
+      }
+      document.getElementById("counterBadge").textContent = `Q ${currentIndex + 1} of ${activeQuestionList.length} • Score: ${score}`;
+    }
+
+    function nextQuestion() {
+      if (currentIndex < activeQuestionList.length - 1) {
+        currentIndex++;
+        loadQuestion(currentIndex);
+      } else {
+        alert(`Completed! Final Score: ${score} / ${activeQuestionList.length}`);
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        loadQuestion(currentIndex);
+      }
+    }
+
+    function restartQuiz() {
+      currentIndex = 0;
+      score = 0;
+      loadQuestion(0);
+    }
+
+    const ALL_QUESTIONS = [
+          // --- HISTORY: NATIONALISM IN INDIA (PART 1) ---
+      {
+        main: "history", sub: "ch2",
+        tag: "History • Congress Sessions",
+        title: "The place where the Indian National Congress session was held in September 1920.",
+        pyq: "2016, 2018, 2020, 2023, 2024",
+        pins: [
+          { top: "54.5%", left: "70.6%", isTarget: true }, // Calcutta
+          { top: "57.6%", left: "41.0%" }, // Nagpur
+          { top: "83.5%", left: "43.4%" }, // Madras
+          { top: "27.0%", left: "26.7%" }  // Amritsar
+        ],
+        explanation: "Calcutta (Kolkata), West Bengal — where Gandhiji convinced leaders to start the Non-Cooperation Movement for Khilafat and Swaraj."
+      },
+      {
+        main: "history", sub: "ch2",
+        tag: "History • Congress Sessions",
+        title: "The place where the Indian National Congress session was held in December 1920.",
+        pyq: "2015, 2017, 2019, 2022, 2024",
+        pins: [
+          { top: "57.6%", left: "41.0%", isTarget: true }, // Nagpur
+          { top: "54.5%", left: "70.6%" }, // Calcutta
+          { top: "83.5%", left: "43.4%" }, // Madras
+          { top: "53.1%", left: "19.0%" }  // Ahmedabad
+        ],
+        explanation: "Nagpur, Maharashtra — where the Non-Cooperation programme was formally adopted by the Congress."
+      },
+      {
+        main: "history", sub: "ch2",
+        tag: "History • Congress Sessions",
+        title: "The place where the Indian National Congress session was held in 1927.",
+        pyq: "2016, 2018, 2020, 2023",
+        pins: [
+          { top: "83.5%", left: "43.4%", isTarget: true }, // Madras
+          { top: "54.5%", left: "70.6%" }, // Calcutta
+          { top: "57.6%", left: "41.0%" }, // Nagpur
+          { top: "27.0%", left: "26.7%" }  // Amritsar
+        ],
+        explanation: "Madras (Chennai), Tamil Nadu — presided over by Dr. M.A. Ansari, where Congress resolved to boycott the Simon Commission."
+      },
+      {
+        main: "history", sub: "ch2",
+        tag: "History • National Movement",
+        title: "The place where the movement of Indigo Planters took place.",
+        pyq: "2015, 2017, 2018, 2020, 2023, 2024",
+        pins: [
+          { top: "40.6%", left: "58.4%", isTarget: true }, // Champaran
+          { top: "27.0%", left: "26.7%" }, // Amritsar
+          { top: "41.0%", left: "54.4%" }, // Chauri-Chaura
+          { top: "54.5%", left: "70.6%" }  // Calcutta
+        ],
+        explanation: "Champaran, Bihar — where Mahatma Gandhi organized his first Satyagraha in India (1917) against the oppressive tinkathia system."
+      },
+      {
+        main: "history", sub: "ch2",
+        tag: "History • National Movement",
+        title: "The place where the Peasant Satyagraha was organized in Gujarat.",
+        pyq: "2016, 2019, 2022",
+        pins: [
+          { top: "53.1%", left: "19.0%", isTarget: true }, // Kheda
+          { top: "57.7%", left: "19.0%" }, // Dandi
+          { top: "57.6%", left: "41.0%" }, // Nagpur
+          { top: "40.6%", left: "58.4%" }  // Champaran
+        ],
+        explanation: "Kheda, Gujarat — where peasants demanded revenue collection relaxation in 1917 following crop failure and epidemic."
+      },
+      {
+        main: "history", sub: "ch2",
+        tag: "History • National Movement",
+        title: "The place where Mahatma Gandhi organized a Satyagraha for Cotton Mill Workers.",
+        pyq: "2015, 2018, 2020, 2024",
+        pins: [
+          { top: "53.1%", left: "19.0%", isTarget: true }, // Ahmedabad
+          { top: "57.7%", left: "19.0%" }, // Surat
+          { top: "27.0%", left: "26.7%" }, // Amritsar
+          { top: "41.0%", left: "54.4%" }  // Chauri-Chaura
+        ],
+        explanation: "Ahmedabad, Gujarat — where Gandhiji led mill workers in 1918 to demand a 35% wage increase."
+      },
+      {
+        main: "history", sub: "ch2",
+        tag: "History • National Movement",
+        title: "The place where the Jallianwala Bagh incident / massacre occurred.",
+        pyq: "2015, 2016, 2017, 2019, 2020, 2023, 2024",
+        pins: [
+          { top: "27.0%", left: "26.7%", isTarget: true }, // Amritsar
+          { top: "41.0%", left: "54.4%" }, // Chauri-Chaura
+          { top: "40.6%", left: "58.4%" }, // Champaran
+          { top: "53.1%", left: "19.0%" }  // Kheda
+        ],
+        explanation: "Amritsar, Punjab — where General Dyer opened fire on unarmed demonstrators gathered at Jallianwala Bagh on 13 April 1919."
+      },
+      {
+        main: "history", sub: "ch2",
+        tag: "History • National Movement",
+        title: "The place where the calling off / withdrawal of the Non-Cooperation Movement took place due to violence.",
+        pyq: "2016, 2017, 2018, 2020, 2023",
+        pins: [
+          { top: "41.0%", left: "54.4%", isTarget: true }, // Chauri-Chaura
+          { top: "40.6%", left: "58.4%" }, // Champaran
+          { top: "57.6%", left: "41.0%" }, // Nagpur
+          { top: "27.0%", left: "26.7%" }  // Amritsar
+        ],
+        explanation: "Chauri Chaura, Gorakhpur, Uttar Pradesh — where violence in February 1922 compelled Gandhiji to withdraw the movement."
+      },
+            // --- HISTORY (DANDI) & DAMS (1 TO 7) ---
+      {
+        main: "history", sub: "ch2",
+        tag: "History • National Movement",
+        title: "The place from where the Civil Disobedience Movement / Dandi March was started or where the Salt Law was broken.",
+        pyq: "2017, 2019, 2020, 2022, 2024",
+        pins: [
+          { top: "57.7%", left: "19.0%", isTarget: true }, // Dandi
+          { top: "53.1%", left: "19.0%" }, // Ahmedabad
+          { top: "83.5%", left: "43.4%" }, // Madras
+          { top: "54.5%", left: "70.6%" }  // Calcutta
+        ],
+        explanation: "Dandi, Gujarat — where Gandhiji manufactured salt on 6 April 1930 to break the British Salt Law."
+      },
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Tehri Dam.",
+        pyq: "2016, 2018, 2020, 2023",
+        pins: [
+          { top: "30.6%", left: "37.7%", isTarget: true }, // Tehri
+          { top: "21.2%", left: "27.2%" }, // Salal
+          { top: "25.7%", left: "31.7%" }, // Bhakra-Nangal
+          { top: "56.0%", left: "56.7%" }  // Hirakud
+        ],
+        explanation: "Tehri Dam — Uttarakhand (Bhagirathi River)."
+      },
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Sardar Sarovar Dam.",
+        pyq: "2015, 2017, 2019, 2022, 2024",
+        pins: [
+          { top: "56.0%", left: "21.9%", isTarget: true }, // Sardar Sarovar
+          { top: "45.8%", left: "29.2%" }, // Rana Pratap Sagar
+          { top: "73.7%", left: "30.6%" }, // Tungabhadra
+          { top: "72.3%", left: "39.7%" }  // Nagarjuna Sagar
+        ],
+        explanation: "Sardar Sarovar Dam — Gujarat (Narmada River)."
+      },
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Bhakra Nangal Dam.",
+        pyq: "2015, 2018, 2020, 2023",
+        pins: [
+          { top: "25.7%", left: "31.7%", isTarget: true }, // Bhakra-Nangal
+          { top: "21.2%", left: "27.2%" }, // Salal
+          { top: "30.6%", left: "37.7%" }, // Tehri
+          { top: "56.0%", left: "21.9%" }  // Sardar Sarovar
+        ],
+        explanation: "Bhakra Nangal Dam — Himachal Pradesh / Punjab border (Satluj River)."
+      },
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Hirakud Dam.",
+        pyq: "2016, 2017, 2019, 2024",
+        pins: [
+          { top: "56.0%", left: "56.7%", isTarget: true }, // Hirakud
+          { top: "56.0%", left: "21.9%" }, // Sardar Sarovar
+          { top: "72.3%", left: "39.7%" }, // Nagarjuna Sagar
+          { top: "73.7%", left: "30.6%" }  // Tungabhadra
+        ],
+        explanation: "Hirakud Dam — Odisha (Mahanadi River)."
+      },
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Rana Pratap Sagar Dam.",
+        pyq: "2017, 2022",
+        pins: [
+          { top: "45.8%", left: "29.2%", isTarget: true }, // Rana Pratap Sagar
+          { top: "56.0%", left: "21.9%" }, // Sardar Sarovar
+          { top: "56.0%", left: "56.7%" }, // Hirakud
+          { top: "72.3%", left: "39.7%" }  // Nagarjuna Sagar
+        ],
+        explanation: "Rana Pratap Sagar Dam — Rajasthan (Chambal River)."
+      },
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Salal Dam.",
+        pyq: "2018, 2020",
+        pins: [
+          { top: "21.2%", left: "27.2%", isTarget: true }, // Salal
+          { top: "25.7%", left: "31.7%" }, // Bhakra-Nangal
+          { top: "30.6%", left: "37.7%" }, // Tehri
+          { top: "45.8%", left: "29.2%" }  // Rana Pratap Sagar
+        ],
+        explanation: "Salal Dam — Jammu & Kashmir (Chenab River)."
+      },
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Nagarjuna Sagar Dam.",
+        pyq: "2016, 2019, 2023",
+        pins: [
+          { top: "72.3%", left: "39.7%", isTarget: true }, // Nagarjuna Sagar
+          { top: "56.0%", left: "56.7%" }, // Hirakud
+          { top: "73.7%", left: "30.6%" }, // Tungabhadra
+          { top: "45.8%", left: "29.2%" }  // Rana Pratap Sagar
+        ],
+        explanation: "Nagarjuna Sagar Dam — Telangana / Andhra Pradesh border (Krishna River)."
+      },
+            // --- DAMS (TUNGABHADRA), IRON ORE & COAL (1-2) ---
+      {
+        main: "geography", sub: "ch3",
+        tag: "Water Resources • Dams",
+        title: "Locate and label Tungabhadra Dam.",
+        pyq: "2015, 2024",
+        pins: [
+          { top: "73.7%", left: "30.6%", isTarget: true }, // Tungabhadra
+          { top: "72.3%", left: "39.7%" }, // Nagarjuna Sagar
+          { top: "56.0%", left: "21.9%" }, // Sardar Sarovar
+          { top: "56.0%", left: "56.7%" }  // Hirakud
+        ],
+        explanation: "Tungabhadra Dam — Karnataka (Tungabhadra River)."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Iron Ore",
+        title: "Locate and label Mayurbhanj Iron Ore Mine.",
+        pyq: "2016, 2018, 2023",
+        pins: [
+          { top: "55.2%", left: "65.2%", isTarget: true }, // Mayurbhanj
+          { top: "57.8%", left: "49.9%" }, // Durg
+          { top: "75.7%", left: "32.9%" }, // Bellary
+          { top: "82.0%", left: "26.4%" }  // Kudremukh
+        ],
+        explanation: "Mayurbhanj Iron Ore Mine — Odisha."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Iron Ore",
+        title: "Locate and label Bailadila Iron Ore Mine.",
+        pyq: "2015, 2017, 2020, 2024",
+        pins: [
+          { top: "64.6%", left: "49.4%", isTarget: true }, // Bailadila
+          { top: "57.8%", left: "49.9%" }, // Durg
+          { top: "75.7%", left: "32.9%" }, // Bellary
+          { top: "82.0%", left: "26.4%" }  // Kudremukh
+        ],
+        explanation: "Bailadila Iron Ore Mine — Bastar district, Chhattisgarh."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Iron Ore",
+        title: "Locate and label Durg Iron Ore Mine.",
+        pyq: "2018, 2022",
+        pins: [
+          { top: "57.8%", left: "49.9%", isTarget: true }, // Durg
+          { top: "55.2%", left: "65.2%" }, // Mayurbhanj
+          { top: "64.6%", left: "49.4%" }, // Bailadila
+          { top: "75.7%", left: "32.9%" }  // Bellary
+        ],
+        explanation: "Durg Iron Ore Mine — Chhattisgarh."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Iron Ore",
+        title: "Locate and label Bellary (Ballari) Iron Ore Mine.",
+        pyq: "2017, 2019",
+        pins: [
+          { top: "75.7%", left: "32.9%", isTarget: true }, // Bellary
+          { top: "82.0%", left: "26.4%" }, // Kudremukh
+          { top: "64.6%", left: "49.4%" }, // Bailadila
+          { top: "57.8%", left: "49.9%" }  // Durg
+        ],
+        explanation: "Bellary (Ballari) Iron Ore Mine — Karnataka."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Iron Ore",
+        title: "Locate and label Kudremukh Iron Ore Mine.",
+        pyq: "2016, 2020, 2024",
+        pins: [
+          { top: "82.0%", left: "26.4%", isTarget: true }, // Kudremukh
+          { top: "75.7%", left: "32.9%" }, // Bellary
+          { top: "64.6%", left: "49.4%" }, // Bailadila
+          { top: "55.2%", left: "65.2%" }  // Mayurbhanj
+        ],
+        explanation: "Kudremukh Iron Ore Mine — Western Ghats, Karnataka."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Coal Mines",
+        title: "Locate and label Bokaro Coal Mine.",
+        pyq: "2015, 2017, 2019, 2023",
+        pins: [
+          { top: "49.7%", left: "62.7%", isTarget: true }, // Bokaro
+          { top: "48.5%", left: "68.2%" }, // Raniganj
+          { top: "56.5%", left: "62.8%" }, // Talcher
+          { top: "48.1%", left: "51.5%" }  // Singrauli
+        ],
+        explanation: "Bokaro Coal Mine — Jharkhand."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Coal Mines",
+        title: "Locate and label Raniganj Coal Mine.",
+        pyq: "2016, 2018, 2020, 2024",
+        pins: [
+          { top: "48.5%", left: "68.2%", isTarget: true }, // Raniganj
+          { top: "49.7%", left: "62.7%" }, // Bokaro
+          { top: "56.5%", left: "62.8%" }, // Talcher
+          { top: "87.5%", left: "41.9%" }  // Neyveli
+        ],
+        explanation: "Raniganj Coal Mine — Damodar Valley, West Bengal."
+      },
+            // --- COAL (TALCHER, NEYVELI) & OIL FIELDS (ALL 6) ---
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Coal Mines",
+        title: "Locate and label Talcher Coal Mine.",
+        pyq: "2017, 2022",
+        pins: [
+          { top: "56.5%", left: "62.8%", isTarget: true }, // Talcher
+          { top: "49.7%", left: "62.7%" }, // Bokaro
+          { top: "48.5%", left: "68.2%" }, // Raniganj
+          { top: "55.2%", left: "65.2%" }  // Mayurbhanj
+        ],
+        explanation: "Talcher Coal Mine — Mahanadi Basin, Odisha."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Coal Mines",
+        title: "Locate and label Neyveli Coal Mine.",
+        pyq: "2018, 2020, 2023",
+        pins: [
+          { top: "87.5%", left: "41.9%", isTarget: true }, // Neyveli
+          { top: "87.2%", left: "38.1%" }, // Salem
+          { top: "56.5%", left: "62.8%" }, // Talcher
+          { top: "48.1%", left: "51.5%" }  // Singrauli
+        ],
+        explanation: "Neyveli Coal Mine (Lignite) — Tamil Nadu."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Oil Fields",
+        title: "Locate and label Digboi Oil Field.",
+        pyq: "2015, 2017, 2019, 2023",
+        pins: [
+          { top: "35.1%", left: "91.0%", isTarget: true }, // Digboi
+          { top: "36.5%", left: "88.5%" }, // Naharkatia
+          { top: "52.1%", left: "22.0%" }, // Kalol
+          { top: "56.3%", left: "20.3%" }  // Ankleshwar
+        ],
+        explanation: "Digboi Oil Field — Assam (oldest oil field in India)."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Oil Fields",
+        title: "Locate and label Mumbai High Oil Field.",
+        pyq: "2016, 2018, 2020, 2024",
+        pins: [
+          { top: "65.4%", left: "16.2%", isTarget: true }, // Mumbai High
+          { top: "61.9%", left: "13.3%" }, // Bassein
+          { top: "56.3%", left: "20.3%" }, // Ankleshwar
+          { top: "52.1%", left: "22.0%" }  // Kalol
+        ],
+        explanation: "Mumbai High Oil Field — Offshore Arabian Sea, Maharashtra."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Oil Fields",
+        title: "Locate and label Bassein Oil Field.",
+        pyq: "2017, 2022",
+        pins: [
+          { top: "61.9%", left: "13.3%", isTarget: true }, // Bassein
+          { top: "56.3%", left: "20.3%" }, // Ankleshwar
+          { top: "65.4%", left: "16.2%" }, // Mumbai High
+          { top: "52.1%", left: "22.0%" }  // Kalol
+        ],
+        explanation: "Bassein Oil & Gas Field — Offshore Arabian Sea."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Oil Fields",
+        title: "Locate and label Ankaleshwar Oil Field.",
+        pyq: "2015, 2018, 2020",
+        pins: [
+          { top: "56.3%", left: "20.3%", isTarget: true }, // Ankleshwar
+          { top: "52.1%", left: "22.0%" }, // Kalol
+          { top: "61.9%", left: "13.3%" }, // Bassein
+          { top: "35.1%", left: "91.0%" }  // Digboi
+        ],
+        explanation: "Ankaleshwar Oil Field — Gujarat."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Oil Fields",
+        title: "Locate and label Kalol Oil Field.",
+        pyq: "2019, 2023",
+        pins: [
+          { top: "52.1%", left: "22.0%", isTarget: true }, // Kalol
+          { top: "56.3%", left: "20.3%" }, // Ankleshwar
+          { top: "61.9%", left: "13.3%" }, // Bassein
+          { top: "65.4%", left: "16.2%" }  // Mumbai High
+        ],
+        explanation: "Kalol Oil Field — Gujarat."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Oil Fields",
+        title: "Locate and label Naharkatia Oil Field.",
+        pyq: "2016, 2024",
+        pins: [
+          { top: "36.5%", left: "88.5%", isTarget: true }, // Naharkatia
+          { top: "35.1%", left: "91.0%" }, // Digboi
+          { top: "56.3%", left: "20.3%" }, // Ankleshwar
+          { top: "65.4%", left: "16.2%" }  // Mumbai High
+        ],
+        explanation: "Naharkatia Oil Field — Assam."
+      },
+            // --- THERMAL, NUCLEAR POWER & COTTON TEXTILES (1-2) ---
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Thermal Power",
+        title: "Locate and label Namrup Thermal Power Plant.",
+        pyq: "2016, 2019, 2022",
+        pins: [
+          { top: "35.1%", left: "91.0%", isTarget: true }, // Namrup
+          { top: "48.1%", left: "51.5%" }, // Singrauli
+          { top: "65.1%", left: "42.3%" }, // Ramagundam
+          { top: "36.8%", left: "39.5%" }  // Narora
+        ],
+        explanation: "Namrup Thermal Power Plant — Assam."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Thermal Power",
+        title: "Locate and label Singrauli Thermal Power Plant.",
+        pyq: "2015, 2017, 2020, 2023",
+        pins: [
+          { top: "48.1%", left: "51.5%", isTarget: true }, // Singrauli
+          { top: "35.1%", left: "91.0%" }, // Namrup
+          { top: "65.1%", left: "42.3%" }, // Ramagundam
+          { top: "58.3%", left: "46.6%" }  // Bhilai
+        ],
+        explanation: "Singrauli Thermal Power Plant — Madhya Pradesh."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Thermal Power",
+        title: "Locate and label Ramagundam Thermal Power Plant.",
+        pyq: "2018, 2024",
+        pins: [
+          { top: "65.1%", left: "42.3%", isTarget: true }, // Ramagundam
+          { top: "48.1%", left: "51.5%" }, // Singrauli
+          { top: "35.1%", left: "91.0%" }, // Namrup
+          { top: "69.0%", left: "39.3%" }  // Hyderabad
+        ],
+        explanation: "Ramagundam Thermal Power Plant — Telangana."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Nuclear Power",
+        title: "Locate and label Narora Nuclear Power Plant.",
+        pyq: "2015, 2017, 2019, 2022, 2024",
+        pins: [
+          { top: "36.8%", left: "39.5%", isTarget: true }, // Narora
+          { top: "57.5%", left: "20.6%" }, // Kakrapar
+          { top: "62.1%", left: "19.3%" }, // Tarapur
+          { top: "83.5%", left: "43.4%" }  // Kalpakkam
+        ],
+        explanation: "Narora Nuclear Power Plant — Uttar Pradesh."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Nuclear Power",
+        title: "Locate and label Tarapur Nuclear Power Plant.",
+        pyq: "2015, 2017, 2019, 2024",
+        pins: [
+          { top: "62.1%", left: "19.3%", isTarget: true }, // Tarapur
+          { top: "36.8%", left: "39.5%" }, // Narora
+          { top: "57.5%", left: "20.6%" }, // Kakrapar
+          { top: "83.5%", left: "43.4%" }  // Kalpakkam
+        ],
+        explanation: "Tarapur Nuclear Power Plant — Maharashtra."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Nuclear Power",
+        title: "Locate and label Kakrapar Nuclear Power Plant.",
+        pyq: "2018, 2022",
+        pins: [
+          { top: "57.5%", left: "20.6%", isTarget: true }, // Kakrapar
+          { top: "36.8%", left: "39.5%" }, // Narora
+          { top: "62.1%", left: "19.3%" }, // Tarapur
+          { top: "83.5%", left: "43.4%" }  // Kalpakkam
+        ],
+        explanation: "Kakrapar Nuclear Power Plant — Gujarat."
+      },
+      {
+        main: "geography", sub: "ch5",
+        tag: "Minerals & Energy • Nuclear Power",
+        title: "Locate and label Kalpakkam Nuclear Power Plant.",
+        pyq: "2016, 2018, 2020, 2023",
+        pins: [
+          { top: "83.5%", left: "43.4%", isTarget: true }, // Kalpakkam
+          { top: "36.8%", left: "39.5%" }, // Narora
+          { top: "57.5%", left: "20.6%" }, // Kakrapar
+          { top: "62.1%", left: "19.3%" }  // Tarapur
+        ],
+        explanation: "Kalpakkam Nuclear Power Plant — Tamil Nadu."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Cotton Textile",
+        title: "Locate and label Mumbai Cotton Textile Centre.",
+        pyq: "2016, 2019, 2023",
+        pins: [
+          { top: "64.9%", left: "19.3%", isTarget: true }, // Mumbai
+          { top: "66.7%", left: "21.1%" }, // Pune
+          { top: "57.7%", left: "19.0%" }, // Surat
+          { top: "88.1%", left: "33.0%" }  // Coimbatore
+        ],
+        explanation: "Mumbai Cotton Textile Centre — Maharashtra."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Cotton Textile",
+        title: "Locate and label Indore Cotton Textile Centre.",
+        pyq: "2017, 2020, 2024",
+        pins: [
+          { top: "53.2%", left: "29.8%", isTarget: true }, // Indore
+          { top: "42.4%", left: "43.2%" }, // Kanpur
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "57.7%", left: "19.0%" }  // Surat
+        ],
+        explanation: "Indore Cotton Textile Centre — Madhya Pradesh."
+      },
+            // --- COTTON TEXTILES (3-5) & IRON AND STEEL (1-5) ---
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Cotton Textile",
+        title: "Locate and label Surat Cotton Textile Centre.",
+        pyq: "2015, 2018, 2022",
+        pins: [
+          { top: "57.7%", left: "19.0%", isTarget: true }, // Surat
+          { top: "53.2%", left: "29.8%" }, // Indore
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "88.1%", left: "33.0%" }  // Coimbatore
+        ],
+        explanation: "Surat Cotton Textile Centre — Gujarat."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Cotton Textile",
+        title: "Locate and label Kanpur Cotton Textile Centre.",
+        pyq: "2016, 2018, 2020, 2024",
+        pins: [
+          { top: "42.4%", left: "43.2%", isTarget: true }, // Kanpur
+          { top: "53.2%", left: "29.8%" }, // Indore
+          { top: "57.7%", left: "19.0%" }, // Surat
+          { top: "88.1%", left: "33.0%" }  // Coimbatore
+        ],
+        explanation: "Kanpur Cotton Textile Centre — Uttar Pradesh."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Cotton Textile",
+        title: "Locate and label Coimbatore Cotton Textile Centre.",
+        pyq: "2017, 2023",
+        pins: [
+          { top: "88.1%", left: "33.0%", isTarget: true }, // Coimbatore
+          { top: "87.2%", left: "38.1%" }, // Salem
+          { top: "82.5%", left: "35.1%" }, // Bengaluru
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Coimbatore Cotton Textile Centre — Tamil Nadu."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Iron & Steel",
+        title: "Locate and label Jamshedpur Iron and Steel Plant.",
+        pyq: "2015, 2017, 2019, 2023, 2024",
+        pins: [
+          { top: "53.3%", left: "64.9%", isTarget: true }, // Jamshedpur
+          { top: "49.7%", left: "62.7%" }, // Bokaro
+          { top: "52.5%", left: "68.3%" }, // Durgapur
+          { top: "58.3%", left: "46.6%" }  // Bhilai
+        ],
+        explanation: "Jamshedpur Iron and Steel Plant (TISCO) — Jharkhand."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Iron & Steel",
+        title: "Locate and label Bhilai Iron and Steel Plant.",
+        pyq: "2016, 2018, 2020, 2022",
+        pins: [
+          { top: "58.3%", left: "46.6%", isTarget: true }, // Bhilai
+          { top: "57.8%", left: "49.9%" }, // Durg
+          { top: "53.3%", left: "64.9%" }, // Jamshedpur
+          { top: "72.9%", left: "32.9%" }  // Vijayanagar
+        ],
+        explanation: "Bhilai Iron and Steel Plant — Durg district, Chhattisgarh."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Iron & Steel",
+        title: "Locate and label Durgapur Iron and Steel Plant.",
+        pyq: "2015, 2018, 2020, 2024",
+        pins: [
+          { top: "52.5%", left: "68.3%", isTarget: true }, // Durgapur
+          { top: "49.7%", left: "62.7%" }, // Bokaro
+          { top: "53.3%", left: "64.9%" }, // Jamshedpur
+          { top: "54.5%", left: "70.6%" }  // Kolkata
+        ],
+        explanation: "Durgapur Iron and Steel Plant — West Bengal."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Iron & Steel",
+        title: "Locate and label Bokaro Iron and Steel Plant.",
+        pyq: "2017, 2019, 2023",
+        pins: [
+          { top: "49.7%", left: "62.7%", isTarget: true }, // Bokaro
+          { top: "52.5%", left: "68.3%" }, // Durgapur
+          { top: "53.3%", left: "64.9%" }, // Jamshedpur
+          { top: "58.3%", left: "46.6%" }  // Bhilai
+        ],
+        explanation: "Bokaro Iron and Steel Plant — Jharkhand."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Iron & Steel",
+        title: "Locate and label Vijayanagar Iron and Steel Plant.",
+        pyq: "2017, 2020",
+        pins: [
+          { top: "72.9%", left: "32.9%", isTarget: true }, // Vijayanagar
+          { top: "87.2%", left: "38.1%" }, // Salem
+          { top: "82.5%", left: "35.1%" }, // Bengaluru
+          { top: "58.3%", left: "46.6%" }  // Bhilai
+        ],
+        explanation: "Vijayanagar Iron and Steel Plant — Bellary-Hospet, Karnataka."
+      },
+            // --- STEEL (SALEM) & SOFTWARE TECHNOLOGY PARKS (1-7) ---
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Iron & Steel",
+        title: "Locate and label Salem Iron and Steel Plant.",
+        pyq: "2019, 2024",
+        pins: [
+          { top: "87.2%", left: "38.1%", isTarget: true }, // Salem
+          { top: "72.9%", left: "32.9%" }, // Vijayanagar
+          { top: "88.1%", left: "33.0%" }, // Coimbatore
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Salem Iron and Steel Plant — Tamil Nadu."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Noida Software Technology Park.",
+        pyq: "2016, 2018, 2020, 2023, 2024",
+        pins: [
+          { top: "35.1%", left: "35.8%", isTarget: true }, // Noida
+          { top: "53.1%", left: "19.0%" }, // Gandhinagar
+          { top: "66.7%", left: "21.1%" }, // Pune
+          { top: "82.5%", left: "35.1%" }  // Bengaluru
+        ],
+        explanation: "Noida Software Technology Park — Uttar Pradesh."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Bengaluru Software Technology Park.",
+        pyq: "2015, 2017, 2019, 2022, 2024",
+        pins: [
+          { top: "82.5%", left: "35.1%", isTarget: true }, // Bengaluru
+          { top: "69.0%", left: "39.3%" }, // Hyderabad
+          { top: "83.5%", left: "43.4%" }, // Chennai
+          { top: "95.7%", left: "33.0%" }  // Thiruvananthapuram
+        ],
+        explanation: "Bengaluru Software Technology Park — Karnataka."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Hyderabad Software Technology Park.",
+        pyq: "2016, 2018, 2020",
+        pins: [
+          { top: "69.0%", left: "39.3%", isTarget: true }, // Hyderabad
+          { top: "66.7%", left: "21.1%" }, // Pune
+          { top: "82.5%", left: "35.1%" }, // Bengaluru
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Hyderabad Software Technology Park (HITEC City) — Telangana."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Pune Software Technology Park.",
+        pyq: "2017, 2019, 2023",
+        pins: [
+          { top: "66.7%", left: "21.1%", isTarget: true }, // Pune
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "69.0%", left: "39.3%" }, // Hyderabad
+          { top: "82.5%", left: "35.1%" }  // Bengaluru
+        ],
+        explanation: "Pune Software Technology Park (Hinjawadi) — Maharashtra."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Chennai Software Technology Park.",
+        pyq: "2015, 2022",
+        pins: [
+          { top: "83.5%", left: "43.4%", isTarget: true }, // Chennai
+          { top: "82.5%", left: "35.1%" }, // Bengaluru
+          { top: "69.0%", left: "39.3%" }, // Hyderabad
+          { top: "95.7%", left: "33.0%" }  // Thiruvananthapuram
+        ],
+        explanation: "Chennai Software Technology Park (TIDEL Park) — Tamil Nadu."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Gandhinagar Software Technology Park.",
+        pyq: "2018, 2024",
+        pins: [
+          { top: "53.1%", left: "19.0%", isTarget: true }, // Gandhinagar
+          { top: "35.1%", left: "35.8%" }, // Noida
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "66.7%", left: "21.1%" }  // Pune
+        ],
+        explanation: "Gandhinagar Software Technology Park (GIFT / Infocity) — Gujarat."
+      },
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Thiruvananthapuram Software Technology Park.",
+        pyq: "2019, 2023",
+        pins: [
+          { top: "95.7%", left: "33.0%", isTarget: true }, // Thiruvananthapuram
+          { top: "82.5%", left: "35.1%" }, // Bengaluru
+          { top: "90.8%", left: "30.0%" }, // Kochi
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Thiruvananthapuram Software Technology Park (Technopark) — Kerala."
+      },
+            // --- STP (MUMBAI) & MAJOR SEA PORTS (1-7) ---
+      {
+        main: "geography", sub: "ch6",
+        tag: "Manufacturing • Software Tech Parks",
+        title: "Locate and label Mumbai Software Technology Park.",
+        pyq: "",
+        pins: [
+          { top: "64.9%", left: "19.3%", isTarget: true }, // Mumbai
+          { top: "66.7%", left: "21.1%" }, // Pune
+          { top: "53.1%", left: "19.0%" }, // Gandhinagar
+          { top: "82.5%", left: "35.1%" }  // Bengaluru
+        ],
+        explanation: "Mumbai Software Technology Park — Maharashtra."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Kandla (Deendayal) Sea Port.",
+        pyq: "2015, 2017, 2019, 2023, 2024",
+        pins: [
+          { top: "51.4%", left: "6.7%", isTarget: true },  // Kandla
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "75.4%", left: "22.4%" }, // Marmagao
+          { top: "82.3%", left: "25.3%" }  // New Mangalore
+        ],
+        explanation: "Kandla (Deendayal) Sea Port — Gulf of Kachchh, Gujarat."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Mumbai Sea Port.",
+        pyq: "",
+        pins: [
+          { top: "64.9%", left: "19.3%", isTarget: true }, // Mumbai
+          { top: "51.4%", left: "6.7%" },  // Kandla
+          { top: "75.4%", left: "22.4%" }, // Marmagao
+          { top: "82.3%", left: "25.3%" }  // New Mangalore
+        ],
+        explanation: "Mumbai Sea Port — Maharashtra (India's biggest natural port and harbour)."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Marmagao Sea Port.",
+        pyq: "2016, 2018, 2020, 2022",
+        pins: [
+          { top: "75.4%", left: "22.4%", isTarget: true }, // Marmagao
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "82.3%", left: "25.3%" }, // New Mangalore
+          { top: "90.8%", left: "30.0%" }  // Kochi
+        ],
+        explanation: "Marmagao Sea Port — Goa (premier iron ore exporting port)."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Kochi (Cochin) Sea Port.",
+        pyq: "2015, 2018, 2024",
+        pins: [
+          { top: "90.8%", left: "30.0%", isTarget: true }, // Kochi
+          { top: "82.3%", left: "25.3%" }, // New Mangalore
+          { top: "94.0%", left: "37.1%" }, // Tuticorin
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Kochi (Cochin) Sea Port — Kerala (natural harbour situated at the entrance of a lagoon)."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label New Mangalore Sea Port.",
+        pyq: "2017, 2020",
+        pins: [
+          { top: "82.3%", left: "25.3%", isTarget: true }, // New Mangalore
+          { top: "75.4%", left: "22.4%" }, // Marmagao
+          { top: "90.8%", left: "30.0%" }, // Kochi
+          { top: "94.0%", left: "37.1%" }  // Tuticorin
+        ],
+        explanation: "New Mangalore Sea Port — Karnataka (caters to export of Kudremukh iron ore concentrates)."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Tuticorin Sea Port.",
+        pyq: "2016, 2019, 2023",
+        pins: [
+          { top: "94.0%", left: "37.1%", isTarget: true }, // Tuticorin
+          { top: "90.8%", left: "30.0%" }, // Kochi
+          { top: "83.5%", left: "43.4%" }, // Chennai
+          { top: "67.9%", left: "54.9%" }  // Visakhapatnam
+        ],
+        explanation: "Tuticorin Sea Port (V.O.C. Port) — Tamil Nadu."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Chennai Sea Port.",
+        pyq: "2017, 2022",
+        pins: [
+          { top: "83.5%", left: "43.4%", isTarget: true }, // Chennai
+          { top: "94.0%", left: "37.1%" }, // Tuticorin
+          { top: "67.9%", left: "54.9%" }, // Visakhapatnam
+          { top: "59.7%", left: "65.6%" }  // Paradip
+        ],
+        explanation: "Chennai Sea Port — Tamil Nadu (one of India's oldest artificial ports)."
+      },
+            // --- SEA PORTS (8-10) & INTERNATIONAL AIRPORTS (ALL 6) ---
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Visakhapatnam Sea Port.",
+        pyq: "2015, 2018, 2020, 2024",
+        pins: [
+          { top: "67.9%", left: "54.9%", isTarget: true }, // Visakhapatnam
+          { top: "59.7%", left: "65.6%" }, // Paradip
+          { top: "55.2%", left: "69.1%" }, // Haldia
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Visakhapatnam Sea Port — Andhra Pradesh (deepest landlocked and protected port)."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Paradip (Paradwip) Sea Port.",
+        pyq: "2016, 2018, 2020, 2023",
+        pins: [
+          { top: "59.7%", left: "65.6%", isTarget: true }, // Paradip
+          { top: "67.9%", left: "54.9%" }, // Visakhapatnam
+          { top: "55.2%", left: "69.1%" }, // Haldia
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Paradip (Paradwip) Sea Port — Odisha (specializes in iron ore export)."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Major Sea Ports",
+        title: "Locate and label Haldia Sea Port.",
+        pyq: "2017, 2019, 2024",
+        pins: [
+          { top: "55.2%", left: "69.1%", isTarget: true }, // Haldia
+          { top: "59.7%", left: "65.6%" }, // Paradip
+          { top: "54.5%", left: "70.6%" }, // Kolkata
+          { top: "67.9%", left: "54.9%" }  // Visakhapatnam
+        ],
+        explanation: "Haldia Sea Port — West Bengal (subsidiary port on Hooghly river to relieve Kolkata)."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Airports",
+        title: "Locate and label Raja Sansi (Sri Guru Ram Dass Jee) International Airport.",
+        pyq: "2016, 2018, 2020, 2023, 2024",
+        pins: [
+          { top: "27.0%", left: "26.7%", isTarget: true }, // Amritsar
+          { top: "34.9%", left: "34.5%" }, // Delhi
+          { top: "54.5%", left: "70.6%" }, // Kolkata
+          { top: "64.9%", left: "19.3%" }  // Mumbai
+        ],
+        explanation: "Raja Sansi (Sri Guru Ram Dass Jee) International Airport — Amritsar, Punjab."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Airports",
+        title: "Locate and label Indira Gandhi International Airport.",
+        pyq: "2015, 2017, 2019, 2022, 2024",
+        pins: [
+          { top: "34.9%", left: "34.5%", isTarget: true }, // Delhi
+          { top: "27.0%", left: "26.7%" }, // Amritsar
+          { top: "54.5%", left: "70.6%" }, // Kolkata
+          { top: "69.0%", left: "39.3%" }  // Hyderabad
+        ],
+        explanation: "Indira Gandhi International Airport — New Delhi."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Airports",
+        title: "Locate and label Chhatrapati Shivaji Maharaj International Airport.",
+        pyq: "2016, 2018, 2020, 2023",
+        pins: [
+          { top: "64.9%", left: "19.3%", isTarget: true }, // Mumbai
+          { top: "69.0%", left: "39.3%" }, // Hyderabad
+          { top: "83.5%", left: "43.4%" }, // Chennai
+          { top: "34.9%", left: "34.5%" }  // Delhi
+        ],
+        explanation: "Chhatrapati Shivaji Maharaj International Airport — Mumbai, Maharashtra."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Airports",
+        title: "Locate and label Meenambakkam International Airport.",
+        pyq: "2017, 2019, 2024",
+        pins: [
+          { top: "83.5%", left: "43.4%", isTarget: true }, // Chennai
+          { top: "69.0%", left: "39.3%" }, // Hyderabad
+          { top: "95.7%", left: "33.0%" }, // Thiruvananthapuram
+          { top: "64.9%", left: "19.3%" }  // Mumbai
+        ],
+        explanation: "Meenambakkam International Airport — Chennai, Tamil Nadu."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Airports",
+        title: "Locate and label Netaji Subhash Chandra Bose International Airport.",
+        pyq: "2015, 2018, 2022",
+        pins: [
+          { top: "54.5%", left: "70.6%", isTarget: true }, // Kolkata
+          { top: "34.9%", left: "34.5%" }, // Delhi
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "83.5%", left: "43.4%" }  // Chennai
+        ],
+        explanation: "Netaji Subhash Chandra Bose International Airport — Kolkata, West Bengal."
+      },
+      {
+        main: "geography", sub: "ch7",
+        tag: "Lifelines • Airports",
+        title: "Locate and label Rajiv Gandhi International Airport.",
+        pyq: "2016, 2019, 2023",
+        pins: [
+          { top: "69.0%", left: "39.3%", isTarget: true }, // Hyderabad
+          { top: "64.9%", left: "19.3%" }, // Mumbai
+          { top: "83.5%", left: "43.4%" }, // Chennai
+          { top: "82.5%", left: "35.1%" }  // Bengaluru
+        ],
+        explanation: "Rajiv Gandhi International Airport — Shamshabad, Hyderabad, Telangana."
+      }
+    ];
+
+    // Launch application with default filter
+    applyFilters();
+  </script>
+</body>
+</html>
